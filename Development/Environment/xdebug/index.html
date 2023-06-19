@@ -4,26 +4,26 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
         
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Sandbox</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Xdebug + ddev + Visual Studio Code - Sandbox</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap.min.js" defer></script>
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href=".">Sandbox</a>
+                <a class="navbar-brand" href="../../..">Sandbox</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -33,10 +33,10 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem active">
-                                <a href="." class="nav-link">Index</a>
+                            <li class="navitem">
+                                <a href="../../.." class="nav-link">Index</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -45,11 +45,11 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="Development/Environment/ddev/" class="dropdown-item">ddev</a>
+    <a href="../ddev/" class="dropdown-item">ddev</a>
 </li>
             
 <li>
-    <a href="Development/Environment/xdebug/" class="dropdown-item">Xdebug + ddev + Visual Studio Code</a>
+    <a href="./" class="dropdown-item active">Xdebug + ddev + Visual Studio Code</a>
 </li>
     </ul>
   </li>
@@ -59,7 +59,7 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="Development/Tools/StaticAnalisys/" class="dropdown-item">Static analisys</a>
+    <a href="../../Tools/StaticAnalisys/" class="dropdown-item">Static analisys</a>
 </li>
     </ul>
   </li>
@@ -74,12 +74,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
+                                <a rel="prev" href="../ddev/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="Development/Environment/ddev/" class="nav-link">
+                                <a rel="next" href="../../Tools/StaticAnalisys/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -101,9 +101,9 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#index" class="nav-link">Index</a>
+            <li class="nav-item" data-level="1"><a href="#xdebug-ddev-visual-studio-code" class="nav-link">Xdebug + ddev + Visual Studio Code</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#tools-and-technologies" class="nav-link">Tools and technologies</a>
+            <li class="nav-item" data-level="2"><a href="#about" class="nav-link">About</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -111,11 +111,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#development-environment" class="nav-link">Development: Environment</a>
+            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#development-tools" class="nav-link">Development: Tools</a>
+            <li class="nav-item" data-level="2"><a href="#notes" class="nav-link">Notes</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -126,26 +126,69 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="index">Index</h1>
-<h2 id="tools-and-technologies">Tools and technologies</h2>
+<h1 id="xdebug-ddev-visual-studio-code">Xdebug + ddev + Visual Studio Code</h1>
+<h2 id="about">About</h2>
 <ul>
-<li><a href="https://www.php-fig.org/">PHP Framework Interop Group - PHP-FIG</a></li>
+<li><a href="https://xdebug.org/">Xdebug - Debugger and Profiler Tool for PHP</a></li>
 </ul>
+<p>This article is about using <a href="https://xdebug.org/docs/step_debug">Step Debugging</a>.</p>
+<blockquote>
+<p>"Xdebug's step debugger allows you to interactively walk through your code to debug control flow and examine data structures."</p>
+</blockquote>
+<hr />
 <h2 id="setup">Setup</h2>
-<pre><code class="language-sh"># Clone repository
-git clone https://github.com/webservco/sandbox.git
-
-# Install dependencies
-ddev composer update
+<h3 id="vscodelaunchjson"><code>.vscode/launch.json</code></h3>
+<pre><code class="language-json">{
+    // Custom xdebug configuration for Visual Studio Code + ddev
+    &quot;version&quot;: &quot;0.2.0&quot;,
+    &quot;configurations&quot;: [
+        {
+            &quot;name&quot;: &quot;Listen for Xdebug&quot;,
+            &quot;type&quot;: &quot;php&quot;,
+            &quot;request&quot;: &quot;launch&quot;,
+            &quot;port&quot;: 9003,
+            &quot;pathMappings&quot;: {
+                &quot;/var/www/html&quot;: &quot;${workspaceRoot}&quot;
+            }
+        }
+    ]
+}
 </code></pre>
-<h2 id="development-environment">Development: Environment</h2>
+<hr />
+<h2 id="usage">Usage</h2>
+<p>Enable in ddev: <code>ddev xdebug on</code>.</p>
+<p>Start debugging in vscode:</p>
 <ul>
-<li><a href="Development/Environment/ddev/">ddev</a></li>
-<li><a href="Development/Environment/xdebug/">Xdebug + ddev + Visual Studio Code</a></li>
+<li>Open "Run and Debug" (Ctrl+Shift+D)</li>
+<li>Start debugging: "Listen for Xdebug" (F5)</li>
 </ul>
-<h2 id="development-tools">Development: Tools</h2>
+<p><img alt="Screenshot: xdebug start" src="../img/xdebug-1-start.png" /></p>
+<p>Test: <code>public/xdebug-test.php</code></p>
+<p>Add a breakpoint (click on the left of the line number) on the line with <code>$var3</code>, and another one on the line with the <code>echo</code>.</p>
+<p><img alt="Screenshot: xdebug breakpoints" src="../img/xdebug-2-breakpoints.png" /></p>
+<p>Navigate to the page <code>xdebug-test.php</code>:</p>
 <ul>
-<li><a href="Development/Tools/StaticAnalisys/">Static analisys</a></li>
+<li>with parameter: <a href="https://sandbox.ddev.site/xdebug-test.php?id=123">https://sandbox.ddev.site/xdebug-test.php?id=123</a></li>
+<li>without parameter: <a href="https://sandbox.ddev.site/xdebug-test.php">https://sandbox.ddev.site/xdebug-test.php</a></li>
+</ul>
+<p>Page loading is paused and the editor should now be in focus.</p>
+<p>Go to vscode, some data should appear in the "Run and Debug" section.</p>
+<p><img alt="Screenshot: xdebug inspect" src="../img/xdebug-3-inspect.png" /></p>
+<p>Note: <code>$var3</code> is not initialized because the break happens before the line is processed.</p>
+<p>By clicking "Continue" we can go to the next breakpoint.</p>
+<p><img alt="Screenshot: xdebug navigation" src="../img/xdebug-4-navigation.png" /></p>
+<p>Now also <code>$var3</code> has a value.</p>
+<hr />
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Breakpoints will be added before the next line with code (if adding on a blank line, it will be moved);</li>
+<li>To debug also any errors that happen during execution (even if caught): Breakpoints &gt; Everything.
+<img alt="Screenshot: xdebug configuration" src="../img/xdebug-5-configuration.png" /></li>
+<li>To stop debugging:<ul>
+<li>vscode: red square button (Shift+F5)</li>
+<li>ddev: <code>ddev xdebug off</code></li>
+</ul>
+</li>
 </ul></div>
             </div>
         </div>
@@ -155,11 +198,11 @@ ddev composer update
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = ".",
+            var base_url = "../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -224,8 +267,3 @@ ddev composer update
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.4.3
-Build Date UTC : 2023-06-19 20:10:20.049885+00:00
--->
