@@ -1,12 +1,12 @@
 # ddev
 
-- ["Docker-based PHP development environments."](https://ddev.com/)
+## About
 
-> Please see project source code for an example implementation.
+- ["Docker-based PHP development environments."](https://ddev.com/)
 
 ## Setup
 
-```shell
+```sh
 ddev config
 ```
 
@@ -54,7 +54,7 @@ services:
 ## Usage
 
 
-```shell
+```sh
 # Start
 ddev start
 
