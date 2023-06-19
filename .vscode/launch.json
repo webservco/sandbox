@@ -1,0 +1,15 @@
+{
+    // Custom xdebug configuration for Visual Studio Code + ddev
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/var/www/html": "${workspaceRoot}"
+            }
+        }
+    ]
+}
