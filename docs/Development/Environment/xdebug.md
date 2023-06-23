@@ -10,7 +10,50 @@ This article is about using [Step Debugging](https://xdebug.org/docs/step_debug)
 
 ---
 
-## Setup
+## Setup: Windows WSL2
+
+- Ubuntu/WSL: do not install anything specific, everything is handled in the `ddev` container;
+- vscode: Install extension: `WSL` (publisher Microsoft);
+- vscode: Install extension: `PHP Debug` (publisher Xdebug);
+- vscode: Install the `PHP Debug` extension also in WSL ("Install in WSL: Ubuntu");
+
+![Screenshot: xdebug extension](img/xdebug-6-php_debug_extension.png)
+
+- vscode: restart;
+- Ubuntu/WSL: setup ide: `ddev config global --xdebug-ide-location=wsl2`
+
+![Screenshot: WSL command](img/xdebug-7-wsl_command.png);
+
+- Ubuntu/WSL: restart ddev: `ddev restart`
+
+### Troubleshooting:
+
+#### Check logs:
+
+```sh
+ddev logs
+```
+
+If error:
+
+"Xdebug: [Step Debug] Time-out connecting to debugging client, waited: 200 ms. Tried: host.docker.internal:9003 (through xdebug.client_host/xdebug.client_port).'"
+
+Make sure to perform all steps in the "Windows WSL2" section.
+
+#### Check firewall
+
+Turn off firewall temporarily;
+
+#### Update ddev (and all packages)
+
+```sh
+sudo apt update
+sudo apt upgrade
+```
+
+---
+
+## Configuration
 
 ### `.vscode/launch.json`
 
@@ -36,7 +79,7 @@ This article is about using [Step Debugging](https://xdebug.org/docs/step_debug)
 
 ## Usage
 
-Enable in ddev: `ddev xdebug on`.
+Enable in ddev (make sure project is started): `ddev xdebug on`.
 
 Start debugging in vscode:
 
@@ -80,3 +123,9 @@ Now also `$var3` has a value.
 - To stop debugging:
     - vscode: red square button (Shift+F5)
     - ddev: `ddev xdebug off`
+
+---
+
+## References
+
+- [Step Debugging with Xdebug](https://ddev.readthedocs.io/en/latest/users/debugging-profiling/step-debugging/)
