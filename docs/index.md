@@ -16,7 +16,7 @@ ddev composer update
 
 ## Development: Environment
 
-- [ddev](Development/Environment/ddev.md)
+- [ddev](Development/Environment/ddev/index.md)
 - [Xdebug + ddev + Visual Studio Code](Development/Environment/xdebug.md)
 
 ## Development: Tools
