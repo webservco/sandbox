@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../../img/favicon.ico">
-        <title>Xdebug + ddev + Visual Studio Code - Sandbox</title>
+        <title>DDEV: index - Sandbox</title>
         <link href="../../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
@@ -44,28 +44,64 @@
     <a href="#" class="dropdown-item">Environment</a>
     <ul class="dropdown-menu">
             
-<li>
-    <a href="./" class="dropdown-item active">Xdebug + ddev + Visual Studio Code</a>
-</li>
-            
   <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">Ddev</a>
+    <a href="#" class="dropdown-item">DDEV</a>
     <ul class="dropdown-menu">
             
 <li>
-    <a href="../ddev/" class="dropdown-item">ddev: index</a>
+    <a href="./" class="dropdown-item active">DDEV: index</a>
 </li>
             
 <li>
-    <a href="../ddev/misc/" class="dropdown-item">ddev: misc</a>
+    <a href="ddev_misc/" class="dropdown-item">DDEV: misc</a>
 </li>
             
 <li>
-    <a href="../ddev/setup/" class="dropdown-item">ddev: setup</a>
+    <a href="ddev_setup/" class="dropdown-item">DDEV: project setup</a>
 </li>
             
 <li>
-    <a href="../ddev/usage/" class="dropdown-item">ddev: usage</a>
+    <a href="ddev_usage/" class="dropdown-item">DDEV: usage</a>
+</li>
+            
+<li>
+    <a href="ddev_windows/" class="dropdown-item">DDEV: Windows</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">WSL</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../WSL/" class="dropdown-item">WSL: index</a>
+</li>
+            
+<li>
+    <a href="../WSL/wsl_misc/" class="dropdown-item">WSL</a>
+</li>
+            
+<li>
+    <a href="../WSL/wsl_vscode/" class="dropdown-item">vscode + WSL</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Xdebug</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../Xdebug/" class="dropdown-item">Xdebug: index</a>
+</li>
+            
+<li>
+    <a href="../Xdebug/xdebug_ddev_vscode/" class="dropdown-item">Xdebug + DDEV + Visual Studio Code</a>
+</li>
+            
+<li>
+    <a href="../Xdebug/xdebug_troubleshooting/" class="dropdown-item">Xdebug troubleshooting</a>
 </li>
     </ul>
   </li>
@@ -97,7 +133,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../ddev/" class="nav-link">
+                                <a rel="next" href="ddev_misc/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -119,29 +155,13 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#xdebug-ddev-visual-studio-code" class="nav-link">Xdebug + ddev + Visual Studio Code</a>
+            <li class="nav-item" data-level="1"><a href="#ddev-index" class="nav-link">DDEV: index</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#about" class="nav-link">About</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#setup-windows-wsl2" class="nav-link">Setup: Windows WSL2</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#configuration" class="nav-link">Configuration</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#notes" class="nav-link">Notes</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#references" class="nav-link">References</a>
+            <li class="nav-item" data-level="2"><a href="#articles" class="nav-link">Articles</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -152,104 +172,17 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="xdebug-ddev-visual-studio-code">Xdebug + ddev + Visual Studio Code</h1>
+<h1 id="ddev-index">DDEV: index</h1>
 <h2 id="about">About</h2>
 <ul>
-<li><a href="https://xdebug.org/">Xdebug - Debugger and Profiler Tool for PHP</a></li>
+<li><a href="https://ddev.com/">"Docker-based PHP development environments."</a></li>
 </ul>
-<p>This article is about using <a href="https://xdebug.org/docs/step_debug">Step Debugging</a>.</p>
-<blockquote>
-<p>"Xdebug's step debugger allows you to interactively walk through your code to debug control flow and examine data structures."</p>
-</blockquote>
-<hr />
-<h2 id="setup-windows-wsl2">Setup: Windows WSL2</h2>
+<h2 id="articles">Articles</h2>
 <ul>
-<li>Ubuntu/WSL: do not install anything specific, everything is handled in the <code>ddev</code> container;</li>
-<li>vscode: Install extension: <code>WSL</code> (publisher Microsoft);</li>
-<li>vscode: Install extension: <code>PHP Debug</code> (publisher Xdebug);</li>
-<li>vscode: Install the <code>PHP Debug</code> extension also in WSL ("Install in WSL: Ubuntu");</li>
-</ul>
-<p><img alt="Screenshot: xdebug extension" src="../img/xdebug-6-php_debug_extension.png" /></p>
-<ul>
-<li>vscode: restart;</li>
-<li>Ubuntu/WSL: setup ide: <code>ddev config global --xdebug-ide-location=wsl2</code></li>
-</ul>
-<p><img alt="Screenshot: WSL command" src="../img/xdebug-7-wsl_command.png" />;</p>
-<ul>
-<li>Ubuntu/WSL: restart ddev: <code>ddev restart</code></li>
-</ul>
-<h3 id="troubleshooting">Troubleshooting:</h3>
-<h4 id="check-logs">Check logs:</h4>
-<pre><code class="language-sh">ddev logs
-</code></pre>
-<p>If error:</p>
-<p>"Xdebug: [Step Debug] Time-out connecting to debugging client, waited: 200 ms. Tried: host.docker.internal:9003 (through xdebug.client_host/xdebug.client_port).'"</p>
-<p>Make sure to perform all steps in the "Windows WSL2" section.</p>
-<h4 id="check-firewall">Check firewall</h4>
-<p>Turn off firewall temporarily;</p>
-<h4 id="update-ddev-and-all-packages">Update ddev (and all packages)</h4>
-<pre><code class="language-sh">sudo apt update
-sudo apt upgrade
-</code></pre>
-<hr />
-<h2 id="configuration">Configuration</h2>
-<h3 id="vscodelaunchjson"><code>.vscode/launch.json</code></h3>
-<pre><code class="language-json">{
-    // Custom xdebug configuration for Visual Studio Code + ddev
-    &quot;version&quot;: &quot;0.2.0&quot;,
-    &quot;configurations&quot;: [
-        {
-            &quot;name&quot;: &quot;Listen for Xdebug&quot;,
-            &quot;type&quot;: &quot;php&quot;,
-            &quot;request&quot;: &quot;launch&quot;,
-            &quot;port&quot;: 9003,
-            &quot;pathMappings&quot;: {
-                &quot;/var/www/html&quot;: &quot;${workspaceRoot}&quot;
-            }
-        }
-    ]
-}
-</code></pre>
-<hr />
-<h2 id="usage">Usage</h2>
-<p>Enable in ddev (make sure project is started): <code>ddev xdebug on</code>.</p>
-<p>Start debugging in vscode:</p>
-<ul>
-<li>Open "Run and Debug" (Ctrl+Shift+D)</li>
-<li>Start debugging: "Listen for Xdebug" (F5)</li>
-</ul>
-<p><img alt="Screenshot: xdebug start" src="../img/xdebug-1-start.png" /></p>
-<p>Test: <code>public/xdebug-test.php</code></p>
-<p>Add a breakpoint (click on the left of the line number) on the line with <code>$var3</code>, and another one on the line with the <code>echo</code>.</p>
-<p><img alt="Screenshot: xdebug breakpoints" src="../img/xdebug-2-breakpoints.png" /></p>
-<p>Navigate to the page <code>xdebug-test.php</code>:</p>
-<ul>
-<li>with parameter: <a href="https://sandbox.ddev.site/xdebug-test.php?id=123">https://sandbox.ddev.site/xdebug-test.php?id=123</a></li>
-<li>without parameter: <a href="https://sandbox.ddev.site/xdebug-test.php">https://sandbox.ddev.site/xdebug-test.php</a></li>
-</ul>
-<p>Page loading is paused and the editor should now be in focus.</p>
-<p>Go to vscode, some data should appear in the "Run and Debug" section.</p>
-<p><img alt="Screenshot: xdebug inspect" src="../img/xdebug-3-inspect.png" /></p>
-<p>Note: <code>$var3</code> is not initialized because the break happens before the line is processed.</p>
-<p>By clicking "Continue" we can go to the next breakpoint.</p>
-<p><img alt="Screenshot: xdebug navigation" src="../img/xdebug-4-navigation.png" /></p>
-<p>Now also <code>$var3</code> has a value.</p>
-<hr />
-<h2 id="notes">Notes</h2>
-<ul>
-<li>Breakpoints will be added before the next line with code (if adding on a blank line, it will be moved);</li>
-<li>To debug also any errors that happen during execution (even if caught): Breakpoints &gt; Everything.
-<img alt="Screenshot: xdebug configuration" src="../img/xdebug-5-configuration.png" /></li>
-<li>To stop debugging:<ul>
-<li>vscode: red square button (Shift+F5)</li>
-<li>ddev: <code>ddev xdebug off</code></li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://ddev.readthedocs.io/en/latest/users/debugging-profiling/step-debugging/">Step Debugging with Xdebug</a></li>
+<li><a href="ddev_windows/">Install on Windows</a></li>
+<li><a href="ddev_setup/">Project setup</a></li>
+<li><a href="ddev_usage/">Usage</a></li>
+<li><a href="ddev_misc/">Misc</a></li>
 </ul></div>
             </div>
         </div>

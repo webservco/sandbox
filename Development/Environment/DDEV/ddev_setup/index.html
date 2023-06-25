@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../../../img/favicon.ico">
-        <title>ddev: misc - Sandbox</title>
+        <title>DDEV: project setup - Sandbox</title>
         <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../../css/base.css" rel="stylesheet">
@@ -44,28 +44,64 @@
     <a href="#" class="dropdown-item">Environment</a>
     <ul class="dropdown-menu">
             
-<li>
-    <a href="../../xdebug/" class="dropdown-item">Xdebug + ddev + Visual Studio Code</a>
-</li>
-            
   <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">Ddev</a>
+    <a href="#" class="dropdown-item">DDEV</a>
     <ul class="dropdown-menu">
             
 <li>
-    <a href="../" class="dropdown-item">ddev: index</a>
+    <a href="../" class="dropdown-item">DDEV: index</a>
 </li>
             
 <li>
-    <a href="./" class="dropdown-item active">ddev: misc</a>
+    <a href="../ddev_misc/" class="dropdown-item">DDEV: misc</a>
 </li>
             
 <li>
-    <a href="../setup/" class="dropdown-item">ddev: setup</a>
+    <a href="./" class="dropdown-item active">DDEV: project setup</a>
 </li>
             
 <li>
-    <a href="../usage/" class="dropdown-item">ddev: usage</a>
+    <a href="../ddev_usage/" class="dropdown-item">DDEV: usage</a>
+</li>
+            
+<li>
+    <a href="../ddev_windows/" class="dropdown-item">DDEV: Windows</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">WSL</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../WSL/" class="dropdown-item">WSL: index</a>
+</li>
+            
+<li>
+    <a href="../../WSL/wsl_misc/" class="dropdown-item">WSL</a>
+</li>
+            
+<li>
+    <a href="../../WSL/wsl_vscode/" class="dropdown-item">vscode + WSL</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Xdebug</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Xdebug/" class="dropdown-item">Xdebug: index</a>
+</li>
+            
+<li>
+    <a href="../../Xdebug/xdebug_ddev_vscode/" class="dropdown-item">Xdebug + DDEV + Visual Studio Code</a>
+</li>
+            
+<li>
+    <a href="../../Xdebug/xdebug_troubleshooting/" class="dropdown-item">Xdebug troubleshooting</a>
 </li>
     </ul>
   </li>
@@ -92,12 +128,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../" class="nav-link">
+                                <a rel="prev" href="../ddev_misc/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../setup/" class="nav-link">
+                                <a rel="next" href="../ddev_usage/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -119,9 +155,9 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#ddev-misc" class="nav-link">ddev: misc</a>
+            <li class="nav-item" data-level="1"><a href="#ddev-project-setup" class="nav-link">DDEV: project setup</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#upgrading-database" class="nav-link">Upgrading database</a>
+            <li class="nav-item" data-level="2"><a href="#customize" class="nav-link">Customize</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -132,36 +168,38 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="ddev-misc">ddev: misc</h1>
-<h2 id="upgrading-database">Upgrading database</h2>
-<p>Example: upgrade MariaDB form 10.4 to 10.8</p>
-<h3 id="the-easy-way">The easy way</h3>
-<ul>
-<li>change database version in <code>ddev</code> configuration, restart;</li>
-<li>If errors ("Unable to start project because the configured database type does not match the current actual database"), go for the hard way.</li>
-</ul>
-<h3 id="the-hard-way">The hard way</h3>
-<ul>
-<li>backup yourself any databases you want to keep, <code>ddev</code> will destroy all;<ul>
-<li>use phpMyAdmin or CLI, <a href="https://ddev.readthedocs.io/en/latest/users/extend/database-types/#caveats"><code>ddev</code> snapshots will not work</a></li>
-</ul>
-</li>
-<li><code>ddev start</code> (do not change configuration by hand);</li>
-<li><code>ddev debug migrate-database mariadb:10.8</code><ul>
-<li><code>ddev</code> will promise to import back the databases however:<ul>
-<li>it will only handle the <code>db</code> database, any custom databases will only be destroyed;</li>
-<li>even for the <code>db</code> the import will fail;</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="other-solutions">Other solutions</h3>
-<ul>
-<li>untested</li>
-<li><a href="https://github.com/ddev/ddev/issues/4089">Steps described in this bug report</a></li>
-</ul>
-<hr /></div>
+<h1 id="ddev-project-setup">DDEV: project setup</h1>
+<pre><code class="language-sh">ddev config
+</code></pre>
+<h2 id="customize">Customize</h2>
+<h3 id="ddevconfigyaml"><code>.ddev/config.yaml</code></h3>
+<pre><code class="language-yaml">php_version: &quot;8.2&quot;
+webserver_type: apache-fpm
+database:
+    type: mariadb
+    version: &quot;10.8&quot;
+timezone: Europe/Rome
+webimage_extra_packages: [php-ast]
+</code></pre>
+<h3 id="ddevphp99-customini"><code>.ddev/php/99-custom.ini</code></h3>
+<pre><code class="language-ini">; Custom php configuration
+
+; Log all errors
+error_reporting = E_ALL
+; But do not display them in the frontend
+display_errors = Off
+</code></pre>
+<h3 id="ddevdocker-composemountsyaml"><code>.ddev/docker-compose.mounts.yaml</code></h3>
+<pre><code class="language-yaml">version: '3.6'
+services:
+  web:
+    volumes:
+      - type: bind
+        # source = path on host
+        source: $HOME/p
+        # target = path in container
+        target: $HOME/p
+</code></pre></div>
             </div>
         </div>
 

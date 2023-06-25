@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../../img/favicon.ico">
+        <title>DDEV: Windows - Sandbox</title>
+        <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../../..">Sandbox</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../../.." class="nav-link">Index</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Environment</a>
+    <ul class="dropdown-menu">
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">DDEV</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../" class="dropdown-item">DDEV: index</a>
+</li>
+            
+<li>
+    <a href="../ddev_misc/" class="dropdown-item">DDEV: misc</a>
+</li>
+            
+<li>
+    <a href="../ddev_setup/" class="dropdown-item">DDEV: project setup</a>
+</li>
+            
+<li>
+    <a href="../ddev_usage/" class="dropdown-item">DDEV: usage</a>
+</li>
+            
+<li>
+    <a href="./" class="dropdown-item active">DDEV: Windows</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">WSL</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../WSL/" class="dropdown-item">WSL: index</a>
+</li>
+            
+<li>
+    <a href="../../WSL/wsl_misc/" class="dropdown-item">WSL</a>
+</li>
+            
+<li>
+    <a href="../../WSL/wsl_vscode/" class="dropdown-item">vscode + WSL</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Xdebug</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Xdebug/" class="dropdown-item">Xdebug: index</a>
+</li>
+            
+<li>
+    <a href="../../Xdebug/xdebug_ddev_vscode/" class="dropdown-item">Xdebug + DDEV + Visual Studio Code</a>
+</li>
+            
+<li>
+    <a href="../../Xdebug/xdebug_troubleshooting/" class="dropdown-item">Xdebug troubleshooting</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Tools</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../Tools/StaticAnalisys/" class="dropdown-item">Static analisys</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../ddev_usage/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../WSL/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#ddev-windows" class="nav-link">DDEV: Windows</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#links" class="nav-link">Links</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#options" class="nav-link">Options</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#uninstall-docker-toolbox-if-present" class="nav-link">Uninstall Docker Toolbox if present</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#chocolatey" class="nav-link">Chocolatey</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#windows-ddev-mkcert" class="nav-link">Windows: DDEV, mkcert</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#wsl2" class="nav-link">WSL2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#docker-desktop" class="nav-link">Docker Desktop</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#verify" class="nav-link">Verify</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ubuntu-ddev-mkcert" class="nav-link">Ubuntu: DDEV, mkcert</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ddev-verify" class="nav-link">DDEV verify</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#notes" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="ddev-windows">DDEV: Windows</h1>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://ddev.readthedocs.io/en/latest/users/install/docker-installation/#windows">Docker Installation</a></li>
+<li><a href="https://ddev.readthedocs.io/en/latest/users/install/ddev-installation/#windows">DDEV Installation</a></li>
+</ul>
+<h2 id="options">Options</h2>
+<ul>
+<li><a href="https://ddev.readthedocs.io/en/latest/users/install/ddev-installation/#wsl2-docker-desktop-install-script">Docker Desktop</a></li>
+<li><a href="https://ddev.readthedocs.io/en/latest/users/install/ddev-installation/#wsl2-docker-ce-inside-install-script">Docker CE</a></li>
+</ul>
+<p>This article uses the "Docker Desktop" approach.</p>
+<hr />
+<h2 id="uninstall-docker-toolbox-if-present">Uninstall Docker Toolbox if present</h2>
+<hr />
+<h2 id="chocolatey">Chocolatey</h2>
+<p>Windows PowerShell &gt; Run as administrator</p>
+<pre><code class="language-sh">Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+</code></pre>
+<p>Close PowerShell.</p>
+<hr />
+<h2 id="windows-ddev-mkcert">Windows: DDEV, mkcert</h2>
+<p>Windows PowerShell &gt; Run as administrator</p>
+<pre><code class="language-sh"># Install DDEV and mkcert
+choco install -y ddev mkcert
+
+# Setup mkcert
+mkcert -install
+
+# Set WSL2 to use the Certificate Authority installed on the Windows side
+$env:CAROOT=&quot;$(mkcert -CAROOT)&quot;; setx CAROOT $env:CAROOT; If ($Env:WSLENV -notlike &quot;*CAROOT/up:*&quot;) { $env:WSLENV=&quot;CAROOT/up:$env:WSLENV&quot;; setx WSLENV $Env:WSLENV }
+</code></pre>
+<p>Close PowerShell.</p>
+<hr />
+<h2 id="wsl2">WSL2</h2>
+<p>Microsoft Store &gt; Windows Subsystem for Linux &gt; Get</p>
+<p>Windows PowerShell &gt; Run as administrator</p>
+<pre><code class="language-sh"># Install Ubuntu
+wsl --install
+</code></pre>
+<p>Reboot (if required), will continue setup afterwards (create user and password).</p>
+<p>Windows PowerShell &gt; Run as administrator</p>
+<pre><code class="language-sh"># Use WSL2 as default
+wsl --set-default-version 2
+</code></pre>
+<h3 id="update">Update</h3>
+<p>Windows Update &gt; Advanced options &gt; Receive updates for other Microsoft products when you update Windows</p>
+<p>Manually: <code>wsl --update</code></p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If nothing happens when running <code>wsl --install</code> (help is diplayed):</p>
+<ul>
+<li>make sure "Windows Subsystem for Linux" is installed;</li>
+<li>if installed, try specifying distro: <code>wsl --install --distribution Ubuntu</code></li>
+</ul>
+<hr />
+<h2 id="docker-desktop">Docker Desktop</h2>
+<p>Note:
+"Docker Desktop is free for small businesses (fewer than 250 employees AND less than $10 million in annual revenue), personal use, education, and non-commercial open source projects. Otherwise, it requires a paid subscription for professional use. Paid subscriptions are also required for government entities."</p>
+<p>Download: https://www.docker.com/products/docker-desktop/</p>
+<p>Leave checked "Use WSL 2 instead of Hyper-V (recommended)".</p>
+<h3 id="enable-wsl-integration">Enable WSL integration</h3>
+<p>Settings &gt; Resources &gt; WSL integration &gt; Enable integration with additional distros &gt; Ubuntu &gt; Apply and restart</p>
+<p>Restart computer.</p>
+<h3 id="troubleshooting_1">Troubleshooting</h3>
+<h4 id="docker-desktop-requires-a-newer-wsl-kernel-version">"Docker Desktop requires a newer WSL kernel version."</h4>
+<p>WSL is probably not installed.</p>
+<hr />
+<h2 id="verify">Verify</h2>
+<h3 id="show-distros">Show distros</h3>
+<p>Windows PowerShell / Terminal</p>
+<pre><code class="language-sh">wsl -l -v
+</code></pre>
+<p>Should display 3, all on WSL2, Ubuntu as default. Example:</p>
+<pre><code>  NAME                   STATE           VERSION
+* Ubuntu                 Running         2
+  docker-desktop         Running         2
+  docker-desktop-data    Running         2
+</code></pre>
+<h3 id="check-mkcert-installed-correctly">Check mkcert installed correctly</h3>
+<p>Ubuntu:</p>
+<pre><code class="language-sh">echo $CAROOT
+# Should display path /mnt/c/Users/__USER__/AppData/Local/mkcert
+</code></pre>
+<h3 id="check-docker-is-running-inside-ubuntu">Check docker is running inside Ubuntu</h3>
+<pre><code class="language-sh">docker ps
+# CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+</code></pre>
+<hr />
+<h2 id="ubuntu-ddev-mkcert">Ubuntu: DDEV, mkcert</h2>
+<p>Ubuntu:</p>
+<pre><code class="language-sh">curl -fsSL https://pkg.ddev.com/apt/gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/ddev.gpg &gt; /dev/null
+echo &quot;deb [signed-by=/etc/apt/trusted.gpg.d/ddev.gpg] https://pkg.ddev.com/apt/ * *&quot; | sudo tee /etc/apt/sources.list.d/ddev.list &gt;/dev/null
+sudo apt update &amp;&amp; sudo apt install -y ddev
+</code></pre>
+<hr />
+<h2 id="ddev-verify">DDEV verify</h2>
+<p>Make sure the same version is used in both Windows and Ubuntu</p>
+<pre><code class="language-sh"># Windows
+ddev.exe version
+
+# Ubuntu
+ddev version
+</code></pre>
+<hr />
+<h2 id="notes">Notes</h2>
+<ul>
+<li>No need to setup PHP 8, Composer 2, etc in Ubuntu, they will be managed by ddev.</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../../js/base.js" defer></script>
+        <script src="../../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

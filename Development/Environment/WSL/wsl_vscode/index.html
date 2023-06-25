@@ -4,26 +4,26 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
         
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Sandbox</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        
+        <link rel="shortcut icon" href="../../../../img/favicon.ico">
+        <title>vscode + WSL - Sandbox</title>
+        <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap.min.js" defer></script>
+        <script src="../../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href=".">Sandbox</a>
+                <a class="navbar-brand" href="../../../..">Sandbox</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -33,10 +33,10 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem active">
-                                <a href="." class="nav-link">Index</a>
+                            <li class="navitem">
+                                <a href="../../../.." class="nav-link">Index</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -49,23 +49,23 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="Development/Environment/DDEV/" class="dropdown-item">DDEV: index</a>
+    <a href="../../DDEV/" class="dropdown-item">DDEV: index</a>
 </li>
             
 <li>
-    <a href="Development/Environment/DDEV/ddev_misc/" class="dropdown-item">DDEV: misc</a>
+    <a href="../../DDEV/ddev_misc/" class="dropdown-item">DDEV: misc</a>
 </li>
             
 <li>
-    <a href="Development/Environment/DDEV/ddev_setup/" class="dropdown-item">DDEV: project setup</a>
+    <a href="../../DDEV/ddev_setup/" class="dropdown-item">DDEV: project setup</a>
 </li>
             
 <li>
-    <a href="Development/Environment/DDEV/ddev_usage/" class="dropdown-item">DDEV: usage</a>
+    <a href="../../DDEV/ddev_usage/" class="dropdown-item">DDEV: usage</a>
 </li>
             
 <li>
-    <a href="Development/Environment/DDEV/ddev_windows/" class="dropdown-item">DDEV: Windows</a>
+    <a href="../../DDEV/ddev_windows/" class="dropdown-item">DDEV: Windows</a>
 </li>
     </ul>
   </li>
@@ -75,15 +75,15 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="Development/Environment/WSL/" class="dropdown-item">WSL: index</a>
+    <a href="../" class="dropdown-item">WSL: index</a>
 </li>
             
 <li>
-    <a href="Development/Environment/WSL/wsl_misc/" class="dropdown-item">WSL</a>
+    <a href="../wsl_misc/" class="dropdown-item">WSL</a>
 </li>
             
 <li>
-    <a href="Development/Environment/WSL/wsl_vscode/" class="dropdown-item">vscode + WSL</a>
+    <a href="./" class="dropdown-item active">vscode + WSL</a>
 </li>
     </ul>
   </li>
@@ -93,15 +93,15 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="Development/Environment/Xdebug/" class="dropdown-item">Xdebug: index</a>
+    <a href="../../Xdebug/" class="dropdown-item">Xdebug: index</a>
 </li>
             
 <li>
-    <a href="Development/Environment/Xdebug/xdebug_ddev_vscode/" class="dropdown-item">Xdebug + DDEV + Visual Studio Code</a>
+    <a href="../../Xdebug/xdebug_ddev_vscode/" class="dropdown-item">Xdebug + DDEV + Visual Studio Code</a>
 </li>
             
 <li>
-    <a href="Development/Environment/Xdebug/xdebug_troubleshooting/" class="dropdown-item">Xdebug troubleshooting</a>
+    <a href="../../Xdebug/xdebug_troubleshooting/" class="dropdown-item">Xdebug troubleshooting</a>
 </li>
     </ul>
   </li>
@@ -113,7 +113,7 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="Development/Tools/StaticAnalisys/" class="dropdown-item">Static analisys</a>
+    <a href="../../../Tools/StaticAnalisys/" class="dropdown-item">Static analisys</a>
 </li>
     </ul>
   </li>
@@ -128,12 +128,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
+                                <a rel="prev" href="../wsl_misc/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="Development/Environment/DDEV/" class="nav-link">
+                                <a rel="next" href="../../Xdebug/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -155,24 +155,8 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#index" class="nav-link">Index</a>
+            <li class="nav-item" data-level="1"><a href="#vscode-wsl" class="nav-link">vscode + WSL</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#tools-and-technologies" class="nav-link">Tools and technologies</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#setup" class="nav-link">Setup</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#development-environment" class="nav-link">Development: Environment</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#development-tools" class="nav-link">Development: Tools</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
         </ul>
@@ -180,28 +164,16 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="index">Index</h1>
-<h2 id="tools-and-technologies">Tools and technologies</h2>
-<ul>
-<li><a href="https://www.php-fig.org/">PHP Framework Interop Group - PHP-FIG</a></li>
-</ul>
-<h2 id="setup">Setup</h2>
-<pre><code class="language-sh"># Clone repository
-git clone https://github.com/webservco/sandbox.git
-
-# Install dependencies
-ddev composer update
-</code></pre>
-<h2 id="development-environment">Development: Environment</h2>
-<ul>
-<li><a href="Development/Environment/DDEV/">DDEV</a></li>
-<li><a href="Development/Environment/WSL/">WSL</a></li>
-<li><a href="Development/Environment/Xdebug/">Xdebug</a></li>
-</ul>
-<h2 id="development-tools">Development: Tools</h2>
-<ul>
-<li><a href="Development/Tools/StaticAnalisys/">Static analisys</a></li>
-</ul></div>
+<h1 id="vscode-wsl">vscode + WSL</h1>
+<p>Setup Visual Studio Code to work with WSL2.</p>
+<p>In Windows: Visual Studio Code:
+- Extensions &gt; "Remote - WSL" &gt; Install</p>
+<p>In Ubuntu:</p>
+<pre><code class="language-sh"># cd a project
+# start vscode
+code .
+# does one time setup (install VS Code Server), then starts editor.
+</code></pre></div>
             </div>
         </div>
 
@@ -210,11 +182,11 @@ ddev composer update
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = ".",
+            var base_url = "../../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
+        <script src="../../../../js/base.js" defer></script>
+        <script src="../../../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -282,8 +254,3 @@ ddev composer update
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.1.2
-Build Date UTC : 2023-06-25 10:59:39.657380+00:00
--->
