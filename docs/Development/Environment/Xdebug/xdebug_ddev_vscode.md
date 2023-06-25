@@ -1,4 +1,4 @@
-# Xdebug + ddev + Visual Studio Code
+# Xdebug + DDEV + Visual Studio Code
 
 ## About
 
@@ -12,7 +12,7 @@ This article is about using [Step Debugging](https://xdebug.org/docs/step_debug)
 
 ## Setup: Windows WSL2
 
-- Ubuntu/WSL: do not install anything specific, everything is handled in the `ddev` container;
+- Ubuntu/WSL: do not install anything specific, everything is handled in the DDEV container;
 - vscode: Install extension: `WSL` (publisher Microsoft);
 - vscode: Install extension: `PHP Debug` (publisher Xdebug);
 - vscode: Install the `PHP Debug` extension also in WSL ("Install in WSL: Ubuntu");
@@ -20,36 +20,21 @@ This article is about using [Step Debugging](https://xdebug.org/docs/step_debug)
 ![Screenshot: xdebug extension](img/xdebug-6-php_debug_extension.png)
 
 - vscode: restart;
-- Ubuntu/WSL: setup ide: `ddev config global --xdebug-ide-location=wsl2`
 
-![Screenshot: WSL command](img/xdebug-7-wsl_command.png);
+### If using Docker Desktop
 
-- Ubuntu/WSL: restart ddev: `ddev restart`
+When running vscode from Ubuntu (`code .`) xdebug can't connect to the IDE.
 
-### Troubleshooting:
+[Official istructions (not working)](https://github.com/ddev/ddev/issues/3781#issuecomment-1288256238).
+[Documentation (not working)](https://ddev.readthedocs.io/en/latest/users/configuration/config/#xdebug_ide_location).
 
-#### Check logs:
+Working solution:
 
-```sh
-ddev logs
-```
+- Ubuntu/WSL: get IP: `hostname -I`
+- Ubuntu/WSL: setup DDEV Xdebug IP: `ddev config global --xdebug-ide-location=__IP__`
+- Ubuntu/WSL: restart DDEV: `ddev restart`
 
-If error:
-
-"Xdebug: [Step Debug] Time-out connecting to debugging client, waited: 200 ms. Tried: host.docker.internal:9003 (through xdebug.client_host/xdebug.client_port).'"
-
-Make sure to perform all steps in the "Windows WSL2" section.
-
-#### Check firewall
-
-Turn off firewall temporarily;
-
-#### Update ddev (and all packages)
-
-```sh
-sudo apt update
-sudo apt upgrade
-```
+Note: do not use custom ini file as some comments suggest, as the project may be run in different environments where the setup is different.
 
 ---
 
@@ -59,7 +44,7 @@ sudo apt upgrade
 
 ```json
 {
-    // Custom xdebug configuration for Visual Studio Code + ddev
+    // Custom xdebug configuration for Visual Studio Code + DDEV
     "version": "0.2.0",
     "configurations": [
         {
@@ -79,7 +64,7 @@ sudo apt upgrade
 
 ## Usage
 
-Enable in ddev (make sure project is started): `ddev xdebug on`.
+Enable in DDEV (make sure project is started): `ddev xdebug on`.
 
 Start debugging in vscode:
 
@@ -122,10 +107,12 @@ Now also `$var3` has a value.
 ![Screenshot: xdebug configuration](img/xdebug-5-configuration.png)
 - To stop debugging:
     - vscode: red square button (Shift+F5)
-    - ddev: `ddev xdebug off`
+    - DDEV: `ddev xdebug off`
 
 ---
 
 ## References
 
 - [Step Debugging with Xdebug](https://ddev.readthedocs.io/en/latest/users/debugging-profiling/step-debugging/)
+- [Xdebug cases](https://drive.google.com/file/d/1_ZIg7TAxPIJvwPXNefXy9laehmIVw028/view)
+- [Pseudo-hosts values for xdebug.client_host](https://docs.google.com/document/d/1W-NzNtExf5C4eOu3rRQm1WlWnbW44u3ANDDA49d3FD4/edit?pli=1#heading=h.om72lccwqcou)

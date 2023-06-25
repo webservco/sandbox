@@ -1,4 +1,4 @@
-# ddev: usage
+# DDEV: usage
 
 
 ```sh

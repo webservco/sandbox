@@ -1,4 +1,4 @@
-# ddev: setup
+# DDEV: project setup
 
 ```sh
 ddev config
