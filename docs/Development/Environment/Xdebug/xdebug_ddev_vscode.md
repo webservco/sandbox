@@ -25,14 +25,37 @@ This article is about using [Step Debugging](https://xdebug.org/docs/step_debug)
 
 When running vscode from Ubuntu (`code .`) xdebug can't connect to the IDE.
 
-[Official istructions (not working)](https://github.com/ddev/ddev/issues/3781#issuecomment-1288256238).
-[Documentation (not working)](https://ddev.readthedocs.io/en/latest/users/configuration/config/#xdebug_ide_location).
+[Official istructions](https://github.com/ddev/ddev/issues/3781#issuecomment-1288256238).
+[Documentation](https://ddev.readthedocs.io/en/latest/users/configuration/config/#xdebug_ide_location).
 
-Working solution:
+Try (Ubuntu/WSL):
 
-- Ubuntu/WSL: get IP: `hostname -I`
-- Ubuntu/WSL: setup DDEV Xdebug IP: `ddev config global --xdebug-ide-location=__IP__`
-- Ubuntu/WSL: restart DDEV: `ddev restart`
+```sh
+# Setup DDEV Xdebug location
+ddev config global --xdebug-ide-location=wsl2
+# Restart DDEV
+ddev restart
+```
+
+Try (Ubuntu/WSL):
+
+```sh
+# Setup DDEV Xdebug location
+ddev config global --xdebug-ide-location=container
+# Restart DDEV
+ddev restart
+```
+
+Try (Ubuntu/WSL):
+
+```sh
+# Get IP
+hostname -I
+# Setup DDEV Xdebug IP
+ddev config global --xdebug-ide-location=__IP__
+# Restart DDEV
+ddev restart
+```
 
 Note: do not use custom ini file as some comments suggest, as the project may be run in different environments where the setup is different.
 
