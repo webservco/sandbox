@@ -9,6 +9,7 @@
 ## Articles
 
 - [Application setup](application_setup.md)
+- [Project structure](application_structure.md)
 
 ---
 
