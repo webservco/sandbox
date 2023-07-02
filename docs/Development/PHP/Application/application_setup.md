@@ -15,6 +15,7 @@
 
 - `authors`
 - `description`
+- `homepage`
 - `keywords`
 - `name`
 - `require` (removed unneeded)
