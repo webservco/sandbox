@@ -1,0 +1,90 @@
+# HTTP tests.
+
+# In order to run the tests at the bottom directly in vscode, install extension "Rest Client" by Huachao Mao.
+
+# CLI run
+
+# cURL - exception handler 1: "No View renderer available for any of the accept mime types."
+curl --header "Accept: custom/mime-no-exist" -w "\n" --verbose https://sandbox.ddev.site
+
+# cURL - exception handler 2: DomainException 'Not implemented.'
+curl --header "Accept: text/html" -w "\n" --verbose https://sandbox.ddev.site/sandbox/qwerty
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/sandbox/qwerty
+
+# cURL - 404
+curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/noexist/foo/bar
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/noexist/foo/bar
+
+# cURL - Homepage
+curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/
+
+# cURL - Sandbox test
+curl --header "Accept: text/html" -w "\n" --verbose "https://sandbox.ddev.site/sandbox/test/<script>alert('xss')</script>"
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/sandbox/test
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/sandbox/test/foo
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/sandbox/qwerty
+curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/sandbox/test/foo
+
+# cURL  - API test
+# OK
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/api/version
+# Error "Please use the appropriate "Accept" headers in order to use the API."
+curl --header "Accept: text/html" -w "\n" --verbose https://sandbox.ddev.site/api/version
+# OK
+curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/api/version
+
+###
+
+# CGI (not CLI and not HTTP)
+# "Unable to determine request method"
+clear && php-cgi -d max_execution_time=1 public/index.php arg1 2 3.5 null
+
+
+###
+
+# Cli run (seems max execution time is not useful):
+# "Unable to determine request method"
+clear && ddev exec php -d max_execution_time=1 public/index.php arg1 2 3.5 null
+
+###
+
+# cURL.
+# Specify HTTP protocol version (not really useful as it is not available in the PHP script):
+# --http1.0
+# --http1.1
+# --http2-prior-knowledge
+# --http2
+# curl -w "\n" --verbose --http1.0 https://sandbox.ddev.site/
+
+###
+
+# cURL - POST.
+# Enable small limits in webapp `.ddev/php/99-custom.ini`, then:
+# clear && curl --request HEAD --form 'key1=value1' --form 'int=1' --form 'float=2.5' --form 'bool=true' "https://sandbox.ddev.site/form?gkey1=value1&gkey2=value2&gint=1&gfloat=2.5&gbool=true"
+# Similar test in PV site:
+# clear && curl -w "\n" --request POST --form 'key1=value1' --form 'key2=value2' https://my-parcelvalue.ddev.site
+
+###
+
+# GET about/version
+GET https://sandbox.ddev.site/api/version
+
+###
+
+# GET request.
+# 404; TODO create page for this example
+GET https://sandbox.ddev.site/user/radum?key1=value1&key2=value2&int=1&float=2.5&bool=true&1=2&1.5=3&null=null HTTP/1.1
+
+###
+
+# POST request with JSON data.
+# 404; TODO create page for this example
+POST https://sandbox.ddev.site/form?gkey1=value1&gkey2=value2&gint=1&gfloat=2.5&gbool=true HTTP/1.1
+Content-Type: application/json
+
+{
+    "jsonKey": "jsonValue",
+}
+
+###

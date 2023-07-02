@@ -11,6 +11,10 @@
 - [Application setup](application_setup.md)
 - [Project structure](application_structure.md)
 
+## Test
+
+- HTTP tests: `tests/HTTP/HTTPTests.http`
+
 ---
 
 ## Notes
