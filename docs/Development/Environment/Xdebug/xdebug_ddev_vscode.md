@@ -96,7 +96,7 @@ Start debugging in vscode:
 
 ![Screenshot: xdebug start](img/xdebug-1-start.png)
 
-Test: `public/xdebug-test.php`
+Test: `public/development/xdebug/xdebug-test.php`
 
 Add a breakpoint (click on the left of the line number) on the line with `$var3`, and another one on the line with the `echo`.
 
@@ -104,8 +104,8 @@ Add a breakpoint (click on the left of the line number) on the line with `$var3`
 
 Navigate to the page `xdebug-test.php`:
 
-- with parameter: [https://sandbox.ddev.site/xdebug-test.php?id=123](https://sandbox.ddev.site/xdebug-test.php?id=123)
-- without parameter: [https://sandbox.ddev.site/xdebug-test.php](https://sandbox.ddev.site/xdebug-test.php)
+- with parameter: [https://sandbox.ddev.site/development/xdebug/xdebug-test.php?id=123](https://sandbox.ddev.site/development/xdebug/xdebug-test.php?id=123)
+- without parameter: [https://sandbox.ddev.site/development/xdebug/xdebug-test.php](https://sandbox.ddev.site/development/xdebug/xdebug-test.php)
 
 Page loading is paused and the editor should now be in focus.
 
