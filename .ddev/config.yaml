@@ -18,6 +18,7 @@ composer_version: "2"
 web_environment: []
 nodejs_version: "16"
 timezone: Europe/Rome
+# php-ast is required for static analysis
 webimage_extra_packages: [php-ast]
 
 # Key features of ddev's config.yaml:
