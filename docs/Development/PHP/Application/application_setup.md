@@ -2,7 +2,8 @@
 
 ## Setup
 
-- Clone project in custom folder, set custom git remote, etc (TODO notes)
+- Clone project in custom folder, set custom git remote, etc;
+    - **TODO**: notes (check ws/component for example setup commands);
 
 ## Customize
 

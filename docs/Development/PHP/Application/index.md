@@ -9,3 +9,15 @@
 ## Articles
 
 - [Application setup](application_setup.md)
+
+---
+
+## Notes
+
+### Refactoring ideas
+
+- Move some common code to a general library to have lighter applications
+
+#### `ApplicationFactoryFactory`
+
+- use interfaces for `RequestHandlerFactory`, `SpecificModuleControllerInstantiator`;
