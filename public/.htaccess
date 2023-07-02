@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+
+    Options +SymLinksIfOwnerMatch
+
+    RewriteEngine On
+
+    # RewriteBase
+    RewriteBase /
+    # Dynamic RewriteBase - avoid if possible
+    # RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    # RewriteRule ^(.*) - [E=BASE:%1]
+
+    # No rewrite for existing files and directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Single point of access
+    RewriteRule ^ index.php [QSA,L]
+
+</IfModule>
