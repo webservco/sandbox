@@ -1,5 +1,9 @@
 # WSL
 
+## Links
+
+- [Basic commands for WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
+
 ## Misc
 
 ```sh
@@ -38,6 +42,18 @@ wsl --shutdown
 Settings > Apps (Apps & features) > Ubuntu > Advanced options > Reset > Reset
 
 ## Uninstall distribution
+
+Windows PowerShell > Run as administrator
+
+```sh
+# List local distributions
+wsl --list
+
+# Remove distribution from WSL and delete all of the data associated with that Linux distribution
+wsl --unregister __NAME__
+```
+
+Alternatively:
 
 Settings > Apps (Apps & features) > Ubuntu > Uninstall
 
