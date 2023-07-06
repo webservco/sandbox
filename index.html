@@ -12,11 +12,11 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
         <script src="js/jquery-1.10.2.min.js" defer></script>
         <script src="js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
@@ -109,6 +109,38 @@
   </li>
                                     
   <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">PHP</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="Development/PHP/ErrorHandling/" class="dropdown-item">Error Handling</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Application</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="Development/PHP/Application/" class="dropdown-item">PHP: Application: index</a>
+</li>
+            
+<li>
+    <a href="Development/PHP/Application/application_setup/" class="dropdown-item">PHP: Application setup</a>
+</li>
+            
+<li>
+    <a href="Development/PHP/Application/application_structure/" class="dropdown-item">Application: Project structure</a>
+</li>
+            
+<li>
+    <a href="Development/PHP/Application/application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
     <a href="#" class="dropdown-item">Tools</a>
     <ul class="dropdown-menu">
             
@@ -152,7 +184,7 @@
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
             <li class="nav-item" data-level="1"><a href="#index" class="nav-link">Index</a>
@@ -170,6 +202,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#development-tools" class="nav-link">Development: Tools</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#todo" class="nav-link">TODO</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -201,6 +237,13 @@ ddev composer update
 <h2 id="development-tools">Development: Tools</h2>
 <ul>
 <li><a href="Development/Tools/StaticAnalisys/">Static analisys</a></li>
+</ul>
+<h2 id="todo">TODO</h2>
+<ul>
+<li>Article: DDEV: Custom composer configuration (private project example);</li>
+<li>Article: DDEV: Custom MySQL configuration;</li>
+<li>Article: PHP: Command line application example;</li>
+<li>Article: PHP: Configuration component usage;</li>
 </ul></div>
             </div>
         </div>
@@ -224,16 +267,13 @@ ddev composer update
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -284,6 +324,6 @@ ddev composer update
 </html>
 
 <!--
-MkDocs version : 1.1.2
-Build Date UTC : 2023-06-25 10:59:39.657380+00:00
+MkDocs version : 1.4.3
+Build Date UTC : 2023-07-06 16:09:57.109591+00:00
 -->

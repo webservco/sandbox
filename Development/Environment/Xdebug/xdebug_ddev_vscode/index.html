@@ -12,11 +12,11 @@
         <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
         <script src="../../../../js/jquery-1.10.2.min.js" defer></script>
         <script src="../../../../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
@@ -109,6 +109,38 @@
   </li>
                                     
   <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">PHP</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../PHP/ErrorHandling/" class="dropdown-item">Error Handling</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Application</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../PHP/Application/" class="dropdown-item">PHP: Application: index</a>
+</li>
+            
+<li>
+    <a href="../../../PHP/Application/application_setup/" class="dropdown-item">PHP: Application setup</a>
+</li>
+            
+<li>
+    <a href="../../../PHP/Application/application_structure/" class="dropdown-item">Application: Project structure</a>
+</li>
+            
+<li>
+    <a href="../../../PHP/Application/application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
     <a href="#" class="dropdown-item">Tools</a>
     <ul class="dropdown-menu">
             
@@ -152,7 +184,7 @@
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
             <li class="nav-item" data-level="1"><a href="#xdebug-ddev-visual-studio-code" class="nav-link">Xdebug + DDEV + Visual Studio Code</a>
@@ -211,14 +243,28 @@
 </ul>
 <h3 id="if-using-docker-desktop">If using Docker Desktop</h3>
 <p>When running vscode from Ubuntu (<code>code .</code>) xdebug can't connect to the IDE.</p>
-<p><a href="https://github.com/ddev/ddev/issues/3781#issuecomment-1288256238">Official istructions (not working)</a>.
-<a href="https://ddev.readthedocs.io/en/latest/users/configuration/config/#xdebug_ide_location">Documentation (not working)</a>.</p>
-<p>Working solution:</p>
-<ul>
-<li>Ubuntu/WSL: get IP: <code>hostname -I</code></li>
-<li>Ubuntu/WSL: setup DDEV Xdebug IP: <code>ddev config global --xdebug-ide-location=__IP__</code></li>
-<li>Ubuntu/WSL: restart DDEV: <code>ddev restart</code></li>
-</ul>
+<p><a href="https://github.com/ddev/ddev/issues/3781#issuecomment-1288256238">Official istructions</a>.
+<a href="https://ddev.readthedocs.io/en/latest/users/configuration/config/#xdebug_ide_location">Documentation</a>.</p>
+<p>Try (Ubuntu/WSL):</p>
+<pre><code class="language-sh"># Setup DDEV Xdebug location
+ddev config global --xdebug-ide-location=wsl2
+# Restart DDEV
+ddev restart
+</code></pre>
+<p>Try (Ubuntu/WSL):</p>
+<pre><code class="language-sh"># Setup DDEV Xdebug location
+ddev config global --xdebug-ide-location=container
+# Restart DDEV
+ddev restart
+</code></pre>
+<p>Try (Ubuntu/WSL):</p>
+<pre><code class="language-sh"># Get IP
+hostname -I
+# Setup DDEV Xdebug IP
+ddev config global --xdebug-ide-location=__IP__
+# Restart DDEV
+ddev restart
+</code></pre>
 <p>Note: do not use custom ini file as some comments suggest, as the project may be run in different environments where the setup is different.</p>
 <hr />
 <h2 id="configuration">Configuration</h2>
@@ -248,13 +294,13 @@
 <li>Start debugging: "Listen for Xdebug" (F5)</li>
 </ul>
 <p><img alt="Screenshot: xdebug start" src="../img/xdebug-1-start.png" /></p>
-<p>Test: <code>public/xdebug-test.php</code></p>
+<p>Test: <code>public/development/xdebug/xdebug-test.php</code></p>
 <p>Add a breakpoint (click on the left of the line number) on the line with <code>$var3</code>, and another one on the line with the <code>echo</code>.</p>
 <p><img alt="Screenshot: xdebug breakpoints" src="../img/xdebug-2-breakpoints.png" /></p>
 <p>Navigate to the page <code>xdebug-test.php</code>:</p>
 <ul>
-<li>with parameter: <a href="https://sandbox.ddev.site/xdebug-test.php?id=123">https://sandbox.ddev.site/xdebug-test.php?id=123</a></li>
-<li>without parameter: <a href="https://sandbox.ddev.site/xdebug-test.php">https://sandbox.ddev.site/xdebug-test.php</a></li>
+<li>with parameter: <a href="https://sandbox.ddev.site/development/xdebug/xdebug-test.php?id=123">https://sandbox.ddev.site/development/xdebug/xdebug-test.php?id=123</a></li>
+<li>without parameter: <a href="https://sandbox.ddev.site/development/xdebug/xdebug-test.php">https://sandbox.ddev.site/development/xdebug/xdebug-test.php</a></li>
 </ul>
 <p>Page loading is paused and the editor should now be in focus.</p>
 <p>Go to vscode, some data should appear in the "Run and Debug" section.</p>
@@ -304,16 +350,13 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
