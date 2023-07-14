@@ -2,3 +2,5 @@ composer.lock
 config/.env.ini
 # important: ignore "vendor" only in root (leading slash).
 /vendor/
+# mkdocs HTML output directory
+/site/
