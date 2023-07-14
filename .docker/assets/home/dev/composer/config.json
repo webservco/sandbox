@@ -1,0 +1,11 @@
+{
+    "repositories" : [
+        {
+            "type" : "path",
+            "url" : "~/p/parcelvalue-v3/framework",
+            "options" : {
+                "symlink" : true
+            }
+        }
+    ]
+}
