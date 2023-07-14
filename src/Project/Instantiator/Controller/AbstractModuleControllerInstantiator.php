@@ -29,7 +29,7 @@ abstract class AbstractModuleControllerInstantiator implements ModuleControllerI
         ViewRendererInterface $viewRenderer,
     ): ControllerInterface {
         /**
-         * Class existence already checked elsewhere, here again for static analisys.
+         * Class existence already checked elsewhere, here again for static analysis.
          */
         if (!class_exists($controllerClassName, true)) {
             throw new OutOfRangeException('Controller class does not exist.');
