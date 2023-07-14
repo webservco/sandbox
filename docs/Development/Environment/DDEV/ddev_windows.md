@@ -1,10 +1,5 @@
 # DDEV: Windows
 
-## Links
-
-- [Docker Installation](https://ddev.readthedocs.io/en/latest/users/install/docker-installation/#windows)
-- [DDEV Installation](https://ddev.readthedocs.io/en/latest/users/install/ddev-installation/#windows)
-
 ## Options
 
 - [Docker Desktop](https://ddev.readthedocs.io/en/latest/users/install/ddev-installation/#wsl2-docker-desktop-install-script)
@@ -174,3 +169,10 @@ ddev version
 ## Notes
 
 - No need to setup PHP 8, Composer 2, etc in Ubuntu, they will be managed by ddev.
+
+---
+
+## External resources
+
+- [Docker Installation](https://ddev.readthedocs.io/en/latest/users/install/docker-installation/#windows)
+- [DDEV Installation](https://ddev.readthedocs.io/en/latest/users/install/ddev-installation/#windows)

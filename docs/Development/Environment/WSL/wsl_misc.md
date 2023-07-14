@@ -1,9 +1,5 @@
 # WSL
 
-## Links
-
-- [Basic commands for WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
-
 ## Misc
 
 ```sh
@@ -68,3 +64,9 @@ Settings > Apps (Apps & features) > Windows Subsystem for Linux > Uninstall
 Do not perform this step if only resetting and starting over.
 
 Settings > Apps (Apps & features) > Optional features > More Windows features > Uncheck "Windows Subsystem for Linux"
+
+---
+
+## External resources
+
+- [Basic commands for WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)
