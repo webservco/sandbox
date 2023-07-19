@@ -24,7 +24,7 @@ svn export https://github.com/webservco/sandbox.git/trunk/.docker
 ### 1) Copy (snapshot) mode
 
 - Read comments / edit to customize: `.docker/config/php82-cli-copy/Dockerfile`
-- Use case: check project in isolation, without adding the vendor dir on local (avoid PHAN errors);
+- Use case: check project in isolation, without adding the vendor dir on local (avoid PHAN errors when project is used as a dependency in another project);
 - Files are copied into the container at build time (not updated in real-time);
 - Working on a "snapshot" done at the time of the build
 - Installs composer dependencies
@@ -32,22 +32,28 @@ svn export https://github.com/webservco/sandbox.git/trunk/.docker
 
 ```sh
 
-# Build:
+# (Optional) Create temporary directory for special project dependencies (local).
 BUILD_TEMP_DIR='.docker/assets/temp/';
-# Create temporary directory for special project dependencies (local).
 mkdir --parents ${BUILD_TEMP_DIR}p/parcelvalue-v3/framework/
 # Copy files into the temporary directory (local).
 cp --recursive ~/p/parcelvalue-v3/framework/ ${BUILD_TEMP_DIR}p/parcelvalue-v3/
+
 # Build.
-docker build -t lhost-v3-framework-copy -f .docker/config/php82-cli-copy/Dockerfile .
-# Cleanup temporary directory.
+DOCKER_IMAGE_TAG='lhost-v3-framework-copy';
+DOCKER_CONTAINER_NAME='lhost-v3-framework-copy-container';
+docker build --tag ${DOCKER_IMAGE_TAG} -f .docker/config/php82-cli-copy/Dockerfile .
+
+# (Optional)Cleanup temporary directory.
 rm -rf ${BUILD_TEMP_DIR}*
 
 # Run: default command: run all checks
-docker run -it --rm --name lhost-v3-framework-running lhost-v3-framework-copy
+docker run -it --rm --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG}
 
 # Run: custom command (default command is not executed)
-docker run -it --rm --name lhost-v3-framework-running lhost-v3-framework-copy /bin/bash -c "ls -lah vendor"
+docker run -it --rm --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG} /bin/bash -c "ls -lah vendor"
+
+# Delete
+docker image rm ${DOCKER_IMAGE_TAG}
 ```
 
 ### 2) Mount (real-time) mode
