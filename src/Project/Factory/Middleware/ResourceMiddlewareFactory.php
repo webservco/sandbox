@@ -9,6 +9,7 @@ use Project\RequestHandler\ThreePart\SandboxRequestHandler;
 use Psr\Http\Server\MiddlewareInterface;
 use WebServCo\Configuration\Service\PHPConfigurationLoader;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
+use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
 use WebServCo\Middleware\Service\ThreePart\ResourceMiddleware;
 use WebServCo\Route\Service\ControllerView\RoutesConfigurationLoader;
 use WebServCo\View\Contract\ViewRendererResolverInterface;
@@ -22,6 +23,7 @@ final class ResourceMiddlewareFactory
 {
     public function __construct(
         private ControllerInstantiatorInterface $controllerInstantiator,
+        private LocalDependencyContainerInterface $localDependencyContainer,
         private ViewRendererResolverInterface $viewRendererResolver,
     ) {
     }
@@ -65,12 +67,14 @@ final class ResourceMiddlewareFactory
             // Request handler for /api requests.
             'api' => new ApiRequestHandler(
                 $controllerInstantiator,
+                $this->localDependencyContainer,
                 $viewRendererResolver,
                 $this->getRoutesConfiguration($projectPath, 'API'),
             ),
             // Request handler for /sandbox requests.
             'sandbox' => new SandboxRequestHandler(
                 $controllerInstantiator,
+                $this->localDependencyContainer,
                 $viewRendererResolver,
                 $this->getRoutesConfiguration($projectPath, 'Sandbox'),
             ),

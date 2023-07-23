@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Project\Controller\Service\Sandbox;
+namespace Project\Controller\Sandbox;
 
-use Project\Controller\Contract\SandboxControllerInterface;
+use Project\Contract\Controller\SandboxControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
@@ -22,7 +22,7 @@ final class TestController extends AbstractSandboxController implements SandboxC
         ];
 
         // Log.
-        $this->logger->debug('data debug (see context)', $data);
+        $this->getLogger(self::class)->debug('data debug (see context)', $data);
 
         /**
          * Create view.
@@ -30,7 +30,7 @@ final class TestController extends AbstractSandboxController implements SandboxC
          * Note: ViewContainerFactoryInterface sets templateName with a sensible default.
          * Here we could call setTemplateName path to set for example a different template in a certain situation.
          */
-        $viewContainer = $this->viewContainerFactory->createViewContainerFromData($data);
+        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
 
         // Return response.
         return $this->createResponse($viewContainer);

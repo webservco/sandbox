@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Project\Controller\Service\Sandbox\TestController;
+use Project\Controller\Sandbox\TestController;
 use Project\Factory\View\Container\Sandbox\TestViewContainerFactory;
 
 // Routes configuration.

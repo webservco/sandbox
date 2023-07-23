@@ -4,41 +4,21 @@ declare(strict_types=1);
 
 namespace Project\Factory\Http;
 
-use Project\Factory\Middleware\ExceptionHandlerMiddlewareFactory;
 use Project\Factory\Middleware\ResourceMiddlewareFactory;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Log\LoggerInterface;
-use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
-use WebServCo\Exception\Contract\ExceptionHandlerInterface;
 use WebServCo\Http\Contract\Message\Request\RequestHandler\RequestHandlerFactoryInterface;
 use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptProcessor;
 use WebServCo\Middleware\Service\Log\LoggerMiddleware;
 use WebServCo\Middleware\Service\ThreePart\RouteMiddleware;
 use WebServCo\Middleware\Service\ViewRenderer\ViewRendererSettingMiddleware;
-use WebServCo\View\Contract\ViewRendererResolverInterface;
-
-use function rtrim;
-
-use const DIRECTORY_SEPARATOR;
 
 /**
  * Request handler factory.
  *
  * Creates the general (stack) request handler with all the middleware used in the application.
  */
-final class RequestHandlerFactory implements RequestHandlerFactoryInterface
+final class RequestHandlerFactory extends AbstractRequestHandlerFactory implements RequestHandlerFactoryInterface
 {
-    public function __construct(
-        private ControllerInstantiatorInterface $controllerInstantiator,
-        private ExceptionHandlerInterface $exceptionHandler,
-        private LoggerInterface $logger,
-        private string $projectPath,
-        private ViewRendererResolverInterface $viewRendererResolver,
-    ) {
-        // Make sure path contains trailing slash (trim + add back).
-        $this->projectPath = rtrim($this->projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-    }
-
     /**
      * Request handler (PSR-15).
      *
@@ -47,15 +27,7 @@ final class RequestHandlerFactory implements RequestHandlerFactoryInterface
      */
     public function createRequestHandler(): RequestHandlerInterface
     {
-        /**
-         * The general request handler that processes all the middleware.
-         */
-        $stackHandlerFactory = new StackHandlerFactory(
-            $this->controllerInstantiator,
-            $this->logger,
-            $this->viewRendererResolver,
-        );
-        $stackHandler = $stackHandlerFactory->createRequestHandler();
+        $stackHandler = $this->createStackHandler();
 
         // Add application specific middleware next.
 
@@ -92,20 +64,11 @@ final class RequestHandlerFactory implements RequestHandlerFactoryInterface
         // Resource middleware; handles requests that are routed by the RouteMiddleware.
         $resourceMiddlewareFactory = new ResourceMiddlewareFactory(
             $this->controllerInstantiator,
+            $this->localDependencyContainer,
             $this->viewRendererResolver,
         );
         $stackHandler->addMiddleware($resourceMiddlewareFactory->createResourceMiddleware($this->projectPath));
 
         return $stackHandler;
-    }
-
-    private function createExceptionHandlerMiddlewareFactory(): ExceptionHandlerMiddlewareFactory
-    {
-        return new ExceptionHandlerMiddlewareFactory(
-            $this->controllerInstantiator,
-            $this->exceptionHandler,
-            $this->logger,
-            $this->viewRendererResolver,
-        );
     }
 }

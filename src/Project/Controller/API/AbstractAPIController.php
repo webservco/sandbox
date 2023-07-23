@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Project\Controller\Service\API;
+namespace Project\Controller\API;
 
-use Project\Controller\Service\AbstractController;
+use Project\Controller\AbstractController;
 use Project\View\API\MainView;
 use WebServCo\View\Contract\ViewContainerInterface;
 
@@ -15,14 +15,18 @@ abstract class AbstractAPIController extends AbstractController
 {
     protected function createMainViewContainer(ViewContainerInterface $viewContainer): ViewContainerInterface
     {
-        return $this->viewContainerFactory->createViewContainerFromView(
+        return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new MainView(
                 // baseUrl; idea: set this dynamically as a route attribute by using a middleware.
-                $this->configurationGetter->getString('BASE_URL'),
+                $this->getConfigurationGetter()->getString(
+                    'BASE_URL',
+                ),
                 // version
-                $this->configurationGetter->getString('API_VERSION'),
+                $this->getConfigurationGetter()->getString(
+                    'API_VERSION',
+                ),
                 // data
-                $this->viewRenderer->render($viewContainer),
+                $this->viewServicesContainer->getViewRenderer()->render($viewContainer),
             ),
             // Set main template to use (can be customized - eg. different "theme" - based on user preference).
             'main/main.api.default',

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Project\Controller\Contract;
+namespace Project\Contract\Controller;
 
 use WebServCo\Controller\Contract\ControllerInterface;
 

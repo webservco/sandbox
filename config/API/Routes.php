@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Project\Controller\Service\API\APIController;
+use Project\Controller\API\APIController;
 use Project\Factory\View\Container\API\APIViewContainerFactory;
 
 return [

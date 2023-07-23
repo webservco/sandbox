@@ -5,24 +5,31 @@ declare(strict_types=1);
 namespace Project\Instantiator\Controller;
 
 use LogicException;
-use Project\Controller\Contract\SandboxControllerInterface;
+use Project\Contract\Controller\SandboxControllerInterface;
 use WebServCo\Controller\Contract\ControllerInterface;
 use WebServCo\Controller\Contract\ModuleControllerInstantiatorInterface;
-use WebServCo\View\Contract\ViewContainerFactoryInterface;
-use WebServCo\View\Contract\ViewRendererInterface;
+use WebServCo\Controller\Service\AbstractModuleControllerInstantiator;
+use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
+use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
+use WebServCo\Reflection\Contract\ReflectionServiceInterface;
+use WebServCo\View\Contract\ViewServicesContainerInterface;
 
 final class SandboxModuleControllerInstantiator extends AbstractModuleControllerInstantiator implements
     ModuleControllerInstantiatorInterface
 {
-    public function instantiateSpecificModuleController(
+    public function instantiateModuleController(
+        ApplicationDependencyContainerInterface $applicationDependencyContainer,
         string $controllerClassName,
-        ViewContainerFactoryInterface $viewContainerFactory,
-        ViewRendererInterface $viewRenderer,
+        LocalDependencyContainerInterface $localDependencyContainer,
+        ReflectionServiceInterface $reflectionService,
+        ViewServicesContainerInterface $viewServicesContainer,
     ): ControllerInterface {
-        $object = parent::instantiateSpecificModuleController(
+        $object = parent::instantiateModuleController(
+            $applicationDependencyContainer,
             $controllerClassName,
-            $viewContainerFactory,
-            $viewRenderer,
+            $localDependencyContainer,
+            $reflectionService,
+            $viewServicesContainer,
         );
 
         if (!$object instanceof SandboxControllerInterface) {

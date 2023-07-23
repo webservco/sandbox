@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Project\Controller\Service\Error;
+namespace Project\Controller\Error;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Project\Controller\Contract\ErrorControllerInterface;
+use Project\Contract\Controller\ErrorControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -23,10 +23,10 @@ final class NotFoundController extends AbstractErrorController implements ErrorC
         ];
 
         // Log.
-        $this->logger->debug('Data debug (see context).', $data);
+        $this->getLogger(self::class)->debug('Data debug (see context).', $data);
 
         // Create view.
-        $viewContainer = $this->viewContainerFactory->createViewContainerFromData($data);
+        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
 
         // Return response.
         return $this->createResponse($viewContainer, StatusCodeInterface::STATUS_NOT_FOUND);

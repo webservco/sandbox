@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Project\Controller\Service\API;
+namespace Project\Controller\API;
 
-use Project\Controller\Contract\APIControllerInterface;
+use Project\Contract\Controller\APIControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
@@ -28,10 +28,10 @@ final class APIController extends AbstractAPIController implements APIController
         ];
 
         // Log.
-        $this->logger->debug('Data debug (see context).', $data);
+        $this->getLogger(self::class)->debug('Data debug (see context).', $data);
 
         // Create view.
-        $viewContainer = $this->viewContainerFactory->createViewContainerFromData($data);
+        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
 
         // Return response.
         return $this->createResponse($viewContainer);

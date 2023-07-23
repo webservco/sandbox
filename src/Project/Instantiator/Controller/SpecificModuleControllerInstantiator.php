@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Project\Instantiator\Controller;
 
-use Project\Controller\Contract\APIControllerInterface;
-use Project\Controller\Contract\ErrorControllerInterface;
-use Project\Controller\Contract\SandboxControllerInterface;
+use Project\Contract\Controller\APIControllerInterface;
+use Project\Contract\Controller\ErrorControllerInterface;
+use Project\Contract\Controller\SandboxControllerInterface;
 use WebServCo\Controller\Contract\SpecificModuleControllerInstantiatorInterface;
 use WebServCo\Controller\Service\AbstractSpecificModuleControllerInstantiator;
 

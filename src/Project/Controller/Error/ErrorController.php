@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Project\Controller\Service\Error;
+namespace Project\Controller\Error;
 
-use Project\Controller\Contract\ErrorControllerInterface;
+use Project\Contract\Controller\ErrorControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 use UnexpectedValueException;
-use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
 use WebServCo\Environment\Contract\EnvironmentInterface;
 use WebServCo\Http\Contract\Message\Response\StatusCodeServiceInterface;
 
@@ -32,7 +31,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
         ];
 
         // Create view.
-        $viewContainer = $this->viewContainerFactory->createViewContainerFromData($data);
+        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
 
         // Return response.
         return $this->createResponse($viewContainer, $this->getResponseCode($throwable));
@@ -40,7 +39,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
 
     private function getDisplayCode(Throwable $throwable): string
     {
-        if ($this->isDevelopment($this->configurationGetter)) {
+        if ($this->isDevelopment()) {
             return (string) $throwable->getCode();
         }
 
@@ -56,7 +55,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
      */
     private function getDisplayMessage(Throwable $throwable): string
     {
-        if ($this->isDevelopment($this->configurationGetter)) {
+        if ($this->isDevelopment()) {
             return $throwable->getMessage();
         }
 
@@ -81,9 +80,11 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
             : 500;
     }
 
-    private function isDevelopment(ConfigurationGetterInterface $configurationGetter): bool
+    private function isDevelopment(): bool
     {
-        switch ($configurationGetter->getString('ENVIRONMENT')) {
+        switch (
+            $this->getConfigurationGetter()->getString('ENVIRONMENT')
+        ) {
             case EnvironmentInterface::ENVIRONMENT_DEVELOPMENT:
             case EnvironmentInterface::ENVIRONMENT_TESTING:
                 return true;
