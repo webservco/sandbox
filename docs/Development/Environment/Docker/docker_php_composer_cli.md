@@ -43,7 +43,7 @@ DOCKER_IMAGE_TAG='lhost-v3-framework-copy';
 DOCKER_CONTAINER_NAME='lhost-v3-framework-copy-container';
 docker build --tag ${DOCKER_IMAGE_TAG} -f .docker/config/php82-cli-copy/Dockerfile .
 
-# (Optional)Cleanup temporary directory.
+# (Optional) Cleanup temporary directory.
 rm -rf ${BUILD_TEMP_DIR}*
 
 # Run: default command: run all checks
@@ -52,7 +52,7 @@ docker run -it --rm --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG}
 # Run: custom command (default command is not executed)
 docker run -it --rm --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG} /bin/bash -c "ls -lah vendor"
 
-# Delete
+# Cleanup
 docker image rm ${DOCKER_IMAGE_TAG}
 ```
 
