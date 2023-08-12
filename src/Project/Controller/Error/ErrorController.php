@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Project\Controller\Error;
 
 use Project\Contract\Controller\ErrorControllerInterface;
+use Project\View\Error\ErrorView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 use UnexpectedValueException;
 use WebServCo\Environment\Contract\EnvironmentInterface;
 use WebServCo\Http\Contract\Message\Response\StatusCodeServiceInterface;
+use WebServCo\View\Contract\ViewContainerInterface;
 
 use function array_key_exists;
 use function is_string;
@@ -19,22 +21,29 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        // Data processing would go here (use services).
         $throwable = $request->getAttribute('throwable');
 
         if (!$throwable instanceof Throwable) {
             throw new UnexpectedValueException('Throwable is not an instance of Throwable.');
         }
 
-        $data = [
-            'code' => $this->getDisplayCode($throwable),
-            'message' => $this->getDisplayMessage($throwable),
-        ];
-
         // Create view.
-        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
+        $viewContainer = $this->createViewContainer($throwable);
 
         // Return response.
         return $this->createResponse($viewContainer, $this->getResponseCode($throwable));
+    }
+
+    private function createViewContainer(Throwable $throwable): ViewContainerInterface
+    {
+        return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
+            new ErrorView(
+                $this->getDisplayCode($throwable),
+                $this->getDisplayMessage($throwable),
+            ),
+            'error/error',
+        );
     }
 
     private function getDisplayCode(Throwable $throwable): string

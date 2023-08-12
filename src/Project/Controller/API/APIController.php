@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Project\Controller\API;
 
 use Project\Contract\Controller\APIControllerInterface;
+use Project\DataTransfer\API\APIResult;
+use Project\View\API\APIView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
+use WebServCo\View\Contract\ViewContainerInterface;
 
 /**
  * A general API Controller.
@@ -18,22 +21,34 @@ final class APIController extends AbstractAPIController implements APIController
     {
         // Data processing would go here (use services).
 
-        // Gathered after data processing.
-        $data = [
-            'result' => [
-                'version' => 3,
-                RoutePartsInterface::ROUTE_PART_3 => $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
-            ],
-            'route' => $request->getAttribute(RoutePartsInterface::ROUTE_PART_2, null),
-        ];
-
-        // Log.
-        $this->getLogger(self::class)->debug('Data debug (see context).', $data);
-
         // Create view.
-        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
+        $viewContainer = $this->createViewContainer($request);
 
         // Return response.
         return $this->createResponse($viewContainer);
+    }
+
+    private function createViewContainer(ServerRequestInterface $request): ViewContainerInterface
+    {
+       /**
+         * Do not assume a JSONRendererInterface will be used/ enforced.
+         * Set a fallback template (could contain for example a general message).
+         */
+        return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
+            new APIView(
+                new APIResult(
+                    $this->applicationDependencyContainer->getDataExtractionContainer()
+                    ->getStrictDataExtractionService()->getNullableString(
+                        $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
+                    ),
+                    3,
+                ),
+                $this->applicationDependencyContainer->getDataExtractionContainer()
+                    ->getStrictDataExtractionService()->getNullableString(
+                        $request->getAttribute(RoutePartsInterface::ROUTE_PART_2, null),
+                    ),
+            ),
+            'api/default',
+        );
     }
 }

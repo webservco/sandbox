@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Project\Controller\Error\NotFoundController;
-use Project\Factory\View\Container\Error\NotFoundViewContainerFactory;
 use Psr\Log\LoggerInterface;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
 use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
@@ -34,7 +33,7 @@ final class StackHandlerFactory implements RequestHandlerFactoryInterface
                 $this->localDependencyContainer,
                 $this->logger,
                 $this->viewRendererResolver,
-                new RouteConfiguration(NotFoundController::class, NotFoundViewContainerFactory::class),
+                new RouteConfiguration(NotFoundController::class),
             ),
         );
     }

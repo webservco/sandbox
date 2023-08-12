@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Project\Factory\Middleware;
 
 use Project\Controller\Error\ErrorController;
-use Project\Factory\View\Container\Error\ErrorViewContainerFactory;
 use Psr\Log\LoggerInterface;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
 use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
@@ -35,7 +34,7 @@ final class ExceptionHandlerMiddlewareFactory
                 $this->localDependencyContainer,
                 $this->logger,
                 $this->viewRendererResolver,
-                new RouteConfiguration(ErrorController::class, ErrorViewContainerFactory::class),
+                new RouteConfiguration(ErrorController::class),
             ),
         );
     }

@@ -6,8 +6,10 @@ namespace Project\Controller\Error;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Project\Contract\Controller\ErrorControllerInterface;
+use Project\View\Error\NotFoundView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use WebServCo\View\Contract\ViewContainerInterface;
 
 final class NotFoundController extends AbstractErrorController implements ErrorControllerInterface
 {
@@ -15,20 +17,22 @@ final class NotFoundController extends AbstractErrorController implements ErrorC
     {
         // Data processing would go here (use services).
 
-        // Gathered after data processing.
-        $data = [
-            'method' => $request->getMethod(),
-            'uri' => $request->getUri()->__toString(),
-            'userAgent' => $request->getHeaderLine('UserAgent'),
-        ];
-
-        // Log.
-        $this->getLogger(self::class)->debug('Data debug (see context).', $data);
-
         // Create view.
-        $viewContainer = $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromData($data);
+        $viewContainer = $this->createViewContainer($request);
 
         // Return response.
         return $this->createResponse($viewContainer, StatusCodeInterface::STATUS_NOT_FOUND);
+    }
+
+    private function createViewContainer(ServerRequestInterface $request): ViewContainerInterface
+    {
+        return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
+            new NotFoundView(
+                $request->getMethod(),
+                $request->getUri()->__toString(),
+                $request->getHeaderLine('UserAgent'),
+            ),
+            'error/notfound',
+        );
     }
 }

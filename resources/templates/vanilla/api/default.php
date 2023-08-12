@@ -9,7 +9,7 @@ assert(isset($view) && $view instanceof APIView);
 
 /**
  * No content, API only uses the main template;
- * However this file musy be present if HTMLRendererInterface is available for this page.
+ * However this file must be present if HTMLRendererInterface is available for this page.
  *
  * @see ApiRequestHandler.getAvailableViewRenderers()
  */
