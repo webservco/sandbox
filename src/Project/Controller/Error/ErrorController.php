@@ -32,7 +32,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
         $viewContainer = $this->createViewContainer($throwable);
 
         // Return response.
-        return $this->createResponse($viewContainer, $this->getResponseCode($throwable));
+        return $this->createResponse($request, $viewContainer, $this->getResponseCode($throwable));
     }
 
     private function createViewContainer(Throwable $throwable): ViewContainerInterface

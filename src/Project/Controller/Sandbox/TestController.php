@@ -26,7 +26,7 @@ final class TestController extends AbstractSandboxController implements SandboxC
         $viewContainer = $this->createViewContainer($request);
 
         // Return response.
-        return $this->createResponse($viewContainer);
+        return $this->createResponse($request, $viewContainer);
     }
 
     private function createViewContainer(ServerRequestInterface $request): ViewContainerInterface

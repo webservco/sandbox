@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Project\View\API\MainView;
+use WebServCo\View\MainView;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);

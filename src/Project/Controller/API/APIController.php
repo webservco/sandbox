@@ -25,13 +25,13 @@ final class APIController extends AbstractAPIController implements APIController
         $viewContainer = $this->createViewContainer($request);
 
         // Return response.
-        return $this->createResponse($viewContainer);
+        return $this->createResponse($request, $viewContainer);
     }
 
     private function createViewContainer(ServerRequestInterface $request): ViewContainerInterface
     {
        /**
-         * Do not assume a JSONRendererInterface will be used/ enforced.
+         * Do not simply assume a JSONRendererInterface will be used / enforced.
          * Set a fallback template (could contain for example a general message).
          */
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(

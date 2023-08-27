@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Project\Controller\Sandbox;
 
 use Project\Controller\AbstractController;
-use Project\View\Sandbox\MainView;
+use Psr\Http\Message\ServerRequestInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
 /**
@@ -13,19 +13,10 @@ use WebServCo\View\Contract\ViewContainerInterface;
  */
 abstract class AbstractSandboxController extends AbstractController
 {
-    protected function createMainViewContainer(ViewContainerInterface $viewContainer): ViewContainerInterface
-    {
-        return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
-            new MainView(
-                // baseUrl; idea: set this dynamically as a route attribute by using a middleware.
-                $this->getConfigurationGetter()->getString(
-                    'BASE_URL',
-                ),
-                // data
-                $this->viewServicesContainer->getViewRenderer()->render($viewContainer),
-            ),
-            // Set main template to use (can be customized - eg. different "theme" - based on user preference).
-            'main/main.sandbox.default',
-        );
+    protected function createMainViewContainer(
+        ServerRequestInterface $request,
+        ViewContainerInterface $viewContainer,
+    ): ViewContainerInterface {
+        return $this->createMainViewContainerWithTemplate($request, 'main/main.sandbox.default', $viewContainer);
     }
 }

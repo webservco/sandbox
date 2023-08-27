@@ -21,7 +21,7 @@ final class NotFoundController extends AbstractErrorController implements ErrorC
         $viewContainer = $this->createViewContainer($request);
 
         // Return response.
-        return $this->createResponse($viewContainer, StatusCodeInterface::STATUS_NOT_FOUND);
+        return $this->createResponse($request, $viewContainer, StatusCodeInterface::STATUS_NOT_FOUND);
     }
 
     private function createViewContainer(ServerRequestInterface $request): ViewContainerInterface

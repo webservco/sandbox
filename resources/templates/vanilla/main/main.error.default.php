@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Project\View\Error\MainView;
+use WebServCo\View\MainView;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
@@ -18,7 +18,7 @@ assert(isset($view) && $view instanceof MainView);
     <body>
         <h1>Error!</h1>
 
-        <p>baseUrl: <?=$view->baseUrl?></p>
+        <p>baseUrl: <?=$view->commonView->baseUrl?></p>
 
         <?=$view->data?>
     </body>
