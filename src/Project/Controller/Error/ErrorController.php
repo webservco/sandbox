@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Error;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Project\Contract\Controller\ErrorControllerInterface;
 use Project\View\Error\ErrorView;
 use Psr\Http\Message\ResponseInterface;
@@ -77,16 +78,16 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
 
         if (is_string($code)) {
             // PDOException for example returns the code as string.
-            return 500;
+            return StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;
         }
 
         if ($code < 400) {
-            return 500;
+            return StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;
         }
 
         return array_key_exists($code, StatusCodeServiceInterface::STATUS_CODES)
             ? $code
-            : 500;
+            : StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;;
     }
 
     private function isDevelopment(): bool
