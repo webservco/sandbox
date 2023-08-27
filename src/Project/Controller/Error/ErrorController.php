@@ -87,7 +87,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
 
         return array_key_exists($code, StatusCodeServiceInterface::STATUS_CODES)
             ? $code
-            : StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;;
+            : StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;
     }
 
     private function isDevelopment(): bool
