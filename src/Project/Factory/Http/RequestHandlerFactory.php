@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Project\Factory\Middleware\ResourceMiddlewareFactory;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Http\Contract\Message\Request\RequestHandler\RequestHandlerFactoryInterface;
 use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptProcessor;
@@ -62,13 +63,19 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
         $stackHandler->addMiddleware($exceptionHandlerMiddleware);
 
         // Resource middleware; handles requests that are routed by the RouteMiddleware.
+        $stackHandler->addMiddleware($this->createResourceMiddleware());
+
+        return $stackHandler;
+    }
+
+    private function createResourceMiddleware(): MiddlewareInterface
+    {
         $resourceMiddlewareFactory = new ResourceMiddlewareFactory(
             $this->controllerInstantiator,
             $this->localDependencyContainer,
             $this->viewRendererResolver,
         );
-        $stackHandler->addMiddleware($resourceMiddlewareFactory->createResourceMiddleware($this->projectPath));
 
-        return $stackHandler;
+        return $resourceMiddlewareFactory->createResourceMiddleware($this->projectPath);
     }
 }
