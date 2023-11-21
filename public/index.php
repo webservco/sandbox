@@ -110,7 +110,7 @@ try {
 /**
  * Application.
  *
- * Not necessary to in the try block.
+ * Not necessary to be in the try block.
  * Exceptions are handled either in the application itself, or by the uncaught exception handler.
  */
 $applicationFactoryFactory = new ApplicationFactoryFactory(
