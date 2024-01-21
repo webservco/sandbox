@@ -2,7 +2,7 @@
 
 ## Setup
 
-- Clone project in custom folder, set custom git remote, etc;
+- Clone sandbox project in custom folder, set custom git remote, etc;
     - **TODO**: notes (check ws/component for example setup commands);
 
 ## Customize
@@ -18,7 +18,7 @@
 - `homepage`
 - `keywords`
 - `name`
-- `require` (removed unneeded)
+- `require` (remove unneeded)
 
 ### `mkdocs.yml`
 
