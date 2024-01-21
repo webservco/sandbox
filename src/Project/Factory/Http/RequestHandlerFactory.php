@@ -12,6 +12,7 @@ use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptProcessor;
 use WebServCo\Middleware\Service\Log\LoggerMiddleware;
 use WebServCo\Middleware\Service\ThreePart\RouteMiddleware;
 use WebServCo\Middleware\Service\ViewRenderer\ViewRendererSettingMiddleware;
+use WebServCo\Stuff\Contract\RouteInterface;
 
 /**
  * Request handler factory.
@@ -51,11 +52,19 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
         // ViewRenderer setting middleware.
         $stackHandler->addMiddleware(new ViewRendererSettingMiddleware(new ServerHeadersAcceptProcessor()));
 
-        // Route middleware; routes /api and /sandbox requests.
-        $stackHandler->addMiddleware(new RouteMiddleware('/', 'sandbox/test', ['api', 'sandbox']));
+        // Route middleware; routes requests.
+        $stackHandler->addMiddleware(
+            new RouteMiddleware('/', 'sandbox/test', ['api', 'sandbox', RouteInterface::ROUTE]),
+        );
+
+        $stackHandler->addMiddleware($this->createAuthenticationMiddleware());
 
         // Request logging middleware.
-        $stackHandler->addMiddleware(new LoggerMiddleware($this->logger));
+        $stackHandler->addMiddleware(
+            new LoggerMiddleware(
+                $this->applicationDependencyContainer->getServiceContainer()->getLogger('application'),
+            ),
+        );
 
         /**
          * Exception handler middleware (2).
@@ -72,7 +81,6 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
     {
         $resourceMiddlewareFactory = new ResourceMiddlewareFactory(
             $this->controllerInstantiator,
-            $this->localDependencyContainer,
             $this->viewRendererResolver,
         );
 

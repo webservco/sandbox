@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Project\Factory\Middleware\ExceptionHandlerMiddlewareFactory;
-use Psr\Log\LoggerInterface;
+use Project\Middleware\AuthenticationMiddleware;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
-use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
+use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
 use WebServCo\Exception\Contract\ExceptionHandlerInterface;
 use WebServCo\Http\Contract\Message\Request\RequestHandler\RequestHandlerFactoryInterface;
 use WebServCo\Http\Service\Message\Request\RequestHandler\StackHandler;
@@ -25,10 +25,9 @@ use const DIRECTORY_SEPARATOR;
 abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInterface
 {
     public function __construct(
+        protected ApplicationDependencyContainerInterface $applicationDependencyContainer,
         protected ControllerInstantiatorInterface $controllerInstantiator,
         private ExceptionHandlerInterface $exceptionHandler,
-        protected LocalDependencyContainerInterface $localDependencyContainer,
-        protected LoggerInterface $logger,
         protected string $projectPath,
         protected ViewRendererResolverInterface $viewRendererResolver,
     ) {
@@ -36,13 +35,21 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
         $this->projectPath = rtrim($this->projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
+    protected function createAuthenticationMiddleware(): AuthenticationMiddleware
+    {
+        return new AuthenticationMiddleware(
+            $this->applicationDependencyContainer->getDataExtractionContainer(),
+            $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
+            $this->applicationDependencyContainer->getServiceContainer()->getSessionService(),
+        );
+    }
+
     protected function createExceptionHandlerMiddlewareFactory(): ExceptionHandlerMiddlewareFactory
     {
         return new ExceptionHandlerMiddlewareFactory(
             $this->controllerInstantiator,
             $this->exceptionHandler,
-            $this->localDependencyContainer,
-            $this->logger,
+            $this->applicationDependencyContainer->getServiceContainer()->getLogger('application'),
             $this->viewRendererResolver,
         );
     }
@@ -54,8 +61,7 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
          */
         $stackHandlerFactory = new StackHandlerFactory(
             $this->controllerInstantiator,
-            $this->localDependencyContainer,
-            $this->logger,
+            $this->applicationDependencyContainer->getServiceContainer()->getLogger('application'),
             $this->viewRendererResolver,
         );
 

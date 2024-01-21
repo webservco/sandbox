@@ -8,7 +8,8 @@
     "autoload" : {
         "psr-4" : {
             "Project\\" : "src/Project/",
-            "Tests\\Unit\\" : "tests/Unit/"
+            "Tests\\Unit\\" : "tests/Unit/",
+            "WebServCo\\" : "src/WebServCo/"
         }
     },
     "config": {
@@ -25,23 +26,26 @@
     "license" : "MIT",
     "name" : "webservco/sandbox",
     "require": {
-        "php" : "^8.2",
+        "php" : "^8.3",
         "webservco/application-default": "^0",
         "webservco/application-runner": "^0",
         "webservco/configuration": "^0",
         "webservco/command": "^0",
         "webservco/controller": "^0",
+        "webservco/data": "^0",
         "webservco/database": "^0",
         "webservco/dependency-container": "^0",
         "webservco/emitter": "^0",
         "webservco/environment": "^0",
         "webservco/error": "^0",
         "webservco/exception": "^0",
+        "webservco/form": "^0",
         "webservco/http": "^0",
         "webservco/http-request-handler": "^0",
         "webservco/log": "^0",
         "webservco/middleware": "^0",
         "webservco/route": "^0",
+        "webservco/session": "^0",
         "webservco/stopwatch": "^0",
         "webservco/view": "^0"
     },

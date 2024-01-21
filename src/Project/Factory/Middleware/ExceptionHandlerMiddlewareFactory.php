@@ -7,7 +7,6 @@ namespace Project\Factory\Middleware;
 use Project\Controller\Error\ErrorController;
 use Psr\Log\LoggerInterface;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
-use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
 use WebServCo\Exception\Contract\ExceptionHandlerInterface;
 use WebServCo\Http\Service\Message\Request\RequestHandler\Exception\ExceptionRequestHandler;
 use WebServCo\Middleware\Service\Exception\ExceptionHandlerMiddleware;
@@ -19,7 +18,6 @@ final class ExceptionHandlerMiddlewareFactory
     public function __construct(
         private ControllerInstantiatorInterface $controllerInstantiator,
         private ExceptionHandlerInterface $exceptionHandler,
-        private LocalDependencyContainerInterface $localDependencyContainer,
         private LoggerInterface $logger,
         private ViewRendererResolverInterface $viewRendererResolver,
     ) {
@@ -31,7 +29,6 @@ final class ExceptionHandlerMiddlewareFactory
             $this->exceptionHandler,
             new ExceptionRequestHandler(
                 $this->controllerInstantiator,
-                $this->localDependencyContainer,
                 $this->logger,
                 $this->viewRendererResolver,
                 new RouteConfiguration(ErrorController::class),

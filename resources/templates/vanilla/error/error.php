@@ -8,7 +8,7 @@ use Project\View\Error\ErrorView;
 assert(isset($view) && $view instanceof ErrorView);
 ?>
 <div>
-    <h2>Custom error page.</h2>
+    <h2>Error</h2>
 
     <p>Code: <?=$view->code?></p>
     <p>Message: <?=$view->escape($view->message)?></p>

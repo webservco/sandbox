@@ -25,9 +25,14 @@
 - **next**: create service(s) to retrieve:
     - item
     - list of items
-- **then** figure out how to inject the service(s) in `src/Project/Controller/Service/Hoarder/ItemController.php`
+- **then** figure out how to inject the service(s) in `src/Project/Controller/Service/Stuff/ItemController.php`
 
 ---
+
+## Temp: Add a new module (section)
+
+- create: `src/Project/Instantiator/Controller/`
+- (if special dependencies): create: `src/Project/Factory/Container/`
 
 ## Temp: Add a new page in an existing section.
 

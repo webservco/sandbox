@@ -6,12 +6,14 @@ namespace Project\Factory\Middleware;
 
 use Project\RequestHandler\ThreePart\ApiRequestHandler;
 use Project\RequestHandler\ThreePart\SandboxRequestHandler;
+use Project\RequestHandler\ThreePart\StuffRequestHandler;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Configuration\Service\PHPConfigurationLoader;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
-use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
 use WebServCo\Middleware\Service\ThreePart\ResourceMiddleware;
 use WebServCo\Route\Service\ControllerView\RoutesConfigurationLoader;
+use WebServCo\Stuff\Contract\RouteInterface;
 use WebServCo\View\Contract\ViewRendererResolverInterface;
 
 use function rtrim;
@@ -23,7 +25,6 @@ final class ResourceMiddlewareFactory
 {
     public function __construct(
         private ControllerInstantiatorInterface $controllerInstantiator,
-        private LocalDependencyContainerInterface $localDependencyContainer,
         private ViewRendererResolverInterface $viewRendererResolver,
     ) {
     }
@@ -34,12 +35,48 @@ final class ResourceMiddlewareFactory
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         return new ResourceMiddleware(
-            // List of requests handlers for this middleware.
+        // List of requests handlers for this middleware.
             $this->getResouceMiddlewareHandlers(
                 $this->controllerInstantiator,
                 $projectPath,
                 $this->viewRendererResolver,
             ),
+        );
+    }
+
+    private function createApiRequestHandler(
+        ControllerInstantiatorInterface $controllerInstantiator,
+        string $projectPath,
+        ViewRendererResolverInterface $viewRendererResolver,
+    ): RequestHandlerInterface {
+        return new ApiRequestHandler(
+            $controllerInstantiator,
+            $viewRendererResolver,
+            $this->getRoutesConfiguration($projectPath, 'API'),
+        );
+    }
+
+    private function createSandboxRequestHandler(
+        ControllerInstantiatorInterface $controllerInstantiator,
+        string $projectPath,
+        ViewRendererResolverInterface $viewRendererResolver,
+    ): RequestHandlerInterface {
+        return new SandboxRequestHandler(
+            $controllerInstantiator,
+            $viewRendererResolver,
+            $this->getRoutesConfiguration($projectPath, 'Sandbox'),
+        );
+    }
+
+    private function createStuffRequestHandler(
+        ControllerInstantiatorInterface $controllerInstantiator,
+        string $projectPath,
+        ViewRendererResolverInterface $viewRendererResolver,
+    ): RequestHandlerInterface {
+        return new StuffRequestHandler(
+            $controllerInstantiator,
+            $viewRendererResolver,
+            $this->getRoutesConfiguration($projectPath, 'Stuff'),
         );
     }
 
@@ -65,18 +102,18 @@ final class ResourceMiddlewareFactory
 
         return [
             // Request handler for /api requests.
-            'api' => new ApiRequestHandler(
-                $controllerInstantiator,
-                $this->localDependencyContainer,
-                $viewRendererResolver,
-                $this->getRoutesConfiguration($projectPath, 'API'),
-            ),
+            'api' => $this->createApiRequestHandler($controllerInstantiator, $projectPath, $viewRendererResolver),
             // Request handler for /sandbox requests.
-            'sandbox' => new SandboxRequestHandler(
+            'sandbox' => $this->createSandboxRequestHandler(
                 $controllerInstantiator,
-                $this->localDependencyContainer,
+                $projectPath,
                 $viewRendererResolver,
-                $this->getRoutesConfiguration($projectPath, 'Sandbox'),
+            ),
+            // Request handler for /stuff requests.
+            RouteInterface::ROUTE => $this->createStuffRequestHandler(
+                $controllerInstantiator,
+                $projectPath,
+                $viewRendererResolver,
             ),
         ];
     }

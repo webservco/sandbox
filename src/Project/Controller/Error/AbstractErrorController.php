@@ -17,6 +17,6 @@ abstract class AbstractErrorController extends AbstractController
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
     ): ViewContainerInterface {
-        return $this->createMainViewContainerWithTemplate($request, 'main/main.error.default', $viewContainer);
+        return $this->createMainViewContainerWithTemplate($request, 'main/main.error.pico', $viewContainer);
     }
 }

@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Project\Factory\Application;
 
-use Project\Factory\Container\LocalDependencyContainerFactory;
 use Project\Factory\Http\RequestHandlerFactory;
 use Project\Instantiator\Controller\SpecificModuleControllerInstantiator;
 use WebServCo\Application\Factory\ApplicationRunnerFactory;
 use WebServCo\Application\Factory\DefaultServerApplicationFactory;
 use WebServCo\Controller\Factory\ControllerInstantiatorFactory;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
-use WebServCo\DependencyContainer\Contract\LocalDependencyContainerFactoryInterface;
 use WebServCo\Error\Factory\DefaultErrorHandlingServiceFactory;
 use WebServCo\Exception\Contract\ExceptionHandlerInterface;
 use WebServCo\Http\Factory\Message\Request\Server\ServerRequestFromServerDataFactory;
@@ -35,17 +33,15 @@ final class ApplicationFactoryFactory
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         return new DefaultServerApplicationFactory(
-            $this->createApplicationRunnerFactory(new LocalDependencyContainerFactory(), $projectPath),
+            $this->createApplicationRunnerFactory($projectPath),
             new DefaultErrorHandlingServiceFactory(),
             $this->applicationDependencyContainer->getServiceContainer(),
             new ServerRequestFromServerDataFactory(),
         );
     }
 
-    private function createApplicationRunnerFactory(
-        LocalDependencyContainerFactoryInterface $localDependencyContainerFactory,
-        string $projectPath,
-    ): ApplicationRunnerFactory {
+    private function createApplicationRunnerFactory(string $projectPath,): ApplicationRunnerFactory
+    {
         // Make sure path contains trailing slash (trim + add back).
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
@@ -53,13 +49,12 @@ final class ApplicationFactoryFactory
 
         return new ApplicationRunnerFactory(
             new RequestHandlerFactory(
+                $this->applicationDependencyContainer,
                 $controllerInstantiatorFactory->createControllerInstantiator(
                     $this->applicationDependencyContainer,
                     new SpecificModuleControllerInstantiator(),
                 ),
                 $this->exceptionHandler,
-                $localDependencyContainerFactory->createLocalDependencyContainer(),
-                $this->applicationDependencyContainer->getServiceContainer()->getLogger('application'),
                 $projectPath,
                 new ViewRendererResolver(),
             ),

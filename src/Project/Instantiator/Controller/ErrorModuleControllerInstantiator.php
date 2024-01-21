@@ -6,11 +6,11 @@ namespace Project\Instantiator\Controller;
 
 use LogicException;
 use Project\Contract\Controller\ErrorControllerInterface;
+use Project\Factory\Container\LocalDependencyContainerFactory;
 use WebServCo\Controller\Contract\ControllerInterface;
 use WebServCo\Controller\Contract\ModuleControllerInstantiatorInterface;
 use WebServCo\Controller\Service\AbstractModuleControllerInstantiator;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
-use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
 use WebServCo\Reflection\Contract\ReflectionServiceInterface;
 use WebServCo\View\Contract\ViewServicesContainerInterface;
 
@@ -20,14 +20,16 @@ final class ErrorModuleControllerInstantiator extends AbstractModuleControllerIn
     public function instantiateModuleController(
         ApplicationDependencyContainerInterface $applicationDependencyContainer,
         string $controllerClassName,
-        LocalDependencyContainerInterface $localDependencyContainer,
         ReflectionServiceInterface $reflectionService,
         ViewServicesContainerInterface $viewServicesContainer,
     ): ControllerInterface {
-        $object = parent::instantiateModuleController(
+
+        $localDependencyContainerFactory = new LocalDependencyContainerFactory();
+
+        $object = $this->instantiateModuleControllerWithLocalDependencyContainer(
             $applicationDependencyContainer,
             $controllerClassName,
-            $localDependencyContainer,
+            $localDependencyContainerFactory->createLocalDependencyContainer(),
             $reflectionService,
             $viewServicesContainer,
         );
