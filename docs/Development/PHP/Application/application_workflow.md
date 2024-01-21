@@ -20,29 +20,25 @@
 
 ---
 
-## Work
-
-- **next**: create service(s) to retrieve:
-    - item
-    - list of items
-- **then** figure out how to inject the service(s) in `src/Project/Controller/Service/Stuff/ItemController.php`
-
----
-
-## Temp: Add a new module (section)
-
-- create: `src/Project/Instantiator/Controller/`
-- (if special dependencies): create: `src/Project/Factory/Container/`
-- TODO: other steps
-
-## Temp: Add command
+### Create a new module (Command)
 
 - create: `src/Project/Command/Sandbox/`
 - create: `src/Project/Factory/Command/`
 - create: `bin/`
 
-## Temp: Add a new page in an existing section.
+---
 
+## Create a new module (Web)
+
+- create: `src/Project/Instantiator/Controller/`
+- (if special dependencies): create: `src/Project/Factory/Container/`
+- (**TODO**: add other steps)
+
+---
+
+## Add a new page in an existing section.
+
+- (**TODO**: check)
 - define what you want to display: create view (implements ViewInterface)
 - create template: display view
 - (if working with storage): add interface method(s)
@@ -52,8 +48,9 @@
 
 ---
 
-## Temp: From workflow
+## Form workflow
 
+- (**TODO**: check)
 - (if need custom method(s)) create from factory interface (extends FormFactoryInterface)
 - create form factory (FormFactoryInterface)
 - add/update FormFactoryContainerInterface
@@ -64,6 +61,3 @@
 
 ---
 
-## TODO: add a new section (abstract stuff, routing, storage, etc)
-
-- example: create a blog
