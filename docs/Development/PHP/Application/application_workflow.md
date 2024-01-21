@@ -33,6 +33,13 @@
 
 - create: `src/Project/Instantiator/Controller/`
 - (if special dependencies): create: `src/Project/Factory/Container/`
+- TODO: other steps
+
+## Temp: Add command
+
+- create: `src/Project/Command/Sandbox/`
+- create: `src/Project/Factory/Command/`
+- create: `bin/`
 
 ## Temp: Add a new page in an existing section.
 
