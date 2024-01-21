@@ -12,12 +12,9 @@
         <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
-
-        <script src="../../../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../../../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
     </head>
 
     <body>
@@ -147,7 +144,21 @@
 </li>
             
 <li>
+    <a href="../application_todo/" class="dropdown-item">Application: TODO</a>
+</li>
+            
+<li>
     <a href="../application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Sandbox</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Sandbox/" class="dropdown-item">PHP: Sandbox: index</a>
 </li>
     </ul>
   </li>
@@ -225,7 +236,7 @@
 <h1 id="php-application-setup">PHP: Application setup</h1>
 <h2 id="setup">Setup</h2>
 <ul>
-<li>Clone project in custom folder, set custom git remote, etc;<ul>
+<li>Clone sandbox project in custom folder, set custom git remote, etc;<ul>
 <li><strong>TODO</strong>: notes (check ws/component for example setup commands);</li>
 </ul>
 </li>
@@ -242,7 +253,7 @@
 <li><code>homepage</code></li>
 <li><code>keywords</code></li>
 <li><code>name</code></li>
-<li><code>require</code> (removed unneeded)</li>
+<li><code>require</code> (remove unneeded)</li>
 </ul>
 <h3 id="mkdocsyml"><code>mkdocs.yml</code></h3>
 <ul>
@@ -259,12 +270,14 @@
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
+        <script src="../../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
         <script>
             var base_url = "../../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../../../../js/base.js" defer></script>
-        <script src="../../../../search/main.js" defer></script>
+        <script src="../../../../js/base.js"></script>
+        <script src="../../../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

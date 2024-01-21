@@ -12,12 +12,9 @@
         <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
-
-        <script src="../../../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../../../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
     </head>
 
     <body>
@@ -147,7 +144,21 @@
 </li>
             
 <li>
+    <a href="../../../PHP/Application/application_todo/" class="dropdown-item">Application: TODO</a>
+</li>
+            
+<li>
     <a href="../../../PHP/Application/application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Sandbox</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../PHP/Sandbox/" class="dropdown-item">PHP: Sandbox: index</a>
 </li>
     </ul>
   </li>
@@ -242,29 +253,35 @@ svn export https://github.com/webservco/sandbox.git/trunk/.docker
 <h3 id="1-copy-snapshot-mode">1) Copy (snapshot) mode</h3>
 <ul>
 <li>Read comments / edit to customize: <code>.docker/config/php82-cli-copy/Dockerfile</code></li>
-<li>Use case: check project in isolation, without adding the vendor dir on local (avoid PHAN errors);</li>
+<li>Use case: check project in isolation, without adding the vendor dir on local (avoid PHAN errors when project is used as a dependency in another project);</li>
 <li>Files are copied into the container at build time (not updated in real-time);</li>
 <li>Working on a "snapshot" done at the time of the build</li>
 <li>Installs composer dependencies</li>
 <li>Runs all checks by default</li>
 </ul>
 <pre><code class="language-sh">
-# Build:
+# (Optional) Create temporary directory for special project dependencies (local).
 BUILD_TEMP_DIR='.docker/assets/temp/';
-# Create temporary directory for special project dependencies (local).
 mkdir --parents ${BUILD_TEMP_DIR}p/parcelvalue-v3/framework/
 # Copy files into the temporary directory (local).
 cp --recursive ~/p/parcelvalue-v3/framework/ ${BUILD_TEMP_DIR}p/parcelvalue-v3/
+
 # Build.
-docker build -t lhost-v3-framework-copy -f .docker/config/php82-cli-copy/Dockerfile .
-# Cleanup temporary directory.
+DOCKER_IMAGE_TAG='lhost-v3-framework-copy';
+DOCKER_CONTAINER_NAME='lhost-v3-framework-copy-container';
+docker build --tag ${DOCKER_IMAGE_TAG} -f .docker/config/php82-cli-copy/Dockerfile .
+
+# (Optional) Cleanup temporary directory.
 rm -rf ${BUILD_TEMP_DIR}*
 
 # Run: default command: run all checks
-docker run -it --rm --name lhost-v3-framework-running lhost-v3-framework-copy
+docker run -it --rm --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG}
 
 # Run: custom command (default command is not executed)
-docker run -it --rm --name lhost-v3-framework-running lhost-v3-framework-copy /bin/bash -c &quot;ls -lah vendor&quot;
+docker run -it --rm --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG} /bin/bash -c &quot;ls -lah vendor&quot;
+
+# Cleanup
+docker image rm ${DOCKER_IMAGE_TAG}
 </code></pre>
 <h3 id="2-mount-real-time-mode">2) Mount (real-time) mode</h3>
 <ul>
@@ -304,12 +321,14 @@ lhost-v3-framework-mount \
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
+        <script src="../../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
         <script>
             var base_url = "../../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../../../../js/base.js" defer></script>
-        <script src="../../../../search/main.js" defer></script>
+        <script src="../../../../js/base.js"></script>
+        <script src="../../../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

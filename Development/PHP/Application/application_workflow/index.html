@@ -12,12 +12,9 @@
         <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
-
-        <script src="../../../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../../../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
     </head>
 
     <body>
@@ -147,7 +144,21 @@
 </li>
             
 <li>
+    <a href="../application_todo/" class="dropdown-item">Application: TODO</a>
+</li>
+            
+<li>
     <a href="./" class="dropdown-item active">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Sandbox</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Sandbox/" class="dropdown-item">PHP: Sandbox: index</a>
 </li>
     </ul>
   </li>
@@ -178,12 +189,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../application_structure/" class="nav-link">
+                                <a rel="prev" href="../application_todo/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../../../Tools/Documentation/" class="nav-link">
+                                <a rel="next" href="../../Sandbox/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -211,7 +222,15 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#work" class="nav-link">Work</a>
+            <li class="nav-item" data-level="2"><a href="#create-a-new-module-web" class="nav-link">Create a new module (Web)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#add-a-new-page-in-an-existing-section" class="nav-link">Add a new page in an existing section.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#form-workflow" class="nav-link">Form workflow</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -248,15 +267,44 @@
 </li>
 <li><code>src/Project/Instantiator/Controller/SpecificModuleControllerInstantiator.php</code> edit</li>
 </ul>
-<h2 id="work">Work</h2>
+<hr />
+<h3 id="create-a-new-module-command">Create a new module (Command)</h3>
 <ul>
-<li><strong>next</strong>: create service(s) to retrieve:<ul>
-<li>item</li>
-<li>list of items</li>
+<li>create: <code>src/Project/Command/Sandbox/</code></li>
+<li>create: <code>src/Project/Factory/Command/</code></li>
+<li>create: <code>bin/</code></li>
 </ul>
-</li>
-<li><strong>then</strong> figure out how to inject the service(s) in <code>src/Project/Controller/Service/Hoarder/ItemController.php</code></li>
-</ul></div>
+<hr />
+<h2 id="create-a-new-module-web">Create a new module (Web)</h2>
+<ul>
+<li>create: <code>src/Project/Instantiator/Controller/</code></li>
+<li>(if special dependencies): create: <code>src/Project/Factory/Container/</code></li>
+<li>(<strong>TODO</strong>: add other steps)</li>
+</ul>
+<hr />
+<h2 id="add-a-new-page-in-an-existing-section">Add a new page in an existing section.</h2>
+<ul>
+<li>(<strong>TODO</strong>: check)</li>
+<li>define what you want to display: create view (implements ViewInterface)</li>
+<li>create template: display view</li>
+<li>(if working with storage): add interface method(s)</li>
+<li>(if working with storage): add storage method(s)</li>
+<li>create controller</li>
+<li>add route (config dir)</li>
+</ul>
+<hr />
+<h2 id="form-workflow">Form workflow</h2>
+<ul>
+<li>(<strong>TODO</strong>: check)</li>
+<li>(if need custom method(s)) create from factory interface (extends FormFactoryInterface)</li>
+<li>create form factory (FormFactoryInterface)</li>
+<li>add/update FormFactoryContainerInterface</li>
+<li>add/update FormFactoryContainer</li>
+<li>controller: createAndHandleForm</li>
+<li>controller: handle form sent/valid</li>
+<li>view: add form</li>
+</ul>
+<hr /></div>
             </div>
         </div>
 
@@ -264,12 +312,14 @@
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
+        <script src="../../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
         <script>
             var base_url = "../../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../../../../js/base.js" defer></script>
-        <script src="../../../../search/main.js" defer></script>
+        <script src="../../../../js/base.js"></script>
+        <script src="../../../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
