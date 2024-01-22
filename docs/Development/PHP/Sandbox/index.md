@@ -10,6 +10,7 @@
 ### Test module
 
 - Web: https://sandbox.ddev.site/sandbox/test
+- Web: https://sandbox.ddev.site/sandbox/test/{SOME_STRING}
 - CLI: `ddev exec bin/sandbox-test`
 
 ### Stuff module
