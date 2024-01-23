@@ -40,7 +40,7 @@ final class ApplicationFactoryFactory
         );
     }
 
-    private function createApplicationRunnerFactory(string $projectPath,): ApplicationRunnerFactory
+    private function createApplicationRunnerFactory(string $projectPath): ApplicationRunnerFactory
     {
         // Make sure path contains trailing slash (trim + add back).
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;

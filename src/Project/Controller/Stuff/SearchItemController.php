@@ -43,7 +43,7 @@ final class SearchItemController extends AbstractStuffController implements Stuf
         return $form;
     }
 
-    private function createViewContainer(FormInterface $form, ServerRequestInterface $request,): ViewContainerInterface
+    private function createViewContainer(FormInterface $form, ServerRequestInterface $request): ViewContainerInterface
     {
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new SearchItemView(

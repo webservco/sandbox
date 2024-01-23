@@ -16,7 +16,7 @@ final class TestCommand extends AbstractCommand implements CommandInterface
 {
     private const PROCESSING_LAP_NAME = 'sandbox-test';
 
-    public function __construct(private LapTimerInterface $lapTimer, private OutputInterface $output,)
+    public function __construct(private LapTimerInterface $lapTimer, private OutputInterface $output)
     {
     }
 

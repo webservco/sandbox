@@ -14,7 +14,7 @@ use WebServCo\View\Contract\ViewInterface;
  */
 final class AuthenticationView extends AbstractView implements ViewInterface
 {
-    public function __construct(public readonly CommonView $commonView, public readonly FormInterface $form,)
+    public function __construct(public readonly CommonView $commonView, public readonly FormInterface $form)
     {
     }
 }
