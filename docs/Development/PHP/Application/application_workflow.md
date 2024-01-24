@@ -22,7 +22,7 @@
 
 ### Create a new module (Command)
 
-- create: `src/Project/Command/Sandbox/`
+- create: `src/Project/Command/`
 - create: `src/Project/Factory/Command/`
 - create: `bin/`
 
