@@ -22,9 +22,9 @@
 
 ### Create a new module (Command)
 
-- create: `src/Project/Command/`
-- create: `src/Project/Factory/Command/`
-- create: `bin/`
+- create command: `src/Project/Command/`
+- create command factory: `src/Project/Factory/Command/`
+- create command runner: `bin/`
 
 ---
 
