@@ -10,3 +10,4 @@
 - [Project setup](ddev_setup.md)
 - [Usage](ddev_usage.md)
 - [Misc](ddev_misc.md)
+- [SQLFluff](ddev_sqlfluff.md)

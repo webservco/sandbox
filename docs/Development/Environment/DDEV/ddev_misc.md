@@ -2,7 +2,7 @@
 
 ## Upgrading database
 
-Example: upgrade MariaDB form 10.4 to 10.8
+Example: upgrade MariaDB from 10.4 to 10.8
 
 ### The easy way
 

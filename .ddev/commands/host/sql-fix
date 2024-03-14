@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Description: Fix SQL files using SQLFluff
+## Usage: sql-fix
+## Example: ddev sql-fix
+
+ddev exec sqlfluff fix --dialect mysql /var/www/html/resources/storage/
