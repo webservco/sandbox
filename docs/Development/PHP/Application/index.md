@@ -4,12 +4,14 @@
 
 ### Apache
 
-- Application is setup to use Apache web server (uses .htaccess file for front controller management).
+- Application is set up to use Apache web server (uses .htaccess file for front controller management).
 
 ## Articles
 
 - [Application setup](application_setup.md)
 - [Project structure](application_structure.md)
+- [Application workflow](application_workflow.md)
+- [Application TODO](application_todo.md)
 
 ## Test
 
