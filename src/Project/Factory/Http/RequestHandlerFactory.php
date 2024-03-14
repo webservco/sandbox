@@ -66,6 +66,9 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
             ),
         );
 
+        // API Authentication middleware
+        $stackHandler->addMiddleware($this->createApiAuthenticationMiddleware());
+
         /**
          * Exception handler middleware (2).
          */

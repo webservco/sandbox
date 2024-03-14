@@ -56,8 +56,46 @@
 - add/update FormFactoryContainerInterface
 - add/update FormFactoryContainer
 - controller: createAndHandleForm
-- controller: handle form sent/valid
 - view: add form
 
 ---
 
+## API workflow
+
+### Authentication
+
+- `src/Project/Middleware/ApiAuthenticationMiddleware.php`
+- `src/Project/Factory/Http/AbstractRequestHandlerFactory.php`.`createApiAuthenticationMiddleware`
+- `src/Project/Factory/Http/RequestHandlerFactory.php`.`createRequestHandler`.`addMiddleware`
+- 
+
+### Data Transfer Object
+
+- `src/Project/DataTransfer/API/APIResult.php`
+
+### View
+
+- `src/Project/View/API/APIView.php`
+
+### Templates
+
+- `resources/templates/vanilla/main/main.api.default.php`
+- `resources/templates/vanilla/api/default.php`
+
+### Controller
+
+- `src/Project/Controller/API/AbstractAPIController.php`
+- `src/Project/Controller/API/APIController.php`
+
+### Routes configuration
+
+- `config/API/Routes.php`
+
+### Middleware
+
+- `src/Project/RequestHandler/ThreePart/ApiRequestHandler.php`
+- `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php`
+    - `createApiRequestHandler`
+    - `getResouceMiddlewareHandlers`
+
+---

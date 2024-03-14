@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Project\Factory\Middleware\ExceptionHandlerMiddlewareFactory;
+use Project\Middleware\ApiAuthenticationMiddleware;
 use Project\Middleware\AuthenticationMiddleware;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
@@ -33,6 +34,14 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
     ) {
         // Make sure path contains trailing slash (trim + add back).
         $this->projectPath = rtrim($this->projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
+
+    protected function createApiAuthenticationMiddleware(): ApiAuthenticationMiddleware
+    {
+        return new ApiAuthenticationMiddleware(
+            $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
+            $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
+        );
     }
 
     protected function createAuthenticationMiddleware(): AuthenticationMiddleware

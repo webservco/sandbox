@@ -4,6 +4,9 @@
 
 ### API module
 
+- make sure to set `Authorization` header ("Bearer `API_KEY`");
+- use `API_KEY` from configuration file;
+
 - https://sandbox.ddev.site/api/about
 - https://sandbox.ddev.site/api/version
 
