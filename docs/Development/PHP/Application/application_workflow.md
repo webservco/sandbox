@@ -20,6 +20,21 @@
 
 ---
 
+### Basic application structure
+
+- (TODO)
+- `bin` (if using `Command`);
+
+- `public`
+  - `.htaccess`
+  - `index.php`
+- `resources/templates`;
+- `src/Project`;
+
+- `config`;
+
+---
+
 ### Create a new module (Command)
 
 - create command: `src/Project/Command/`
