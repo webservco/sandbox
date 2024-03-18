@@ -6,7 +6,7 @@ use Project\Controller\API\APIController;
 
 return [
     // Use general API Controller and View factory.
-    'about' => APIController::class,
+    'v1/about' => APIController::class,
     // Use general API Controller and View factory.
-    'version' => APIController::class,
+    'v1/version' => APIController::class,
 ];

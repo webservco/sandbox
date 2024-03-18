@@ -26,6 +26,8 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
      *
      * "A request handler is an individual component that processes a request
      * and produces a response, as defined by PSR-7."
+     *
+     * @phpcs:disable SlevomatCodingStandard.Functions.FunctionLength.FunctionLength
      */
     public function createRequestHandler(): RequestHandlerInterface
     {
@@ -39,7 +41,7 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
          * Will basically only handle application domain exceptions.
          * Two instances:
          * - one as early as possible to handle most exceptions possible.
-         * - one as lates as possible to benefit from most functionality.
+         * - one as late as possible to benefit from most functionality.
          * Any exceptions thrown before this will be handled by the unhandled exception handler (if implemented).
          * Functionality should be the same as the unhandled exception handler, except for the output;
          * - unhandled exception handler would probably return a very basic output.
@@ -54,7 +56,12 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
 
         // Route middleware; routes requests.
         $stackHandler->addMiddleware(
-            new RouteMiddleware('/', 'sandbox/test', ['api', 'sandbox', RouteInterface::ROUTE]),
+            new RouteMiddleware(
+                '/',
+                'sandbox/test',
+                // These are `RoutePartsInterface::ROUTE_PART_1` values (only use the part 1 of the processed route).
+                ['api', 'sandbox', RouteInterface::ROUTE],
+            ),
         );
 
         $stackHandler->addMiddleware($this->createAuthenticationMiddleware());
@@ -79,6 +86,7 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
 
         return $stackHandler;
     }
+    /** @phpcs:enable */
 
     private function createResourceMiddleware(): MiddlewareInterface
     {

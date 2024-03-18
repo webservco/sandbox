@@ -28,11 +28,11 @@ curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/sandbox/
 
 # cURL  - API test
 # OK
-curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/api/version
+curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/api/v1/version
 # Error "Please use the appropriate "Accept" headers in order to use the API."
-curl --header "Accept: text/html" -w "\n" --verbose https://sandbox.ddev.site/api/version
+curl --header "Accept: text/html" -w "\n" --verbose https://sandbox.ddev.site/api/v1/version
 # OK
-curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/api/version
+curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/api/v1/version
 
 ###
 
@@ -67,8 +67,8 @@ clear && ddev exec php -d max_execution_time=1 public/index.php arg1 2 3.5 null
 
 ###
 
-# GET about/version
-GET https://sandbox.ddev.site/api/version
+# GET api/v1/version
+GET https://sandbox.ddev.site/api/v1/version
 
 ###
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Project\RequestHandler\ThreePart;
 
 use Psr\Http\Server\RequestHandlerInterface;
-use WebServCo\Http\Service\Message\Request\RequestHandler\ThreePart\AbstractThreePartRequestHandler;
+use WebServCo\Http\Service\Message\Request\RequestHandler\ThreePart\AbstractApiThreePartRequestHandler;
 use WebServCo\View\Contract\HTMLRendererInterface;
 use WebServCo\View\Contract\JSONRendererInterface;
 use WebServCo\View\Contract\ViewRendererListInterface;
@@ -15,7 +15,7 @@ use WebServCo\View\Service\JSONRenderer;
 /**
  * API request handler.
  */
-final class ApiRequestHandler extends AbstractThreePartRequestHandler implements
+final class ApiRequestHandler extends AbstractApiThreePartRequestHandler implements
     RequestHandlerInterface,
     ViewRendererListInterface
 {

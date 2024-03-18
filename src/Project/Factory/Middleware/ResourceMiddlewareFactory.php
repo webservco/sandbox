@@ -100,6 +100,7 @@ final class ResourceMiddlewareFactory
         // Make sure path contains trailing slash (trim + add back).
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
+        // These are `RoutePartsInterface::ROUTE_PART_1` values (only use the part 1 of the processed route).
         return [
             // Request handler for /api requests.
             'api' => $this->createApiRequestHandler($controllerInstantiator, $projectPath, $viewRendererResolver),

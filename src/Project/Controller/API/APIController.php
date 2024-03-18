@@ -41,12 +41,9 @@ final class APIController extends AbstractAPIController implements APIController
                     ->getStrictDataExtractionService()->getNullableString(
                         $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
                     ),
-                    3,
                 ),
-                $this->applicationDependencyContainer->getDataExtractionContainer()
-                    ->getStrictDataExtractionService()->getNullableString(
-                        $request->getAttribute(RoutePartsInterface::ROUTE_PART_2, null),
-                    ),
+                $this->getCurrentRoute($request),
+                $this->getApiVersionString(),
             ),
             'api/default',
         );
