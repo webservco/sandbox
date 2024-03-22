@@ -7,10 +7,10 @@ namespace Project\RequestHandler\ThreePart;
 use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Http\Service\Message\Request\RequestHandler\ThreePart\AbstractApiThreePartRequestHandler;
 use WebServCo\View\Contract\HTMLRendererInterface;
-use WebServCo\View\Contract\JSONRendererInterface;
+use WebServCo\View\Contract\JSONAPIRendererInterface;
 use WebServCo\View\Contract\ViewRendererListInterface;
 use WebServCo\View\Service\HTMLRenderer;
-use WebServCo\View\Service\JSONRenderer;
+use WebServCo\View\Service\JSONAPIRenderer;
 
 /**
  * API request handler.
@@ -26,7 +26,7 @@ final class ApiRequestHandler extends AbstractApiThreePartRequestHandler impleme
     {
         // @phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
         return [
-            JSONRendererInterface::class => JSONRenderer::class,
+            JSONAPIRendererInterface::class => JSONAPIRenderer::class,
             // Provide also a fallback HTML renderer to show a nice message if accessed via a browser
             HTMLRendererInterface::class => HTMLRenderer::class,
         ];

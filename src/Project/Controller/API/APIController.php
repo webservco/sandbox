@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Project\Controller\API;
 
 use Project\Contract\Controller\APIControllerInterface;
-use Project\DataTransfer\API\APIResult;
-use Project\View\API\APIView;
-use Psr\Http\Message\ResponseInterface;
+use Project\DataTransfer\API\Document\ExampleData;
+use Project\DataTransfer\API\Document\ExampleMeta;
+use Project\View\API\ItemView;
 use Psr\Http\Message\ServerRequestInterface;
+use WebServCo\JSONAPI\DataTransfer\Document\Jsonapi;
 use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
@@ -17,33 +18,27 @@ use WebServCo\View\Contract\ViewContainerInterface;
  */
 final class APIController extends AbstractAPIController implements APIControllerInterface
 {
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    protected function createViewContainer(ServerRequestInterface $request, string $userId): ViewContainerInterface
     {
-        // Data processing would go here (use services).
-
-        // Create view.
-        $viewContainer = $this->createViewContainer($request);
-
-        // Return response.
-        return $this->createResponse($request, $viewContainer);
-    }
-
-    private function createViewContainer(ServerRequestInterface $request): ViewContainerInterface
-    {
-       /**
+        /**
          * Do not simply assume a JSONRendererInterface will be used / enforced.
          * Set a fallback template (could contain for example a general message).
          */
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
-            new APIView(
-                new APIResult(
+            new ItemView(
+                new Jsonapi('1.1'),
+                new ExampleData(
                     $this->applicationDependencyContainer->getDataExtractionContainer()
-                    ->getStrictDataExtractionService()->getNullableString(
-                        $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
-                    ),
+                        ->getStrictDataExtractionService()->getNullableString(
+                            $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
+                        ),
+                    $userId,
                 ),
-                $this->getCurrentRoute($request),
-                $this->getApiVersionString(),
+                null,
+                new ExampleMeta(
+                    $this->getCurrentRoute($request),
+                    $this->getApiVersionString(),
+                ),
             ),
             'api/default',
         );

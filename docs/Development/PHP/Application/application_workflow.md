@@ -82,15 +82,25 @@
 - `src/Project/Middleware/ApiAuthenticationMiddleware.php`
 - `src/Project/Factory/Http/AbstractRequestHandlerFactory.php`.`createApiAuthenticationMiddleware`
 - `src/Project/Factory/Http/RequestHandlerFactory.php`.`createRequestHandler`.`addMiddleware`
-- 
 
-### Data Transfer Object
+### Configuration
 
-- `src/Project/DataTransfer/API/APIResult.php`
+- `config/`
 
-### View
+### Container
 
-- `src/Project/View/API/APIView.php`
+- `src/Project/Contract/Container/API/`
+- `src/Project/Container/API/`
+- `src/Project/Factory/Container/APILocalDependencyContainerFactory.php`
+- `src/Project/Instantiator/Controller/APIModuleControllerInstantiator.php`
+
+### Data Transfer Objects
+
+- `src/Project/DataTransfer/API/`
+
+### Views
+
+- `src/Project/View/API/`
 
 ### Templates
 

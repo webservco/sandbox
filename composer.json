@@ -42,6 +42,8 @@
         "webservco/form": "^0",
         "webservco/http": "^0",
         "webservco/http-request-handler": "^0",
+        "webservco/jsonapi": "^0",
+        "webservco/jwt": "^0",
         "webservco/log": "^0",
         "webservco/middleware": "^0",
         "webservco/route": "^0",

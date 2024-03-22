@@ -6,7 +6,7 @@ namespace Project\Instantiator\Controller;
 
 use LogicException;
 use Project\Contract\Controller\APIControllerInterface;
-use Project\Factory\Container\LocalDependencyContainerFactory;
+use Project\Factory\Container\APILocalDependencyContainerFactory;
 use WebServCo\Controller\Contract\ControllerInterface;
 use WebServCo\Controller\Contract\ModuleControllerInstantiatorInterface;
 use WebServCo\Controller\Service\AbstractModuleControllerInstantiator;
@@ -23,7 +23,7 @@ final class APIModuleControllerInstantiator extends AbstractModuleControllerInst
         ReflectionServiceInterface $reflectionService,
         ViewServicesContainerInterface $viewServicesContainer,
     ): ControllerInterface {
-        $localDependencyContainerFactory = new LocalDependencyContainerFactory();
+        $localDependencyContainerFactory = new APILocalDependencyContainerFactory();
 
         $object = $this->instantiateModuleControllerWithLocalDependencyContainer(
             $applicationDependencyContainer,

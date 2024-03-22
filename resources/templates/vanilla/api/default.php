@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Project\View\API\APIView;
+use Project\View\API\ItemView;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
-assert(isset($view) && $view instanceof APIView);
+assert(isset($view) && $view instanceof ItemView);
 
 /**
  * No content, API only uses the main template;

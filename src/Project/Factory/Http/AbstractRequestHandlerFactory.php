@@ -12,6 +12,7 @@ use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterfa
 use WebServCo\Exception\Contract\ExceptionHandlerInterface;
 use WebServCo\Http\Contract\Message\Request\RequestHandler\RequestHandlerFactoryInterface;
 use WebServCo\Http\Service\Message\Request\RequestHandler\StackHandler;
+use WebServCo\JWT\Service\DecoderService;
 use WebServCo\View\Contract\ViewRendererResolverInterface;
 
 use function rtrim;
@@ -40,6 +41,10 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
     {
         return new ApiAuthenticationMiddleware(
             $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
+            // Not pleased about this, should be a factory or similar.
+            new DecoderService(
+                $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
+            ),
             $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
         );
     }
