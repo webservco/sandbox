@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WebServCo\Stuff\Service\Form\Validator;
+namespace Project\Service\Form\Validator;
 
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormValidatorInterface;

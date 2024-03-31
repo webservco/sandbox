@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Project\Factory\Form;
 
 use Project\Contract\Factory\Stuff\AuthenticationFormFactoryInterface;
+use Project\Service\Form\Validator\PasswordValidator;
 use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormInterface;
 use WebServCo\Form\Service\Form;
 use WebServCo\Form\Service\FormField;
-use WebServCo\Stuff\Service\Form\Validator\PasswordValidator;
 
 final class AuthenticationFormFactory extends AbstractFormFactory implements AuthenticationFormFactoryInterface
 {

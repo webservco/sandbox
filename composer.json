@@ -27,6 +27,7 @@
     "name" : "webservco/sandbox",
     "require": {
         "php" : "^8.3",
+        "webservco/app-stuff-common": "dev-main",
         "webservco/application-default": "^0",
         "webservco/application-runner": "^0",
         "webservco/configuration": "^0",
