@@ -2,7 +2,7 @@
     "repositories" : [
         {
             "type" : "path",
-            "url" : "~/p/webservco/app/app-stuff-common",
+            "url" : "~/p/webservco-app/app-stuff-common",
             "options" : {
                 "symlink" : true
             }
