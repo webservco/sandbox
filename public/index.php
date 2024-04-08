@@ -119,13 +119,8 @@ $applicationFactoryFactory = new ApplicationFactoryFactory(
 );
 $applicationFactory = $applicationFactoryFactory->createServerApplicationFactory($projectPath);
 // @phpcs:disable SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
-$application = $applicationFactory->createServerApplication(
+$application = $applicationFactory->createDefaultServerApplication(
     $applicationDependencyContainer->getServiceContainer()->getLapTimer(),
-    $_COOKIE,
-    $_POST,
-    $_GET,
-    $_SERVER,
-    $_FILES,
 );
 // @phpcs:enable
 $application->bootstrap();
