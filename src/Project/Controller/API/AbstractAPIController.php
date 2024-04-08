@@ -6,7 +6,7 @@ namespace Project\Controller\API;
 
 use Project\Contract\Container\API\APILocalServiceContainerInterface;
 use Project\Controller\AbstractController;
-use Project\Middleware\ApiAuthenticationMiddleware;
+use Project\Middleware\API\ApiAuthenticationMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;

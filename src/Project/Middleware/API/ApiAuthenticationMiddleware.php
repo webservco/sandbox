@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Project\Middleware;
+namespace Project\Middleware\API;
 
 use Override;
 use Psr\Http\Message\ResponseFactoryInterface;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Project\Factory\Middleware\ExceptionHandlerMiddlewareFactory;
-use Project\Middleware\ApiAuthenticationMiddleware;
+use Project\Middleware\API\ApiAuthenticationMiddleware;
 use Project\Middleware\AuthenticationMiddleware;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
