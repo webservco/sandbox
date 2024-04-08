@@ -9,8 +9,8 @@ use Project\Service\Form\Validator\PasswordValidator;
 use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormInterface;
-use WebServCo\Form\Service\Form;
 use WebServCo\Form\Service\FormField;
+use WebServCo\Form\Service\HtmlPostForm;
 
 final class AuthenticationFormFactory extends AbstractFormFactory implements AuthenticationFormFactoryInterface
 {
@@ -20,7 +20,7 @@ final class AuthenticationFormFactory extends AbstractFormFactory implements Aut
 
     public function createForm(): FormInterface
     {
-        return new Form(
+        return new HtmlPostForm(
             [
                 0 => $this->createPasswordField(),
             ],

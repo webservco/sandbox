@@ -7,8 +7,8 @@ namespace Project\Factory\Form;
 use Project\Contract\Factory\Stuff\ItemFormFactoryInterface;
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormInterface;
-use WebServCo\Form\Service\Form;
 use WebServCo\Form\Service\FormField;
+use WebServCo\Form\Service\HtmlPostForm;
 use WebServCo\Stuff\DataTransfer\Item\Item;
 
 final class ItemFormFactory extends AbstractFormFactory implements ItemFormFactoryInterface
@@ -17,7 +17,7 @@ final class ItemFormFactory extends AbstractFormFactory implements ItemFormFacto
 
     public function createForm(): FormInterface
     {
-        return new Form(
+        return new HtmlPostForm(
             [
                 0 => $this->createDescriptionField($this->item),
                 1 => $this->createNameField($this->item),
