@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Project\Controller\API;
 
 use Project\Contract\Controller\APIControllerInterface;
-use Project\DataTransfer\API\Document\ExampleData;
-use Project\DataTransfer\API\Document\ExampleMeta;
+use Project\DataTransfer\API\Example\ExampleAttributes;
+use Project\DataTransfer\API\Example\ExampleData;
+use Project\DataTransfer\API\Example\ExampleDataItemMeta;
+use Project\DataTransfer\API\Example\ExampleDocumentMeta;
 use Project\View\API\ItemView;
 use Psr\Http\Message\ServerRequestInterface;
 use WebServCo\JSONAPI\DataTransfer\Document\Jsonapi;
@@ -25,22 +27,31 @@ final class APIController extends AbstractAPIController implements APIController
          * Set a fallback template (could contain for example a general message).
          */
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
-            new ItemView(
-                new Jsonapi('1.1'),
-                new ExampleData(
+            $this->createItemView($request, $userId),
+            'api/default',
+        );
+    }
+
+    private function createItemView(ServerRequestInterface $request, string $userId): ItemView
+    {
+        return new ItemView(
+            new Jsonapi('1.1'),
+            new ExampleData(
+                1,
+                new ExampleAttributes(
                     $this->applicationDependencyContainer->getDataExtractionContainer()
                         ->getStrictDataExtractionService()->getNullableString(
                             $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
                         ),
                     $userId,
                 ),
-                null,
-                new ExampleMeta(
-                    $this->getCurrentRoute($request),
-                    $this->getApiVersionString(),
-                ),
+                new ExampleDataItemMeta('dataValue'),
             ),
-            'api/default',
+            null,
+            new ExampleDocumentMeta(
+                $this->getCurrentRoute($request),
+                $this->getApiVersionString(),
+            ),
         );
     }
 }
