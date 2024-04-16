@@ -9,7 +9,7 @@
 ## Controller
 
 - Can use any nested directory structure (path is not hard coded when resolving controller);
-- Receives a request, retuns a response;
+- Receives a request, returns a response;
 - Uses the same definition as `Psr\Http\Server\RequestHandlerInterface`;
 - Can use a `ViewRendererInterface` to format the output;
 - Since using an interface it is agnostic about the type of response it will return; the caller (usually another request handler) will feed it an appropriate view based on the request (eg. `HtmlRenderer`, `JSONRenderer`, etc)
