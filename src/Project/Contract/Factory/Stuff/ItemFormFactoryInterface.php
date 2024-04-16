@@ -9,5 +9,8 @@ use WebServCo\Stuff\DataTransfer\Item\Item;
 
 interface ItemFormFactoryInterface extends FormFactoryInterface
 {
+    /**
+     * Used to set pre-existing data in the form.
+     */
     public function setItem(Item $item): bool;
 }
