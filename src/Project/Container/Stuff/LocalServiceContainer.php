@@ -9,13 +9,13 @@ use Project\Contract\Container\Stuff\StuffLocalServiceContainerInterface;
 use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
 use WebServCo\Data\Contract\Extraction\DataExtractionContainerInterface;
 use WebServCo\Database\Contract\PDOContainerInterface;
-use WebServCo\Stuff\Container\Storage\StorageContainer;
-use WebServCo\Stuff\Contract\Container\Storage\StorageContainerInterface;
+use WebServCo\Stuff\Container\Storage\StuffStorageContainer;
+use WebServCo\Stuff\Contract\Container\Storage\StuffStorageContainerInterface;
 
 final class LocalServiceContainer implements StuffLocalServiceContainerInterface
 {
     private ?FormFactoryContainerInterface $formFactoryContainer = null;
-    private ?StorageContainerInterface $storageContainer = null;
+    private ?StuffStorageContainerInterface $storageContainer = null;
 
     public function __construct(
         private ConfigurationGetterInterface $configurationGetter,
@@ -33,10 +33,10 @@ final class LocalServiceContainer implements StuffLocalServiceContainerInterface
         return $this->formFactoryContainer;
     }
 
-    public function getStorageContainer(): StorageContainerInterface
+    public function getStorageContainer(): StuffStorageContainerInterface
     {
         if ($this->storageContainer === null) {
-            $this->storageContainer = new StorageContainer($this->dataExtractionContainer, $this->pdoContainer);
+            $this->storageContainer = new StuffStorageContainer($this->dataExtractionContainer, $this->pdoContainer);
         }
 
         return $this->storageContainer;
