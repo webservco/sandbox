@@ -27,9 +27,6 @@ final class ItemFormFactory extends AbstractFormFactory implements ItemFormFacto
         );
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setItem(Item $item): bool
     {
         $this->item = $item;
