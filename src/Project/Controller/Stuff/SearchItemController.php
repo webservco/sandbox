@@ -18,6 +18,9 @@ final class SearchItemController extends AbstractStuffController implements Stuf
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        // Get mandatory userId.
+        $userId = $this->getUserIdFromRequest($request);
+
         // Create form.
         $form = $this->createAndHandleForm($request);
 
@@ -25,7 +28,7 @@ final class SearchItemController extends AbstractStuffController implements Stuf
         if ($form->isSent() && $form->isValid()) {
             return $this->createResponse(
                 $request,
-                $this->createViewContainer($form, $request),
+                $this->createViewContainer($form, $request, $userId),
             );
         }
 
@@ -43,8 +46,11 @@ final class SearchItemController extends AbstractStuffController implements Stuf
         return $form;
     }
 
-    private function createViewContainer(FormInterface $form, ServerRequestInterface $request): ViewContainerInterface
-    {
+    private function createViewContainer(
+        FormInterface $form,
+        ServerRequestInterface $request,
+        string $userId,
+    ): ViewContainerInterface {
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new SearchItemView(
                 $this->createCommonView($request),
@@ -55,6 +61,7 @@ final class SearchItemController extends AbstractStuffController implements Stuf
                     ->getStrictNonEmptyDataExtractionService()->getNonEmptyString(
                         $form->getField('search_item')->getValue(),
                     ),
+                    $userId,
                 ),
             ),
             'stuff/search_item',

@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use UnexpectedValueException;
 use WebServCo\Data\Contract\Extraction\DataExtractionContainerInterface;
 use WebServCo\Http\Contract\Message\Response\StatusCodeServiceInterface;
 use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
@@ -21,6 +22,7 @@ use function sprintf;
 final class AuthenticationMiddleware implements MiddlewareInterface
 {
     public const NEXT_LOCATION_KEY = 'nextLocation';
+    public const REQUEST_ATTRIBUTE_KEY_USER_ID = 'userId';
 
     public function __construct(
         private DataExtractionContainerInterface $dataExtractionContainer,
@@ -44,11 +46,7 @@ final class AuthenticationMiddleware implements MiddlewareInterface
 
         // Check if already authenticated.
         if ($this->isAuthenticated()) {
-            // Set Request attribute.
-            $request = $request->withAttribute('isAuthenticated', true);
-
-            // Pass to the next handler.
-            return $handler->handle($request);
+            return $this->handleAuthenticated($request, $handler);
         }
 
         // Not authenticated.
@@ -90,6 +88,34 @@ final class AuthenticationMiddleware implements MiddlewareInterface
 
         // Remove trailing slash
         return ltrim($result, '/');
+    }
+
+    private function getUserIdFromSession(): ?string
+    {
+        if (!$this->sessionService->isStarted()) {
+            // Session not started (eg. CLI) so no authentication.
+            return null;
+        }
+
+        return $this->dataExtractionContainer->getStrictArrayDataExtractionService()
+        ->getNullableString($this->sessionService->getSessionData(), self::REQUEST_ATTRIBUTE_KEY_USER_ID, null);
+    }
+
+    private function handleAuthenticated(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler,
+    ): ResponseInterface {
+        $userId = $this->getUserIdFromSession();
+        if ($userId === null) {
+            throw new UnexpectedValueException('userId is null.');
+        }
+
+        // Set Request attributes.
+        $request = $request->withAttribute('isAuthenticated', true);
+        $request = $request->withAttribute(self::REQUEST_ATTRIBUTE_KEY_USER_ID, $userId);
+
+        // Pass to the next handler.
+        return $handler->handle($request);
     }
 
     private function isAuthenticated(): bool

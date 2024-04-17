@@ -16,6 +16,9 @@ final class ItemDeleteController extends AbstractItemController implements Stuff
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        // Get mandatory userId.
+        $userId = $this->getUserIdFromRequest($request);
+
         // Get (mandatory) item id from the request.
         $itemId = $this->getItemIdFromRequest($request);
         if ($itemId === null) {
@@ -26,7 +29,7 @@ final class ItemDeleteController extends AbstractItemController implements Stuff
 
         // Delete.
         $this->getLocalDependencyContainer()->getStorageContainer()->getItemStorageContainer()
-        ->getItemStorage()->deleteItem($itemId);
+        ->getItemStorage()->deleteItem($itemId, $userId);
 
         // Redirect.
         return $this->createLocalRedirectResponse(

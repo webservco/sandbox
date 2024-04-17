@@ -13,7 +13,9 @@ use WebServCo\Form\Contract\FormInterface;
 use WebServCo\Stuff\Contract\RouteInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
+use function md5;
 use function sprintf;
+use function substr;
 
 final class AuthenticationController extends AbstractStuffController implements StuffControllerInterface
 {
@@ -30,8 +32,15 @@ final class AuthenticationController extends AbstractStuffController implements 
 
         // Handle form.
         if ($form->isSent() && $form->isValid()) {
+            // Generate user id based on the password from the configuration
+            $userId = substr(
+                md5($this->getConfigurationGetter()->getString('AUTHENTICATION_PASSWORD')),
+                0,
+                15,
+            );
+
             // Set authenticated.
-            $this->setAuthenticated();
+            $this->setAuthenticated($userId);
 
             // Get next URL.
             $nextLocation = $this->getNextLocation();
@@ -104,9 +113,12 @@ final class AuthenticationController extends AbstractStuffController implements 
         );
     }
 
-    private function setAuthenticated(): bool
+    private function setAuthenticated(string $userId): bool
     {
+        $this->applicationDependencyContainer->getServiceContainer()->getSessionService()
+            ->setSessionDataItem('userId', $userId);
+
         return $this->applicationDependencyContainer->getServiceContainer()->getSessionService()
-        ->setSessionDataItem('isAuthenticated', true);
+            ->setSessionDataItem('isAuthenticated', true);
     }
 }

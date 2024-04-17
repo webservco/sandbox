@@ -20,12 +20,15 @@ final class ItemController extends AbstractItemController implements StuffContro
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        // Get mandatory userId.
+        $userId = $this->getUserIdFromRequest($request);
+
         // Get (optional, if edit mode) item id from the request.
         $itemId = $this->getItemIdFromRequest($request);
         // Get (optional, if add mode) parent item id from the request.
         $parentItemId = $this->getParentItemIdFromRequest($request);
 
-        $itemEntity = $this->retrieveNullableItemEntity($itemId);
+        $itemEntity = $this->retrieveNullableItemEntity($itemId, $userId);
 
         // Create form.
         $form = $this->createAndHandleForm($itemEntity, $request);
@@ -33,7 +36,7 @@ final class ItemController extends AbstractItemController implements StuffContro
         // Handle form
         if ($form->isSent() && $form->isValid()) {
             // Store form data. If new item created, it will generate the new id.
-            $itemId = $this->storeItem($form, $itemId, $parentItemId);
+            $itemId = $this->storeItem($form, $itemId, $parentItemId, $userId);
 
             // Redirect to items page.
             return $this->createLocalRedirectResponse(
@@ -53,11 +56,11 @@ final class ItemController extends AbstractItemController implements StuffContro
         );
     }
 
-    private function retrieveNullableItemEntity(?int $itemId): ?ItemEntity
+    private function retrieveNullableItemEntity(?int $itemId, string $userId): ?ItemEntity
     {
         return $itemId !== null
             ? $this->getLocalDependencyContainer()->getStorageContainer()->getItemStorageContainer()
-                ->getItemEntityStorage()->retrieveItemEntity($itemId)
+                ->getItemEntityStorage()->retrieveItemEntity($itemId, $userId)
             : null;
     }
 
@@ -79,12 +82,12 @@ final class ItemController extends AbstractItemController implements StuffContro
      *
      * Returns item id.
      */
-    private function storeItem(FormInterface $form, ?int $itemId, ?int $parentItemId): int
+    private function storeItem(FormInterface $form, ?int $itemId, ?int $parentItemId, string $userId): int
     {
         if ($itemId !== null) {
             // Update existing item. Only updates DTO data (eg. name and description, no ids).
             $this->getLocalDependencyContainer()->getStorageContainer()->getItemStorageContainer()
-                ->getItemStorage()->updateItem($this->createItemObjectFromForm($form), $itemId);
+                ->getItemStorage()->updateItem($this->createItemObjectFromForm($form), $itemId, $userId);
 
             return $itemId;
         }
@@ -95,6 +98,7 @@ final class ItemController extends AbstractItemController implements StuffContro
             ->getItemStorageContainer()->getItemStorage()->addItem(
                 $this->createItemObjectFromForm($form),
                 $parentItemId,
+                $userId,
             );
     }
 

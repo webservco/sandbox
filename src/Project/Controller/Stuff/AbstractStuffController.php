@@ -6,6 +6,7 @@ namespace Project\Controller\Stuff;
 
 use Project\Contract\Container\Stuff\StuffLocalServiceContainerInterface;
 use Project\Controller\AbstractController;
+use Project\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 use WebServCo\View\Contract\ViewContainerInterface;
@@ -32,5 +33,23 @@ abstract class AbstractStuffController extends AbstractController
         }
 
         return $this->localDependencyContainer;
+    }
+
+    protected function getUserIdFromRequest(ServerRequestInterface $request): string
+    {
+        $userId = $this->applicationDependencyContainer->getDataExtractionContainer()
+            ->getStrictDataExtractionService()->getNullableString(
+                $request->getAttribute(AuthenticationMiddleware::REQUEST_ATTRIBUTE_KEY_USER_ID, null),
+            );
+
+        /**
+         * Sanity check, should never arrive here;
+         * userId is set by ApiAuthenticationMiddleware, and we do not arrive here if not set (not authenticated)
+         */
+        if ($userId === null) {
+            throw new UnexpectedValueException('User id not set.');
+        }
+
+        return $userId;
     }
 }
