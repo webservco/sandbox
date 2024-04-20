@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Project\View\Sandbox;
 
-use WebServCo\View\AbstractView;
 use WebServCo\View\Contract\ViewInterface;
+use WebServCo\View\View\AbstractView;
 
 final class TestView extends AbstractView implements ViewInterface
 {

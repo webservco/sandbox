@@ -9,9 +9,9 @@ use Project\DataTransfer\API\Example\ExampleAttributes;
 use Project\DataTransfer\API\Example\ExampleData;
 use Project\DataTransfer\API\Example\ExampleDataItemMeta;
 use Project\DataTransfer\API\Example\ExampleDocumentMeta;
-use Project\View\API\ItemView;
 use Psr\Http\Message\ServerRequestInterface;
-use WebServCo\JSONAPI\DataTransfer\Document\Jsonapi;
+use WebServCo\JSONAPI\DataTransfer\Document\JSONAPI;
+use WebServCo\JSONAPI\View\ItemView;
 use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
@@ -35,7 +35,7 @@ final class APIController extends AbstractAPIController implements APIController
     private function createItemView(ServerRequestInterface $request, string $userId): ItemView
     {
         return new ItemView(
-            new Jsonapi('1.1'),
+            new JSONAPI('1.1'),
             new ExampleData(
                 1,
                 new ExampleAttributes(

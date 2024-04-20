@@ -6,9 +6,9 @@ namespace Project\View\Stuff;
 
 use Generator;
 use WebServCo\Form\Contract\FormInterface;
-use WebServCo\View\AbstractView;
-use WebServCo\View\CommonView;
 use WebServCo\View\Contract\ViewInterface;
+use WebServCo\View\View\AbstractView;
+use WebServCo\View\View\CommonView;
 
 final class SearchItemView extends AbstractView implements ViewInterface
 {

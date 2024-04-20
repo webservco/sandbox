@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use WebServCo\Stuff\Contract\RouteInterface;
-use WebServCo\View\MainView;
+use WebServCo\View\View\MainView;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
