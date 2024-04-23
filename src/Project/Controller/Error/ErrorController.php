@@ -93,7 +93,8 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
     private function isDevelopment(): bool
     {
         switch (
-            $this->getConfigurationGetter()->getString('ENVIRONMENT')
+            $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()
+            ->getString('ENVIRONMENT')
         ) {
             case EnvironmentInterface::ENVIRONMENT_DEVELOPMENT:
             case EnvironmentInterface::ENVIRONMENT_TESTING:

@@ -52,7 +52,8 @@ abstract class AbstractAPIController extends AbstractController
 
     protected function getApiVersionString(): string
     {
-        return $this->getConfigurationGetter()->getString('API_VERSION');
+        return $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()
+        ->getString('API_VERSION');
     }
 
     protected function getCurrentRoute(ServerRequestInterface $request): ?string

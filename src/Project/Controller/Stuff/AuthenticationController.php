@@ -32,15 +32,8 @@ final class AuthenticationController extends AbstractStuffController implements 
 
         // Handle form.
         if ($form->isSent() && $form->isValid()) {
-            // Generate user id based on the password from the configuration
-            $userId = substr(
-                md5($this->getConfigurationGetter()->getString('AUTHENTICATION_PASSWORD')),
-                0,
-                15,
-            );
-
             // Set authenticated.
-            $this->setAuthenticated($userId);
+            $this->setAuthenticated($this->generateUserId());
 
             // Get next URL.
             $nextLocation = $this->getNextLocation();
@@ -100,6 +93,17 @@ final class AuthenticationController extends AbstractStuffController implements 
                 $form,
             ),
             'stuff/authentication',
+        );
+    }
+
+    private function generateUserId(): string
+    {
+        // Generate user id based on the password from the configuration
+        return substr(
+            md5($this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()
+                ->getString('AUTHENTICATION_PASSWORD')),
+            0,
+            15,
         );
     }
 

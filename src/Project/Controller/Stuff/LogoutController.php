@@ -21,7 +21,8 @@ final class LogoutController extends AbstractStuffController implements StuffCon
          * regardless if logged in or not.
          */
         if ((bool) $request->getAttribute('isAuthenticated') === true) {
-            $this->getLogger('LogoutController')->debug('isAuthenticated');
+            $this->applicationDependencyContainer->getServiceContainer()->getLogger('LogoutController')
+            ->debug('isAuthenticated');
         }
 
         // Logout.

@@ -27,7 +27,8 @@ abstract class AbstractController extends AbstractDefaultController
         return $this->createRedirectResponse(
             sprintf(
                 '%s%s',
-                $this->getConfigurationGetter()->getString('BASE_URL'),
+                $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()
+                ->getString('BASE_URL'),
                 $location,
             ),
             StatusCodeInterface::STATUS_SEE_OTHER,
