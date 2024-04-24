@@ -31,6 +31,14 @@ $backUrl = sprintf(
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
 
+    <?php if ($view->form->getErrorMessages() !== []) { ?>
+        <p>
+            <mark>
+                <?=implode('<br>', $view->form->getErrorMessages())?>
+            </mark>
+        </p>
+    <?php } ?>
+
     <fieldset>
         <label for="<?=$view->form->getField('name')->getId()?>">
             <?=$view->form->getField('name')->getTitle()?>

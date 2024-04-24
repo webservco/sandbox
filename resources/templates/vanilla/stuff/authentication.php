@@ -14,6 +14,14 @@ assert(isset($view) && $view instanceof AuthenticationView);
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
 
+    <?php if ($view->form->getErrorMessages() !== []) { ?>
+        <p>
+            <mark>
+                <?=implode('<br>', $view->form->getErrorMessages())?>
+            </mark>
+        </p>
+    <?php } ?>
+
     <fieldset>
         <label for="<?=$view->form->getField('password')->getId()?>">
             <?=$view->form->getField('password')->getTitle()?>
