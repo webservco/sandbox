@@ -58,6 +58,10 @@
 </li>
             
 <li>
+    <a href="../../../Environment/DDEV/ddev_sqlfluff/" class="dropdown-item">DDEV: SQLFluff</a>
+</li>
+            
+<li>
     <a href="../../../Environment/DDEV/ddev_usage/" class="dropdown-item">DDEV: usage</a>
 </li>
             
@@ -218,11 +222,23 @@
             
             <li class="nav-item" data-level="1"><a href="#application-project-structure" class="nav-link">Application: Project structure</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#command" class="nav-link">Command</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#container" class="nav-link">Container</a>
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#contract" class="nav-link">Contract</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#controller" class="nav-link">Controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#datatransfer" class="nav-link">DataTransfer</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -242,6 +258,14 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#service" class="nav-link">Service</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#view" class="nav-link">View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#templates" class="nav-link">Templates</a>
               <ul class="nav flex-column">
               </ul>
@@ -254,18 +278,30 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="application-project-structure">Application: Project structure</h1>
+<h2 id="command">Command</h2>
+<ul>
+<li>Code that will be run by CLI</li>
+</ul>
 <h2 id="container">Container</h2>
 <ul>
 <li>DIY Dependency Injection container implementation.</li>
 <li>Creates and keeps a list of single instances (only one instance created).</li>
 </ul>
+<h2 id="contract">Contract</h2>
+<ul>
+<li>Interfaces</li>
+</ul>
 <h2 id="controller">Controller</h2>
 <ul>
 <li>Can use any nested directory structure (path is not hard coded when resolving controller);</li>
-<li>Receives a request, retuns a response;</li>
+<li>Receives a request, returns a response;</li>
 <li>Uses the same definition as <code>Psr\Http\Server\RequestHandlerInterface</code>;</li>
 <li>Can use a <code>ViewRendererInterface</code> to format the output;</li>
 <li>Since using an interface it is agnostic about the type of response it will return; the caller (usually another request handler) will feed it an appropriate view based on the request (eg. <code>HtmlRenderer</code>, <code>JSONRenderer</code>, etc)</li>
+</ul>
+<h2 id="datatransfer">DataTransfer</h2>
+<ul>
+<li>DTO's, ValueObject's, etc</li>
 </ul>
 <h2 id="factory">Factory</h2>
 <ul>
@@ -284,6 +320,14 @@
 <h2 id="requesthandler">RequestHandler</h2>
 <ul>
 <li>Handle input Request (optionally processed by middleware) return a Response that can be emitted.</li>
+</ul>
+<h2 id="service">Service</h2>
+<ul>
+<li>Project specific services.</li>
+</ul>
+<h2 id="view">View</h2>
+<ul>
+<li>View objects.</li>
 </ul>
 <h2 id="templates">Templates</h2>
 <ul>

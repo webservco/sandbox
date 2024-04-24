@@ -58,6 +58,10 @@
 </li>
             
 <li>
+    <a href="../../../Environment/DDEV/ddev_sqlfluff/" class="dropdown-item">DDEV: SQLFluff</a>
+</li>
+            
+<li>
     <a href="../../../Environment/DDEV/ddev_usage/" class="dropdown-item">DDEV: usage</a>
 </li>
             
@@ -234,6 +238,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#api-workflow" class="nav-link">API workflow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -268,11 +276,31 @@
 <li><code>src/Project/Instantiator/Controller/SpecificModuleControllerInstantiator.php</code> edit</li>
 </ul>
 <hr />
+<h3 id="basic-application-structure">Basic application structure</h3>
+<ul>
+<li>(TODO)</li>
+<li>
+<p><code>bin</code> (if using <code>Command</code>);</p>
+</li>
+<li>
+<p><code>public</code></p>
+</li>
+<li><code>.htaccess</code></li>
+<li><code>index.php</code></li>
+<li><code>resources/templates</code>;</li>
+<li>
+<p><code>src/Project</code>;</p>
+</li>
+<li>
+<p><code>config</code>;</p>
+</li>
+</ul>
+<hr />
 <h3 id="create-a-new-module-command">Create a new module (Command)</h3>
 <ul>
-<li>create: <code>src/Project/Command/Sandbox/</code></li>
-<li>create: <code>src/Project/Factory/Command/</code></li>
-<li>create: <code>bin/</code></li>
+<li>create command: <code>src/Project/Command/</code></li>
+<li>create command factory: <code>src/Project/Factory/Command/</code></li>
+<li>create command runner: <code>bin/</code></li>
 </ul>
 <hr />
 <h2 id="create-a-new-module-web">Create a new module (Web)</h2>
@@ -301,8 +329,57 @@
 <li>add/update FormFactoryContainerInterface</li>
 <li>add/update FormFactoryContainer</li>
 <li>controller: createAndHandleForm</li>
-<li>controller: handle form sent/valid</li>
 <li>view: add form</li>
+</ul>
+<hr />
+<h2 id="api-workflow">API workflow</h2>
+<h3 id="authentication">Authentication</h3>
+<ul>
+<li><code>src/Project/Middleware/ApiAuthenticationMiddleware.php</code></li>
+<li><code>src/Project/Factory/Http/AbstractRequestHandlerFactory.php</code>.<code>createApiAuthenticationMiddleware</code></li>
+<li><code>src/Project/Factory/Http/RequestHandlerFactory.php</code>.<code>createRequestHandler</code>.<code>addMiddleware</code></li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<ul>
+<li><code>config/</code></li>
+</ul>
+<h3 id="container">Container</h3>
+<ul>
+<li><code>src/Project/Contract/Container/API/</code></li>
+<li><code>src/Project/Container/API/</code></li>
+<li><code>src/Project/Factory/Container/APILocalDependencyContainerFactory.php</code></li>
+<li><code>src/Project/Instantiator/Controller/APIModuleControllerInstantiator.php</code></li>
+</ul>
+<h3 id="data-transfer-objects">Data Transfer Objects</h3>
+<ul>
+<li><code>src/Project/DataTransfer/API/</code></li>
+</ul>
+<h3 id="views">Views</h3>
+<ul>
+<li><code>src/Project/View/API/</code></li>
+</ul>
+<h3 id="templates">Templates</h3>
+<ul>
+<li><code>resources/templates/vanilla/main/main.api.default.php</code></li>
+<li><code>resources/templates/vanilla/api/default.php</code></li>
+</ul>
+<h3 id="controller">Controller</h3>
+<ul>
+<li><code>src/Project/Controller/API/AbstractAPIController.php</code></li>
+<li><code>src/Project/Controller/API/APIController.php</code></li>
+</ul>
+<h3 id="routes-configuration">Routes configuration</h3>
+<ul>
+<li><code>config/API/Routes.php</code></li>
+</ul>
+<h3 id="middleware">Middleware</h3>
+<ul>
+<li><code>src/Project/RequestHandler/ThreePart/ApiRequestHandler.php</code></li>
+<li><code>src/Project/Factory/Middleware/ResourceMiddlewareFactory.php</code><ul>
+<li><code>createApiRequestHandler</code></li>
+<li><code>getResouceMiddlewareHandlers</code></li>
+</ul>
+</li>
 </ul>
 <hr /></div>
             </div>
