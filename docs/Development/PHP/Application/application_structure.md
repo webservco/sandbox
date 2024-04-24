@@ -1,10 +1,17 @@
 # Application: Project structure
 
+## Command
+
+- Code that will be run by CLI
 
 ## Container
 
 - DIY Dependency Injection container implementation.
 - Creates and keeps a list of single instances (only one instance created).
+
+## Contract
+
+- Interfaces
 
 ## Controller
 
@@ -13,6 +20,10 @@
 - Uses the same definition as `Psr\Http\Server\RequestHandlerInterface`;
 - Can use a `ViewRendererInterface` to format the output;
 - Since using an interface it is agnostic about the type of response it will return; the caller (usually another request handler) will feed it an appropriate view based on the request (eg. `HtmlRenderer`, `JSONRenderer`, etc)
+
+## DataTransfer
+
+- DTO's, ValueObject's, etc
 
 ## Factory
 
@@ -31,6 +42,14 @@
 ## RequestHandler
 
 - Handle input Request (optionally processed by middleware) return a Response that can be emitted.
+
+## Service
+
+- Project specific services.
+
+## View
+
+- View objects.
 
 ## Templates
 
