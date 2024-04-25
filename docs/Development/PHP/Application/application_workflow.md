@@ -15,8 +15,8 @@
 - `src/Project/Factory/Http/RequestHandlerFactory.php`
 - `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php`
 
-- `src/Project/Instantiator/Controller` create main
-- `src/Project/Instantiator/Controller/SpecificModuleControllerInstantiator.php` edit
+- `src/Project/Instantiator/Controller` create instantiator
+- `src/Project/Instantiator/Controller/SpecificModuleControllerInstantiator.php` add line in array
 
 ---
 
