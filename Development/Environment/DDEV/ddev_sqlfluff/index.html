@@ -231,8 +231,10 @@
 
 <h1 id="ddev-sqlfluff">DDEV: SQLFluff</h1>
 <p><code>.ddev/web-build/Dockerfile</code></p>
-<pre><code class="language-shell"># Install SQLFluff SQL linter. `sudo` so it's installed globally and available in PATH.
-RUN sudo apt -y install sqlfluff
+<pre><code class="language-shell"># Install SQLFluff SQL linter. https://stackoverflow.com/a/77453453/14583382
+RUN python3 -m venv /opt/venv
+ENV PATH=&quot;/opt/venv/bin:$PATH&quot;
+RUN pip install sqlfluff
 </code></pre>
 <p><code>.ddev/commands/host/sql-lint</code></p>
 <pre><code class="language-shell">#!/bin/bash
