@@ -19,11 +19,20 @@ final class SpecificModuleControllerInstantiator extends AbstractSpecificModuleC
      */
     public function getAvailableModuleControllerInstantiators(): array
     {
+        /**
+         * The order is very important;
+         *
+         * Items are processed in the order they appear,
+         * so more specific implementations should be placed before more general ones.
+         *
+         * @phpcs:disable SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
+         */
         return [
             APIControllerInterface::class => APIModuleControllerInstantiator::class,
             ErrorControllerInterface::class => ErrorModuleControllerInstantiator::class,
             SandboxControllerInterface::class => SandboxModuleControllerInstantiator::class,
             StuffControllerInterface::class => StuffModuleControllerInstantiator::class,
         ];
+        /** @phpcs:enable */
     }
 }
