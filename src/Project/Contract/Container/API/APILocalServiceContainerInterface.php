@@ -8,4 +8,5 @@ use Project\Contract\Container\LocalServiceContainerInterface;
 
 interface APILocalServiceContainerInterface extends LocalServiceContainerInterface
 {
+    public function getJsonApiServiceContainer(): APIJSONAPIServiceContainerInterface;
 }

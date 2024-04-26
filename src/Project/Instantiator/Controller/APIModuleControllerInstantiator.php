@@ -23,7 +23,7 @@ final class APIModuleControllerInstantiator extends AbstractModuleControllerInst
         ReflectionServiceInterface $reflectionService,
         ViewServicesContainerInterface $viewServicesContainer,
     ): ControllerInterface {
-        $localDependencyContainerFactory = new APILocalDependencyContainerFactory();
+        $localDependencyContainerFactory = new APILocalDependencyContainerFactory($applicationDependencyContainer);
 
         $object = $this->instantiateModuleControllerWithLocalDependencyContainer(
             $applicationDependencyContainer,
