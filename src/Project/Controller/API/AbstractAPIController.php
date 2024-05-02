@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Project\Controller\API;
 
-use Project\Contract\Container\API\APILocalServiceContainerInterface;
 use Project\Controller\AbstractController;
 use Project\Middleware\API\ApiAuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 use WebServCo\Form\Contract\FormInterface;
+use WebServCo\JSONAPI\Contract\Service\Container\APILocalServiceContainerInterface;
 use WebServCo\JSONAPI\Contract\Service\JSONAPIHandlerInterface;
 use WebServCo\JSONAPI\DataTransfer\Document\JSONAPI;
 use WebServCo\JSONAPI\DataTransfer\Errors\DefaultError;

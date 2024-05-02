@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Project\Controller;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Project\Contract\Container\LocalServiceContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use UnexpectedValueException;
 use WebServCo\Controller\Service\AbstractDefaultController;
 use WebServCo\View\Contract\TemplateServiceInterface;
 use WebServCo\View\Service\TemplateService;
@@ -49,17 +47,5 @@ abstract class AbstractController extends AbstractDefaultController
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         return new TemplateService(sprintf('%sresources/templates/vanilla', $projectPath), '.php');
-    }
-
-    /**
-     * Return local implementation of LocalDependencyContainerInterface
-     */
-    protected function getLocalDependencyContainer(): LocalServiceContainerInterface
-    {
-        if (!$this->localDependencyContainer instanceof LocalServiceContainerInterface) {
-            throw new UnexpectedValueException('Invalid instance.');
-        }
-
-        return $this->localDependencyContainer;
     }
 }

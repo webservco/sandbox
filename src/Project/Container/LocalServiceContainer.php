@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Project\Container;
 
-use Project\Contract\Container\LocalServiceContainerInterface;
+use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
 
-final class LocalServiceContainer implements LocalServiceContainerInterface
+final class LocalServiceContainer implements LocalDependencyContainerInterface
 {
 }
