@@ -14,7 +14,7 @@ use function sprintf;
 
 final class TestCommand extends AbstractCommand implements CommandInterface
 {
-    private const PROCESSING_LAP_NAME = 'sandbox-test';
+    private const string PROCESSING_LAP_NAME = 'sandbox-test';
 
     public function __construct(private LapTimerInterface $lapTimer, private OutputInterface $output)
     {

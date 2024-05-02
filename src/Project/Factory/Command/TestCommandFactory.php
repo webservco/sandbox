@@ -12,7 +12,7 @@ use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterfa
 
 final class TestCommandFactory implements CommandFactoryInterface
 {
-    private const LOGGER_CHANNEL = 'application';
+    private const string LOGGER_CHANNEL = 'application';
 
     public function __construct(private ApplicationDependencyContainerInterface $applicationDependencyContainer)
     {

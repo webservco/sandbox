@@ -14,9 +14,9 @@ use function sprintf;
 
 abstract class AbstractFormFactory
 {
-    private const ERROR_MESSAGE_MAXIMUM_LENGTH = 'Maximum length: %d chars.';
-    private const ERROR_MESSAGE_MINIMUM_LENGTH = 'Minimum length: %d chars.';
-    private const ERROR_MESSAGE_REQUIRED = 'Field is required.';
+    private const string ERROR_MESSAGE_MAXIMUM_LENGTH = 'Maximum length: %d chars.';
+    private const string ERROR_MESSAGE_MINIMUM_LENGTH = 'Minimum length: %d chars.';
+    private const string ERROR_MESSAGE_REQUIRED = 'Field is required.';
 
     /**
      * @return array<int,\WebServCo\Form\Contract\FormFilterInterface>
