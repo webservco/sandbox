@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Project\Contract\Container;
+namespace Project\Contract\Container\API;
 
 use Project\Contract\Factory\API\JSONAPIHandlerFactoryInterface;
 use WebServCo\JSONAPI\Contract\Service\JSONAPIRequestServiceInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Container\API;
 
-use Project\Contract\Container\JSONAPIServiceContainerInterface;
+use Project\Contract\Container\API\JSONAPIServiceContainerInterface;
 use Project\Contract\Factory\API\JSONAPIHandlerFactoryInterface;
 use Project\Factory\Handler\JSONAPIDefaultHandlerFactory;
 use WebServCo\Data\Contract\Extraction\DataExtractionContainerInterface;
