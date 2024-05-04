@@ -10,7 +10,7 @@
 - `resources/templates/vanilla/` specific
 - `config`
 
-- `RequestHandler/ThreePart/` (why needed?, no customization was required)
+- `RequestHandler/Dynamic/`
 
 - `src/Project/Factory/Http/RequestHandlerFactory.php`
 - `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php`
@@ -118,7 +118,7 @@
 
 ### Middleware
 
-- `src/Project/RequestHandler/ThreePart/ApiRequestHandler.php`
+- `src/Project/RequestHandler/Dynamic/ApiRequestHandler.php`
 - `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php`
     - `createApiRequestHandler`
     - `getResouceMiddlewareHandlers`

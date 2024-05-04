@@ -6,7 +6,6 @@ namespace Project\Controller\Stuff;
 
 use Project\Contract\Controller\StuffControllerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 
 abstract class AbstractItemController extends AbstractStuffController implements StuffControllerInterface
 {
@@ -14,7 +13,10 @@ abstract class AbstractItemController extends AbstractStuffController implements
     {
         return $this->applicationDependencyContainer->getDataExtractionContainer()
         ->getLooseNonEmptyDataExtractionService()
-        ->getNonEmptyNullableInt($request->getAttribute(RoutePartsInterface::ROUTE_PART_3));
+        ->getNonEmptyNullableInt(
+            $this->applicationDependencyContainer->getRequestServiceContainer()
+                ->getServerRequestAttributeService()->getRoutePart(3, $request),
+        );
     }
 
     protected function getParentItemIdFromRequest(ServerRequestInterface $request): ?int

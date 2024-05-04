@@ -8,7 +8,6 @@ use Project\Contract\Controller\StuffControllerInterface;
 use Project\View\Stuff\ItemsView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
 final class ItemsController extends AbstractStuffController implements StuffControllerInterface
@@ -23,7 +22,10 @@ final class ItemsController extends AbstractStuffController implements StuffCont
             $this->createViewContainer(
                 $this->applicationDependencyContainer->getDataExtractionContainer()
                 ->getLooseNonEmptyDataExtractionService()
-                ->getNonEmptyNullableInt($request->getAttribute(RoutePartsInterface::ROUTE_PART_3)),
+                ->getNonEmptyNullableInt(
+                    $this->applicationDependencyContainer->getRequestServiceContainer()
+                        ->getServerRequestAttributeService()->getRoutePart(3, $request),
+                ),
                 $request,
                 $userId,
             ),

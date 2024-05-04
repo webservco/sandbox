@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Project\RequestHandler\ThreePart;
+namespace Project\RequestHandler\Dynamic;
 
 use Psr\Http\Server\RequestHandlerInterface;
-use WebServCo\Http\Service\Message\Request\RequestHandler\ThreePart\AbstractApiThreePartRequestHandler;
+use WebServCo\Http\Service\Message\Request\RequestHandler\Dynamic\AbstractApiDynamicRequestHandler;
 use WebServCo\View\Contract\HTMLRendererInterface;
 use WebServCo\View\Contract\JSONAPIRendererInterface;
 use WebServCo\View\Contract\ViewRendererListInterface;
@@ -15,7 +15,7 @@ use WebServCo\View\Service\JSONAPIRenderer;
 /**
  * API request handler.
  */
-final class ApiRequestHandler extends AbstractApiThreePartRequestHandler implements
+final class ApiRequestHandler extends AbstractApiDynamicRequestHandler implements
     RequestHandlerInterface,
     ViewRendererListInterface
 {

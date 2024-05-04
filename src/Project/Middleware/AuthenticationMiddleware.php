@@ -11,8 +11,8 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use UnexpectedValueException;
 use WebServCo\Data\Contract\Extraction\DataExtractionContainerInterface;
+use WebServCo\Http\Contract\Message\Request\Server\ServerRequestAttributeServiceInterface;
 use WebServCo\Http\Contract\Message\Response\StatusCodeServiceInterface;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\Session\Contract\SessionServiceInterface;
 use WebServCo\Stuff\Contract\RouteInterface;
 
@@ -21,12 +21,13 @@ use function sprintf;
 
 final class AuthenticationMiddleware implements MiddlewareInterface
 {
-    public const NEXT_LOCATION_KEY = 'nextLocation';
-    public const REQUEST_ATTRIBUTE_KEY_USER_ID = 'userId';
+    public const string NEXT_LOCATION_KEY = 'nextLocation';
+    public const string REQUEST_ATTRIBUTE_KEY_USER_ID = 'userId';
 
     public function __construct(
         private DataExtractionContainerInterface $dataExtractionContainer,
         private ResponseFactoryInterface $responseFactory,
+        private ServerRequestAttributeServiceInterface $serverRequestAttributeService,
         private SessionServiceInterface $sessionService,
     ) {
     }
@@ -34,7 +35,7 @@ final class AuthenticationMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Check if condition applies.
-        $routePart1 = $request->getAttribute(RoutePartsInterface::ROUTE_PART_1, null);
+        $routePart1 = $this->serverRequestAttributeService->getRoutePart(1, $request);
         if ($routePart1 !== RouteInterface::ROUTE) {
             // Condition does not apply.
             // Pass to the next handler.

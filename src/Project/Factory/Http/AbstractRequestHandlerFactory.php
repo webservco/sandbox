@@ -46,6 +46,7 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
                 $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
             ),
             $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
+            $this->applicationDependencyContainer->getRequestServiceContainer()->getServerRequestAttributeService(),
         );
     }
 
@@ -54,6 +55,7 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
         return new AuthenticationMiddleware(
             $this->applicationDependencyContainer->getDataExtractionContainer(),
             $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
+            $this->applicationDependencyContainer->getRequestServiceContainer()->getServerRequestAttributeService(),
             $this->applicationDependencyContainer->getServiceContainer()->getSessionService(),
         );
     }

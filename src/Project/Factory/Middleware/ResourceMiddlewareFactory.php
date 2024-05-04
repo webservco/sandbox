@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Project\Factory\Middleware;
 
-use Project\RequestHandler\ThreePart\ApiRequestHandler;
-use Project\RequestHandler\ThreePart\SandboxRequestHandler;
-use Project\RequestHandler\ThreePart\StuffRequestHandler;
+use Project\RequestHandler\Dynamic\ApiRequestHandler;
+use Project\RequestHandler\Dynamic\SandboxRequestHandler;
+use Project\RequestHandler\Dynamic\StuffRequestHandler;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Configuration\Service\PHPConfigurationLoader;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
-use WebServCo\Middleware\Service\ThreePart\ResourceMiddleware;
+use WebServCo\Http\Contract\Message\Request\Server\ServerRequestAttributeServiceInterface;
+use WebServCo\Middleware\Service\Dynamic\ResourceMiddleware;
 use WebServCo\Route\Service\ControllerView\RoutesConfigurationLoader;
 use WebServCo\Stuff\Contract\RouteInterface;
 use WebServCo\View\Contract\ViewRendererResolverInterface;
@@ -25,6 +26,7 @@ final class ResourceMiddlewareFactory
 {
     public function __construct(
         private ControllerInstantiatorInterface $controllerInstantiator,
+        private ServerRequestAttributeServiceInterface $serverRequestAttributeService,
         private ViewRendererResolverInterface $viewRendererResolver,
     ) {
     }
@@ -35,12 +37,13 @@ final class ResourceMiddlewareFactory
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         return new ResourceMiddleware(
-        // List of requests handlers for this middleware.
+            // List of requests handlers for this middleware.
             $this->getResouceMiddlewareHandlers(
                 $this->controllerInstantiator,
                 $projectPath,
                 $this->viewRendererResolver,
             ),
+            $this->serverRequestAttributeService,
         );
     }
 
@@ -51,6 +54,7 @@ final class ResourceMiddlewareFactory
     ): RequestHandlerInterface {
         return new ApiRequestHandler(
             $controllerInstantiator,
+            $this->serverRequestAttributeService,
             $viewRendererResolver,
             $this->getRoutesConfiguration($projectPath, 'API'),
         );
@@ -63,6 +67,7 @@ final class ResourceMiddlewareFactory
     ): RequestHandlerInterface {
         return new SandboxRequestHandler(
             $controllerInstantiator,
+            $this->serverRequestAttributeService,
             $viewRendererResolver,
             $this->getRoutesConfiguration($projectPath, 'Sandbox'),
         );
@@ -75,6 +80,7 @@ final class ResourceMiddlewareFactory
     ): RequestHandlerInterface {
         return new StuffRequestHandler(
             $controllerInstantiator,
+            $this->serverRequestAttributeService,
             $viewRendererResolver,
             $this->getRoutesConfiguration($projectPath, 'Stuff'),
         );
@@ -100,7 +106,7 @@ final class ResourceMiddlewareFactory
         // Make sure path contains trailing slash (trim + add back).
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        // These are `RoutePartsInterface::ROUTE_PART_1` values (only use the part 1 of the processed route).
+        // These are part 1 of the route values (only use the part 1 of the processed route).
         return [
             // Request handler for /api requests.
             'api' => $this->createApiRequestHandler($controllerInstantiator, $projectPath, $viewRendererResolver),

@@ -15,7 +15,6 @@ use WebServCo\JSONAPI\DataTransfer\Example\ExampleData;
 use WebServCo\JSONAPI\DataTransfer\Example\ExampleDataItemMeta;
 use WebServCo\JSONAPI\DataTransfer\Example\ExampleDocumentMeta;
 use WebServCo\JSONAPI\View\ItemView;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
 /**
@@ -65,10 +64,8 @@ final class APIController extends AbstractAPIController implements APIController
             new ExampleData(
                 1,
                 new ExampleAttributes(
-                    $this->applicationDependencyContainer->getDataExtractionContainer()
-                        ->getStrictDataExtractionService()->getNullableString(
-                            $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, null),
-                        ),
+                    $this->applicationDependencyContainer->getRequestServiceContainer()
+                        ->getServerRequestAttributeService()->getRoutePart(3, $request),
                     $userId,
                 ),
                 new ExampleDataItemMeta('dataValue'),

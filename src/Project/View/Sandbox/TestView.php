@@ -9,7 +9,7 @@ use WebServCo\View\View\AbstractView;
 
 final class TestView extends AbstractView implements ViewInterface
 {
-    public function __construct(public readonly int $intProperty, public readonly string $stringProperty)
+    public function __construct(public readonly int $intProperty, public readonly ?string $stringProperty)
     {
     }
 }

@@ -12,17 +12,17 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use UnexpectedValueException;
 use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
+use WebServCo\Http\Contract\Message\Request\Server\ServerRequestAttributeServiceInterface;
 use WebServCo\Http\Contract\Message\Response\StatusCodeServiceInterface;
 use WebServCo\JWT\Contract\DecoderServiceInterface;
 use WebServCo\JWT\DataTransfer\Payload;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 
 use function array_key_exists;
 use function explode;
 
 final class ApiAuthenticationMiddleware implements MiddlewareInterface
 {
-    public const REQUEST_ATTRIBUTE_KEY_USER_ID = 'userId';
+    public const string REQUEST_ATTRIBUTE_KEY_USER_ID = 'userId';
 
     private ?Payload $jwtPayload = null;
 
@@ -30,6 +30,7 @@ final class ApiAuthenticationMiddleware implements MiddlewareInterface
         private ConfigurationGetterInterface $configurationGetter,
         private DecoderServiceInterface $decoderService,
         private ResponseFactoryInterface $responseFactory,
+        private ServerRequestAttributeServiceInterface $serverRequestAttributeService,
     ) {
     }
 
@@ -37,7 +38,7 @@ final class ApiAuthenticationMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Check if condition applies.
-        $routePart1 = $request->getAttribute(RoutePartsInterface::ROUTE_PART_1, null);
+        $routePart1 = $this->serverRequestAttributeService->getRoutePart(1, $request);
 
         if ($routePart1 !== 'api') {
             // Condition does not apply.

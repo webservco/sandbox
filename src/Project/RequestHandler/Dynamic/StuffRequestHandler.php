@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Project\RequestHandler\ThreePart;
+namespace Project\RequestHandler\Dynamic;
 
 use DomainException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use WebServCo\Http\Service\Message\Request\RequestHandler\ThreePart\AbstractThreePartRequestHandler;
+use WebServCo\Http\Service\Message\Request\RequestHandler\Dynamic\AbstractDynamicRequestHandler;
 use WebServCo\View\Contract\HTMLRendererInterface;
 use WebServCo\View\Contract\JSONRendererInterface;
 use WebServCo\View\Contract\ViewRendererListInterface;
@@ -16,9 +16,9 @@ use WebServCo\View\Service\HTMLRenderer;
 use WebServCo\View\Service\JSONRenderer;
 
 /**
- * Sandbox request handler, using the three part routing system.
+ * Request handler, using the three part routing system.
  */
-final class SandboxRequestHandler extends AbstractThreePartRequestHandler implements
+final class StuffRequestHandler extends AbstractDynamicRequestHandler implements
     RequestHandlerInterface,
     ViewRendererListInterface
 {
@@ -35,7 +35,7 @@ final class SandboxRequestHandler extends AbstractThreePartRequestHandler implem
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $route = $this->getRoutePart2($request);
+        $route = $this->requestAttributeService->getRoutePart(2, $request);
 
         return match ($route) {
             'qwerty' => $this->handleQwerty(),

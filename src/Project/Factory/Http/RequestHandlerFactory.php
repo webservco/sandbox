@@ -8,9 +8,8 @@ use Project\Factory\Middleware\ResourceMiddlewareFactory;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Http\Contract\Message\Request\RequestHandler\RequestHandlerFactoryInterface;
-use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptProcessor;
+use WebServCo\Middleware\Service\Dynamic\RouteMiddleware;
 use WebServCo\Middleware\Service\Log\LoggerMiddleware;
-use WebServCo\Middleware\Service\ThreePart\RouteMiddleware;
 use WebServCo\Middleware\Service\ViewRenderer\ViewRendererSettingMiddleware;
 use WebServCo\Stuff\Contract\RouteInterface;
 
@@ -52,14 +51,16 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
         $stackHandler->addMiddleware($exceptionHandlerMiddleware);
 
         // ViewRenderer setting middleware.
-        $stackHandler->addMiddleware(new ViewRendererSettingMiddleware(new ServerHeadersAcceptProcessor()));
+        $stackHandler->addMiddleware(new ViewRendererSettingMiddleware(
+            $this->applicationDependencyContainer->getRequestServiceContainer()->getServerHeadersAcceptService(),
+        ));
 
         // Route middleware; routes requests.
         $stackHandler->addMiddleware(
             new RouteMiddleware(
                 '/',
                 'sandbox/test',
-                // These are `RoutePartsInterface::ROUTE_PART_1` values (only use the part 1 of the processed route).
+                // These are part 1 of the route values (only use the part 1 of the processed route).
                 ['api', 'sandbox', RouteInterface::ROUTE],
             ),
         );
@@ -92,6 +93,7 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
     {
         $resourceMiddlewareFactory = new ResourceMiddlewareFactory(
             $this->controllerInstantiator,
+            $this->applicationDependencyContainer->getRequestServiceContainer()->getServerRequestAttributeService(),
             $this->viewRendererResolver,
         );
 

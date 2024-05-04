@@ -14,7 +14,6 @@ use WebServCo\JSONAPI\Contract\Service\JSONAPIHandlerInterface;
 use WebServCo\JSONAPI\DataTransfer\Document\JSONAPI;
 use WebServCo\JSONAPI\DataTransfer\Errors\DefaultError;
 use WebServCo\JSONAPI\View\ItemView;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 use WebServCo\View\Contract\ViewInterface;
 
@@ -72,10 +71,8 @@ abstract class AbstractAPIController extends AbstractController
 
     protected function getCurrentRoute(ServerRequestInterface $request): ?string
     {
-        return $this->applicationDependencyContainer->getDataExtractionContainer()
-            ->getStrictDataExtractionService()->getNullableString(
-                $request->getAttribute(RoutePartsInterface::ROUTE_PART_2, null),
-            );
+        return $this->applicationDependencyContainer->getRequestServiceContainer()
+            ->getServerRequestAttributeService()->getRoutePart(2, $request);
     }
 
     /**

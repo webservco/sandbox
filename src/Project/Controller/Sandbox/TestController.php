@@ -8,7 +8,6 @@ use Project\Contract\Controller\SandboxControllerInterface;
 use Project\View\Sandbox\TestView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebServCo\Route\Contract\ThreePart\RoutePartsInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
 final class TestController extends AbstractSandboxController implements SandboxControllerInterface
@@ -34,10 +33,8 @@ final class TestController extends AbstractSandboxController implements SandboxC
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new TestView(
                 17,
-                $this->applicationDependencyContainer->getDataExtractionContainer()
-                    ->getStrictDataExtractionService()->getString(
-                        $request->getAttribute(RoutePartsInterface::ROUTE_PART_3, 'default_value'),
-                    ),
+                $this->applicationDependencyContainer->getRequestServiceContainer()
+                    ->getServerRequestAttributeService()->getRoutePart(3, $request),
             ),
             'sandbox/test',
         );
