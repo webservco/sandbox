@@ -105,14 +105,6 @@ abstract class AbstractAPIController extends AbstractController
         return $userId;
     }
 
-    protected function initializeJSONAPIHandler(): JSONAPIHandlerInterface
-    {
-        $handlerFactory = $this->getLocalDependencyContainer()->getJsonApiServiceContainer()
-            ->getDefaultHandlerFactory();
-
-        return $handlerFactory->createHandler();
-    }
-
     /**
      * @return array<int,\WebServCo\JSONAPI\Contract\Errors\ErrorInterface>
      */

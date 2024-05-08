@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\API;
 
+use Fig\Http\Message\RequestMethodInterface;
 use JsonException;
 use OutOfBoundsException;
 use Project\Contract\Controller\APIControllerInterface;
@@ -29,7 +30,12 @@ final class APIController extends AbstractAPIController implements APIController
         $userId = $this->getUserIdFromRequest($request);
 
         // Create JSONAPI handler.
-        $jsonApiHandler = $this->initializeJSONAPIHandler();
+        $jsonApiHandler = $this->getLocalDependencyContainer()->getJsonApiServiceContainer()
+            ->getDefaultHandlerFactory()->createHandler(
+                [
+                    RequestMethodInterface::METHOD_GET,
+                ],
+            );
 
         try {
             // Handle request.
