@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Project\Controller\API;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Project\Controller\AbstractController;
 use Project\Middleware\API\ApiAuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 use UnexpectedValueException;
 use WebServCo\Form\Contract\FormInterface;
 use WebServCo\JSONAPI\Contract\Service\Container\APILocalServiceContainerInterface;
@@ -22,6 +24,9 @@ use function sprintf;
 
 /**
  * An abstract controller with dependencies specific to current module.
+ *
+ * @todo solve CouplingBetweenObjects
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 abstract class AbstractAPIController extends AbstractController
 {
@@ -87,6 +92,15 @@ abstract class AbstractAPIController extends AbstractController
         return $this->localDependencyContainer;
     }
 
+    protected function getResponseCodeBasedOnThrowable(Throwable $throwable): int
+    {
+        $throwableCode = (int) $throwable->getCode();
+
+        return $throwableCode >= 400
+            ? $throwableCode
+            : StatusCodeInterface::STATUS_BAD_REQUEST;
+    }
+
     protected function getUserIdFromRequest(ServerRequestInterface $request): string
     {
         $userId = $this->applicationDependencyContainer->getDataExtractionContainer()
@@ -112,11 +126,11 @@ abstract class AbstractAPIController extends AbstractController
     {
         $errors = [];
 
-        foreach ($form->getErrorMessages() as $errorMessage) {
+        foreach ($form->getErrors() as $error) {
             $errors[] = new DefaultError(
-                '400',
+                (string) $error->getCode(),
                 'Input error',
-                sprintf('General: %s', $errorMessage),
+                sprintf('General: %s', $error->getMessage()),
             );
         }
 
@@ -131,11 +145,11 @@ abstract class AbstractAPIController extends AbstractController
         $errors = [];
 
         foreach ($form->getFields() as $field) {
-            foreach ($field->getErrorMessages() as $errorMessage) {
+            foreach ($field->getErrors() as $error) {
                 $errors[] = new DefaultError(
-                    '400',
+                    (string) $error->getCode(),
                     'Input error',
-                    sprintf('%s: %s', $field->getName(), $errorMessage),
+                    sprintf('%s: %s', $field->getName(), $error->getMessage()),
                 );
             }
         }

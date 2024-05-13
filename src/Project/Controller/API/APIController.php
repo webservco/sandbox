@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Project\Controller\API;
 
+use Error;
 use Fig\Http\Message\RequestMethodInterface;
 use JsonException;
 use OutOfBoundsException;
+use OutOfRangeException;
 use Project\Contract\Controller\APIControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use UnexpectedValueException;
 use WebServCo\JSONAPI\DataTransfer\Document\JSONAPI;
 use WebServCo\JSONAPI\DataTransfer\Example\ExampleAttributes;
 use WebServCo\JSONAPI\DataTransfer\Example\ExampleData;
@@ -20,6 +23,9 @@ use WebServCo\View\Contract\ViewContainerInterface;
 
 /**
  * A general API Controller.
+ *
+ * @todo solve CouplingBetweenObjects
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 final class APIController extends AbstractAPIController implements APIControllerInterface
 {
@@ -40,27 +46,30 @@ final class APIController extends AbstractAPIController implements APIController
         try {
             // Handle request.
             $jsonApiHandler->handleRequest($request);
-        } catch (JsonException | OutOfBoundsException $e) {
-            // Error processing request body.
-            $jsonApiHandler->addErrorMessage($e->getMessage());
-        }
 
-        // Handle request
-        if ($jsonApiHandler->isSent() && $jsonApiHandler->isValid()) {
-            // Create view.
-            $viewContainer = $this->createViewContainer($request, $userId);
+            // Handle valid request.
+            if ($jsonApiHandler->isSent() && $jsonApiHandler->isValid()) {
+                // Create view.
+                $viewContainer = $this->createViewContainer($request, $userId);
+
+                // Return response.
+                return $this->createResponse($request, $viewContainer);
+            }
+
+            // If we arrive here, there is a problem.
+            throw new UnexpectedValueException('Invalid request.');
+        } catch (JsonException | OutOfBoundsException | OutOfRangeException | UnexpectedValueException $e) {
+            $responseCode = $this->getResponseCodeBasedOnThrowable($e);
+
+            // Error processing request body.
+            $jsonApiHandler->addError(new Error($e->getMessage(), $responseCode));
+
+            // Create error view container.
+            $viewContainer = $this->createErrorViewContainer($jsonApiHandler);
 
             // Return response.
-            return $this->createResponse($request, $viewContainer);
+            return $this->createResponse($request, $viewContainer, $responseCode);
         }
-
-        // If we arrive here, the request is not valid.
-
-        // Create error view container.
-        $viewContainer = $this->createErrorViewContainer($jsonApiHandler);
-
-        // Return response.
-        return $this->createResponse($request, $viewContainer, 400);
     }
 
     private function createItemView(ServerRequestInterface $request, string $userId): ItemView

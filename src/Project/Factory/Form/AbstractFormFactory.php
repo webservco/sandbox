@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Project\Factory\Form;
 
+use Error;
+use Fig\Http\Message\StatusCodeInterface;
 use WebServCo\Form\Service\Filter\StripTagsFilter;
 use WebServCo\Form\Service\Filter\TrimFilter;
 use WebServCo\Form\Service\Validator\MaximumLengthValidator;
@@ -35,17 +37,29 @@ abstract class AbstractFormFactory
     protected function getGeneralValidators(): array
     {
         return [
-            new RequiredValidator(self::ERROR_MESSAGE_REQUIRED),
+            new RequiredValidator(new Error(self::ERROR_MESSAGE_REQUIRED, StatusCodeInterface::STATUS_BAD_REQUEST)),
         ];
     }
 
     protected function getMaximumLengthValidator(int $maximumLength): MaximumLengthValidator
     {
-        return new MaximumLengthValidator(sprintf(self::ERROR_MESSAGE_MAXIMUM_LENGTH, $maximumLength), $maximumLength);
+        return new MaximumLengthValidator(
+            new Error(
+                sprintf(self::ERROR_MESSAGE_MAXIMUM_LENGTH, $maximumLength),
+                StatusCodeInterface::STATUS_BAD_REQUEST,
+            ),
+            $maximumLength,
+        );
     }
 
     protected function getMinimumLengthValidator(int $minimumLength): MinimumLengthValidator
     {
-        return new MinimumLengthValidator(sprintf(self::ERROR_MESSAGE_MINIMUM_LENGTH, $minimumLength), $minimumLength);
+        return new MinimumLengthValidator(
+            new Error(
+                sprintf(self::ERROR_MESSAGE_MINIMUM_LENGTH, $minimumLength),
+                StatusCodeInterface::STATUS_BAD_REQUEST,
+            ),
+            $minimumLength,
+        );
     }
 }

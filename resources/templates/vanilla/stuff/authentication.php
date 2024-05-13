@@ -14,10 +14,15 @@ assert(isset($view) && $view instanceof AuthenticationView);
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
 
-    <?php if ($view->form->getErrorMessages() !== []) { ?>
+    <?php if ($view->form->getErrors() !== []) { ?>
         <p>
             <mark>
-                <?=implode('<br>', $view->form->getErrorMessages())?>
+                <?php foreach ($view->form->getErrors() as $index => $error) { ?>
+                    <?php if ($index > 0) { ?>
+                        <br>
+                    <?php } ?>
+                    <?=$error->getMessage()?>
+                <?php } ?>
             </mark>
         </p>
     <?php } ?>
@@ -34,13 +39,18 @@ assert(isset($view) && $view instanceof AuthenticationView);
             <?=$view->form->getField('password')->isRequired()
             ? ' required'
             : ''?>
-            <?=$view->form->getField('password')->getErrorMessages() !== []
+            <?=$view->form->getField('password')->getErrors() !== []
             ? 'aria-invalid="true"'
             : ''?>>
-        <?php if ($view->form->getField('password')->getErrorMessages() !== []) { ?>
+        <?php if ($view->form->getField('password')->getErrors() !== []) { ?>
             <small>
                 <mark>
-                    <?=implode('<br>', $view->form->getField('password')->getErrorMessages())?>
+                    <?php foreach ($view->form->getField('password')->getErrors() as $index => $error) { ?>
+                        <?php if ($index > 0) { ?>
+                            <br>
+                        <?php } ?>
+                        <?=$error->getMessage()?>
+                    <?php } ?>
                 </mark>
             </small>
         <?php } ?>

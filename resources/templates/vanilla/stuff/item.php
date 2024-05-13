@@ -31,10 +31,15 @@ $backUrl = sprintf(
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
 
-    <?php if ($view->form->getErrorMessages() !== []) { ?>
+    <?php if ($view->form->getErrors() !== []) { ?>
         <p>
             <mark>
-                <?=implode('<br>', $view->form->getErrorMessages())?>
+                <?php foreach ($view->form->getErrors() as $index => $error) { ?>
+                    <?php if ($index > 0) { ?>
+                        <br>
+                    <?php } ?>
+                    <?=$error->getMessage()?>
+                <?php } ?>
             </mark>
         </p>
     <?php } ?>
@@ -51,13 +56,18 @@ $backUrl = sprintf(
             <?=$view->form->getField('name')->isRequired()
             ? ' required'
             : ''?>
-            <?=$view->form->getField('name')->getErrorMessages() !== []
+            <?=$view->form->getField('name')->getErrors() !== []
             ? 'aria-invalid="true"'
             : ''?>>
-        <?php if ($view->form->getField('name')->getErrorMessages() !== []) { ?>
+        <?php if ($view->form->getField('name')->getErrors() !== []) { ?>
             <small>
                 <mark>
-                    <?=implode('<br>', $view->form->getField('name')->getErrorMessages())?>
+                    <?php foreach ($view->form->getField('name')->getErrors() as $index => $error) { ?>
+                        <?php if ($index > 0) { ?>
+                            <br>
+                        <?php } ?>
+                        <?=$error->getMessage()?>
+                    <?php } ?>
                 </mark>
             </small>
         <?php } ?>
@@ -75,13 +85,18 @@ $backUrl = sprintf(
             <?=$view->form->getField('description')->isRequired()
             ? ' required'
             : ''?>
-            <?=$view->form->getField('description')->getErrorMessages() !== []
+            <?=$view->form->getField('description')->getErrors() !== []
             ? 'aria-invalid="true"'
             : ''?>>
-        <?php if ($view->form->getField('description')->getErrorMessages() !== []) { ?>
+        <?php if ($view->form->getField('description')->getErrors() !== []) { ?>
             <small>
                 <mark>
-                    <?=implode('<br>', $view->form->getField('description')->getErrorMessages())?>
+                    <?php foreach ($view->form->getField('description')->getErrors() as $index => $error) { ?>
+                        <?php if ($index > 0) { ?>
+                            <br>
+                        <?php } ?>
+                        <?=$error->getMessage()?>
+                    <?php } ?>
                 </mark>
             </small>
         <?php } ?>
@@ -114,4 +129,3 @@ $backUrl = sprintf(
     </fieldset>
 
 </form>
-
