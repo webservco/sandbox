@@ -2,10 +2,22 @@
 
 declare(strict_types=1);
 
+use Fig\Http\Message\StatusCodeInterface;
 use Project\View\Stuff\AuthenticationView;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof AuthenticationView);
+
+$displayErrors = [];
+if ($view->form->getErrors() !== []) {
+    foreach ($view->form->getErrors() as $error) {
+        if ($error->getCode() === StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED) {
+            continue;
+        }
+
+        $displayErrors[] = $error->getMessage();
+    }
+}
 ?>
 <h2>
     Authentication
@@ -14,15 +26,10 @@ assert(isset($view) && $view instanceof AuthenticationView);
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
 
-    <?php if ($view->form->getErrors() !== []) { ?>
+    <?php if ($displayErrors !== []) { ?>
         <p>
             <mark>
-                <?php foreach ($view->form->getErrors() as $index => $error) { ?>
-                    <?php if ($index > 0) { ?>
-                        <br>
-                    <?php } ?>
-                    <?=$error->getMessage()?>
-                <?php } ?>
+                <?=implode('<br>', $displayErrors)?>
             </mark>
         </p>
     <?php } ?>
