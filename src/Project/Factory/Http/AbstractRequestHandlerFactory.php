@@ -43,7 +43,8 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
             $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
             // Not pleased about this, should be a factory or similar.
             new DecoderService(
-                $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
+                $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()
+                    ->getString('JWT_SECRET'),
             ),
             $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
             $this->applicationDependencyContainer->getRequestServiceContainer()->getServerRequestAttributeService(),
