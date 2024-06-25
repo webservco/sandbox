@@ -34,7 +34,6 @@ display_errors = Off
 - Note: make sure the directory `p` exists in the home path.
 
 ```yaml
-version: '3.6'
 services:
   web:
     volumes:
