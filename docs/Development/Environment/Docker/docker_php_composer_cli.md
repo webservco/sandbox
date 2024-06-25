@@ -23,7 +23,7 @@ svn export https://github.com/webservco/sandbox.git/trunk/.docker
 
 ### 1) Copy (snapshot) mode
 
-- Read comments / edit to customize: `.docker/config/php82-cli-copy/Dockerfile`
+- Read comments / edit to customize: `.docker/config/php83-cli-copy/Dockerfile`
 - Use case: check project in isolation, without adding the vendor dir on local (avoid PHAN errors when project is used as a dependency in another project);
 - Files are copied into the container at build time (not updated in real-time);
 - Working on a "snapshot" done at the time of the build
@@ -41,7 +41,7 @@ cp --recursive ~/p/parcelvalue-v3/framework/ ${BUILD_TEMP_DIR}p/parcelvalue-v3/
 # Build.
 DOCKER_IMAGE_TAG='lhost-v3-framework-copy';
 DOCKER_CONTAINER_NAME='lhost-v3-framework-copy-container';
-docker build --tag ${DOCKER_IMAGE_TAG} -f .docker/config/php82-cli-copy/Dockerfile .
+docker build --tag ${DOCKER_IMAGE_TAG} -f .docker/config/php83-cli-copy/Dockerfile .
 
 # (Optional) Cleanup temporary directory.
 rm -rf ${BUILD_TEMP_DIR}*
@@ -58,7 +58,7 @@ docker image rm ${DOCKER_IMAGE_TAG}
 
 ### 2) Mount (real-time) mode
 
-- Read comments / edit to customize: `.docker/config/php82-cli-mount/Dockerfile`
+- Read comments / edit to customize: `.docker/config/php83-cli-mount/Dockerfile`
 - Use case: active development, need to run quickly on up-to-date files; need vendor dir (or no problem if present);
 - Files are mounted at run time, so no composer commands are run automatically
 - Execute any commands needed at run time
@@ -67,7 +67,7 @@ docker image rm ${DOCKER_IMAGE_TAG}
 
 ```sh
 # Build.
-docker build -t lhost-v3-framework-mount -f .docker/config/php82-cli-mount/Dockerfile .
+docker build -t lhost-v3-framework-mount -f .docker/config/php83-cli-mount/Dockerfile .
 
 # Run (specify mounts and commands to run)
 docker run -it --rm --name lhost-v3-framework-running \
