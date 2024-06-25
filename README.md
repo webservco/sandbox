@@ -10,6 +10,12 @@ View online: [webservco.github.io/sandbox/](https://webservco.github.io/sandbox/
 
 Serve locally:
 
-- `mkdocs serve`
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+pip install mkdocs
+mkdocs serve
+```
+
 - navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 - Cleanup afterwards: `rm -rf site/*`
