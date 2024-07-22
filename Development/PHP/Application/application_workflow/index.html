@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +10,13 @@
         <link rel="shortcut icon" href="../../../../img/favicon.ico">
         <title>Application: Workflow (WIP) - Sandbox</title>
         <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../../css/v4-font-face.min.css" rel="stylesheet">
         <link href="../../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script> 
     </head>
@@ -22,7 +26,7 @@
             <div class="container">
                 <a class="navbar-brand" href="../../../..">Sandbox</a>
                 <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -30,98 +34,12 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../../../.." class="nav-link">Index</a>
                             </li>
-                            <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Development</a>
                                 <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">Environment</a>
-    <ul class="dropdown-menu">
-            
-  <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">DDEV</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../../../Environment/DDEV/" class="dropdown-item">DDEV: index</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/DDEV/ddev_misc/" class="dropdown-item">DDEV: misc</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/DDEV/ddev_setup/" class="dropdown-item">DDEV: project setup</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/DDEV/ddev_sqlfluff/" class="dropdown-item">DDEV: SQLFluff</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/DDEV/ddev_usage/" class="dropdown-item">DDEV: usage</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/DDEV/ddev_windows/" class="dropdown-item">DDEV: Windows</a>
-</li>
-    </ul>
-  </li>
-            
-  <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">Docker</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../../../Environment/Docker/" class="dropdown-item">Docker: index</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/Docker/docker_php_composer_cli/" class="dropdown-item">Docker + PHP + Composer</a>
-</li>
-    </ul>
-  </li>
-            
-  <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">WSL</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../../../Environment/WSL/" class="dropdown-item">WSL: index</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/WSL/wsl_misc/" class="dropdown-item">WSL</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/WSL/wsl_vscode/" class="dropdown-item">vscode + WSL</a>
-</li>
-    </ul>
-  </li>
-            
-  <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">Xdebug</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../../../Environment/Xdebug/" class="dropdown-item">Xdebug: index</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/Xdebug/xdebug_ddev_vscode/" class="dropdown-item">Xdebug + DDEV + Visual Studio Code</a>
-</li>
-            
-<li>
-    <a href="../../../Environment/Xdebug/xdebug_troubleshooting/" class="dropdown-item">Xdebug troubleshooting</a>
-</li>
-    </ul>
-  </li>
-    </ul>
-  </li>
                                     
   <li class="dropdown-submenu">
     <a href="#" class="dropdown-item">PHP</a>
@@ -152,7 +70,7 @@
 </li>
             
 <li>
-    <a href="./" class="dropdown-item active">Application: Workflow (WIP)</a>
+    <a href="./" class="dropdown-item active" aria-current="page">Application: Workflow (WIP)</a>
 </li>
     </ul>
   </li>
@@ -168,27 +86,13 @@
   </li>
     </ul>
   </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">Tools</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../../../Tools/Documentation/" class="dropdown-item">Documentation</a>
-</li>
-            
-<li>
-    <a href="../../../Tools/StaticAnalisys/" class="dropdown-item">Static analisys</a>
-</li>
-    </ul>
-  </li>
                                 </ul>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav ms-md-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
@@ -209,36 +113,36 @@
 
         <div class="container">
             <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
         </button>
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#application-workflow-wip" class="nav-link">Application: Workflow (WIP)</a>
+            <li class="nav-item" data-bs-level="1"><a href="#application-workflow-wip" class="nav-link">Application: Workflow (WIP)</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#notes" class="nav-link">Notes</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#create-a-new-module-web" class="nav-link">Create a new module (Web)</a>
+            <li class="nav-item" data-bs-level="2"><a href="#notes" class="nav-link">Notes</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#add-a-new-page-in-an-existing-section" class="nav-link">Add a new page in an existing section.</a>
+            <li class="nav-item" data-bs-level="2"><a href="#create-a-new-module-web" class="nav-link">Create a new module (Web)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#form-workflow" class="nav-link">Form workflow</a>
+            <li class="nav-item" data-bs-level="2"><a href="#add-a-new-page-in-an-existing-section" class="nav-link">Add a new page in an existing section.</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#api-workflow" class="nav-link">API workflow</a>
+            <li class="nav-item" data-bs-level="2"><a href="#form-workflow" class="nav-link">Form workflow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-workflow" class="nav-link">API workflow</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -262,7 +166,7 @@
 <p><code>config</code></p>
 </li>
 <li>
-<p><code>RequestHandler/ThreePart/</code> (why needed?, no customization was required)</p>
+<p><code>RequestHandler/Dynamic/</code></p>
 </li>
 <li>
 <p><code>src/Project/Factory/Http/RequestHandlerFactory.php</code></p>
@@ -374,7 +278,7 @@
 </ul>
 <h3 id="middleware">Middleware</h3>
 <ul>
-<li><code>src/Project/RequestHandler/ThreePart/ApiRequestHandler.php</code></li>
+<li><code>src/Project/RequestHandler/Dynamic/ApiRequestHandler.php</code></li>
 <li><code>src/Project/Factory/Middleware/ResourceMiddlewareFactory.php</code><ul>
 <li><code>createApiRequestHandler</code></li>
 <li><code>getResouceMiddlewareHandlers</code></li>
@@ -389,8 +293,7 @@
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="../../../../js/jquery-3.6.0.min.js"></script>
-        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/bootstrap.bundle.min.js"></script>
         <script>
             var base_url = "../../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
@@ -403,7 +306,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>From here you can search these documents. Enter your search terms below.</p>
@@ -423,7 +326,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <table class="table">
