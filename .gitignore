@@ -5,3 +5,4 @@ config/.env.ini
 /vendor/
 # mkdocs HTML output directory
 /site/
+/.venv
