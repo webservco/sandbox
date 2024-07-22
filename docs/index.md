@@ -14,21 +14,3 @@ git clone https://github.com/webservco/sandbox.git
 ddev composer update
 ```
 
-## Development: Environment
-
-- [DDEV](Development/Environment/DDEV/index.md)
-- [Docker](Development/Environment/Docker/index.md)
-- [WSL](Development/Environment/WSL/index.md)
-- [Xdebug](Development/Environment/Xdebug/index.md)
-
-## Development: Tools
-
-- [Documentation](Development/Tools/Documentation.md)
-- [Static analisys](Development/Tools/StaticAnalisys.md)
-
-## TODO
-
-- Article: DDEV: Custom composer configuration (private project example);
-- Article: DDEV: Custom MySQL configuration;
-- Article: PHP: Command line application example;
-- Article: PHP: Configuration component usage;
