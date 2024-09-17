@@ -56,7 +56,7 @@ final class SearchItemController extends AbstractStuffController implements Stuf
                 $this->createCommonView($request),
                 $form,
                 $this->getLocalDependencyContainer()->getStorageContainer()
-                ->getItemStorageContainer()->getSearchItemStorage()->iterateItemEntity(
+                ->getItemStorageContainer()->getSearchItemEntityStorage()->iterateItemEntity(
                     $this->applicationDependencyContainer->getDataExtractionContainer()
                     ->getStrictNonEmptyDataExtractionService()->getNonEmptyString(
                         $form->getField('search_item')->getValue(),

@@ -95,7 +95,7 @@ final class ItemController extends AbstractItemController implements StuffContro
         // Item id is null. Add new item.
 
         return $this->getLocalDependencyContainer()->getStorageContainer()
-            ->getItemStorageContainer()->getItemStorage()->addItem(
+            ->getItemStorageContainer()->getItemStorage()->createItem(
                 $this->createItemObjectFromForm($form),
                 $parentItemId,
                 $userId,
