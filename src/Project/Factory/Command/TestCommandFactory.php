@@ -7,7 +7,7 @@ namespace Project\Factory\Command;
 use Override;
 use Project\Command\Sandbox\TestCommand;
 use WebServCo\Command\Contract\CommandFactoryInterface;
-use WebServCo\Command\Contract\CommandInterface;
+use WebServCo\Command\Contract\CommandRunnerInterface;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
 
 final class TestCommandFactory implements CommandFactoryInterface
@@ -19,7 +19,7 @@ final class TestCommandFactory implements CommandFactoryInterface
     }
 
     #[Override]
-    public function createCommand(): CommandInterface
+    public function createCommand(): CommandRunnerInterface
     {
         $serviceContainer = $this->applicationDependencyContainer->getServiceContainer();
 

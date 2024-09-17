@@ -6,13 +6,13 @@ namespace Project\Command\Sandbox;
 
 use Override;
 use Project\Command\AbstractCommand;
-use WebServCo\Command\Contract\CommandInterface;
+use WebServCo\Command\Contract\CommandRunnerInterface;
 use WebServCo\Command\Contract\OutputInterface;
 use WebServCo\Stopwatch\Contract\LapTimerInterface;
 
 use function sprintf;
 
-final class TestCommand extends AbstractCommand implements CommandInterface
+final class TestCommand extends AbstractCommand implements CommandRunnerInterface
 {
     private const string PROCESSING_LAP_NAME = 'sandbox-test';
 
