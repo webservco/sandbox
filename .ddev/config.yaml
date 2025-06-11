@@ -1,20 +1,26 @@
 name: sandbox
 type: php
 docroot: public
-php_version: "8.3"
-webserver_type: apache-fpm
+#php_version: "8.3"
+#webserver_type: apache-fpm
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
-database:
-    type: mariadb
-    version: "10.5"
+# database:
+#    type: mariadb
+#    version: "10.5"
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
+
+# Custom configuration
+database:
+    type: mariadb
+    version: "11.4"
+php_version: "8.4"
 timezone: Europe/Budapest
-# php-ast is required for static analysis
 webimage_extra_packages: [php-ast]
+webserver_type: apache-fpm
 
 # Key features of DDEV's config.yaml:
 
