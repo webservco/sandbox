@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Stuff;
 
+use Override;
 use Project\Contract\Controller\StuffControllerInterface;
 use Project\Middleware\AuthenticationMiddleware;
 use Project\View\Stuff\AuthenticationView;
@@ -19,6 +20,7 @@ use function substr;
 
 final class AuthenticationController extends AbstractStuffController implements StuffControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Check if already authenticated
@@ -58,6 +60,7 @@ final class AuthenticationController extends AbstractStuffController implements 
      *
      * Use a custom template for this page.
      */
+    #[Override]
     protected function createMainViewContainer(
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\RequestHandler\Dynamic;
 
 use DomainException;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -25,6 +26,7 @@ final class SandboxRequestHandler extends AbstractDynamicRequestHandler implemen
     /**
      * @return array<string,string> interface/implementation
      */
+    #[Override]
     public function getAvailableViewRenderers(): array
     {
         return [
@@ -33,6 +35,7 @@ final class SandboxRequestHandler extends AbstractDynamicRequestHandler implemen
         ];
     }
 
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $route = $this->requestAttributeService->getRoutePart(2, $request);

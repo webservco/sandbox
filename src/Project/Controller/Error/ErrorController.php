@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Controller\Error;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Project\Contract\Controller\ErrorControllerInterface;
 use Project\View\Error\ErrorView;
 use Psr\Http\Message\ResponseInterface;
@@ -20,6 +21,7 @@ use function is_string;
 
 final class ErrorController extends AbstractErrorController implements ErrorControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Data processing would go here (use services).

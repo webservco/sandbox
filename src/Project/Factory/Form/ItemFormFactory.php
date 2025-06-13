@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Form;
 
+use Override;
 use Project\Contract\Factory\Stuff\ItemFormFactoryInterface;
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormInterface;
@@ -15,6 +16,7 @@ final class ItemFormFactory extends AbstractFormFactory implements ItemFormFacto
 {
     private ?Item $item = null;
 
+    #[Override]
     public function createForm(): FormInterface
     {
         return new HtmlPostForm(
@@ -27,6 +29,7 @@ final class ItemFormFactory extends AbstractFormFactory implements ItemFormFacto
         );
     }
 
+    #[Override]
     public function setItem(Item $item): bool
     {
         $this->item = $item;

@@ -11,6 +11,7 @@ namespace Project;
 use Project\Factory\Application\ApplicationFactoryFactory;
 use Psr\Log\NullLogger;
 use Throwable;
+use UnexpectedValueException;
 use WebServCo\Configuration\Service\ConfigurationFileProcessor;
 use WebServCo\Configuration\Service\IniServerConfigurationContainer;
 use WebServCo\DependencyContainer\Service\ApplicationDependencyContainer;
@@ -34,7 +35,11 @@ $startTime = (int) hrtime(true);
 /**
  * Configuration.
  */
-$projectPath = realpath(__DIR__ . '/..') . DIRECTORY_SEPARATOR;
+$projectPath = realpath(__DIR__ . '/..');
+if ($projectPath === false) {
+    throw new UnexpectedValueException('Failed to retrieve path.');
+}
+$projectPath .= DIRECTORY_SEPARATOR;
 
 /**
  * Composer autoload.

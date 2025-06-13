@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Controller;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use WebServCo\Controller\Service\AbstractDefaultController;
 use WebServCo\View\Contract\TemplateServiceInterface;
@@ -41,6 +42,7 @@ abstract class AbstractController extends AbstractDefaultController
      * (different template group based on user preference).
      * We could get an already set attribute from route.
      */
+    #[Override]
     protected function createTemplateService(string $projectPath): TemplateServiceInterface
     {
         // Make sure path contains trailing slash (trim + add back).

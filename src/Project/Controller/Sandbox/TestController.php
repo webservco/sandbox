@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Sandbox;
 
+use Override;
 use Project\Contract\Controller\SandboxControllerInterface;
 use Project\View\Sandbox\TestView;
 use Psr\Http\Message\ResponseInterface;
@@ -12,6 +13,7 @@ use WebServCo\View\Contract\ViewContainerInterface;
 
 final class TestController extends AbstractSandboxController implements SandboxControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Data processing would go here (use services).

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Instantiator\Controller;
 
 use LogicException;
+use Override;
 use Project\Contract\Controller\StuffControllerInterface;
 use Project\Factory\Container\StuffLocalDependencyContainerFactory;
 use WebServCo\Controller\Contract\ControllerInterface;
@@ -17,6 +18,7 @@ use WebServCo\View\Contract\ViewServicesContainerInterface;
 final class StuffModuleControllerInstantiator extends AbstractModuleControllerInstantiator implements
     ModuleControllerInstantiatorInterface
 {
+    #[Override]
     public function instantiateModuleController(
         ApplicationDependencyContainerInterface $applicationDependencyContainer,
         string $controllerClassName,

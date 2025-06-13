@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Container;
 
+use Override;
 use Project\Container\Stuff\LocalServiceContainer;
 use WebServCo\Database\Factory\PDOContainerMySQLFactory;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
@@ -16,6 +17,7 @@ final class StuffLocalDependencyContainerFactory implements LocalDependencyConta
     {
     }
 
+    #[Override]
     public function createLocalDependencyContainer(): LocalDependencyContainerInterface
     {
         $pdoContainerFactory = new PDOContainerMySQLFactory(

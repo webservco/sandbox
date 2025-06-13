@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Stuff;
 
+use Override;
 use Project\Contract\Container\Stuff\StuffLocalServiceContainerInterface;
 use Project\Controller\AbstractController;
 use Project\Middleware\AuthenticationMiddleware;
@@ -16,6 +17,7 @@ use WebServCo\View\Contract\ViewContainerInterface;
  */
 abstract class AbstractStuffController extends AbstractController
 {
+    #[Override]
     protected function createMainViewContainer(
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
@@ -26,6 +28,7 @@ abstract class AbstractStuffController extends AbstractController
     /**
      * Return local implementation of LocalDependencyContainerInterface
      */
+    #[Override]
     protected function getLocalDependencyContainer(): StuffLocalServiceContainerInterface
     {
         if (!$this->localDependencyContainer instanceof StuffLocalServiceContainerInterface) {

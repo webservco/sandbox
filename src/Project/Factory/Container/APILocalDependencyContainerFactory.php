@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Container;
 
+use Override;
 use WebServCo\DependencyContainer\Contract\LocalDependencyContainerFactoryInterface;
 use WebServCo\DependencyContainer\Contract\LocalDependencyContainerInterface;
 use WebServCo\JSONAPI\Container\APILocalServiceContainer;
@@ -11,6 +12,7 @@ use WebServCo\JSONAPI\Container\APILocalServiceContainer;
 final class APILocalDependencyContainerFactory extends AbstractLocalDependencyContainerFactory implements
     LocalDependencyContainerFactoryInterface
 {
+    #[Override]
     public function createLocalDependencyContainer(): LocalDependencyContainerInterface
     {
         return new APILocalServiceContainer($this->applicationDependencyContainer->getDataExtractionContainer());

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Instantiator\Controller;
 
+use Override;
 use Project\Contract\Controller\APIControllerInterface;
 use Project\Contract\Controller\ErrorControllerInterface;
 use Project\Contract\Controller\SandboxControllerInterface;
@@ -17,6 +18,7 @@ final class SpecificModuleControllerInstantiator extends AbstractSpecificModuleC
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function getAvailableModuleControllerInstantiators(): array
     {
         /**

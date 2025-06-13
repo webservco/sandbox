@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Form;
 
+use Override;
 use Project\Contract\Factory\Stuff\AuthenticationFormFactoryInterface;
 use Project\Service\Form\Validator\PasswordValidator;
 use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
@@ -18,6 +19,7 @@ final class AuthenticationFormFactory extends AbstractFormFactory implements Aut
     {
     }
 
+    #[Override]
     public function createForm(): FormInterface
     {
         return new HtmlPostForm(

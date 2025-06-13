@@ -9,6 +9,7 @@ use Fig\Http\Message\RequestMethodInterface;
 use JsonException;
 use OutOfBoundsException;
 use OutOfRangeException;
+use Override;
 use Project\Contract\Controller\APIControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,10 +26,11 @@ use WebServCo\View\Contract\ViewContainerInterface;
  * A general API Controller.
  *
  * @todo solve CouplingBetweenObjects
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 final class APIController extends AbstractAPIController implements APIControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Data processing would go here (use services).

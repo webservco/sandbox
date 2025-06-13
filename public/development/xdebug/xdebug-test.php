@@ -7,10 +7,9 @@
 declare(strict_types=1);
 
 /**
- * @psalm-suppress RiskyCast
  * phpcs:disable SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable.DisallowedSuperGlobalVariable
  */
-$id = array_key_exists('id', $_GET)
+$id = array_key_exists('id', $_GET) && is_scalar($_GET['id'])
 ? (int) $_GET['id']
 : null;
 

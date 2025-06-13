@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Controller\Error;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Project\Contract\Controller\ErrorControllerInterface;
 use Project\View\Error\NotFoundView;
 use Psr\Http\Message\ResponseInterface;
@@ -13,6 +14,7 @@ use WebServCo\View\Contract\ViewContainerInterface;
 
 final class NotFoundController extends AbstractErrorController implements ErrorControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Data processing would go here (use services).

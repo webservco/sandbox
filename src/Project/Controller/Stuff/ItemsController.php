@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Stuff;
 
+use Override;
 use Project\Contract\Controller\StuffControllerInterface;
 use Project\View\Stuff\ItemsView;
 use Psr\Http\Message\ResponseInterface;
@@ -12,6 +13,7 @@ use WebServCo\View\Contract\ViewContainerInterface;
 
 final class ItemsController extends AbstractStuffController implements StuffControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Get mandatory userId.

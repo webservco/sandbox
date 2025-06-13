@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Form;
 
+use Override;
 use Project\Contract\Factory\Stuff\SearchItemFormFactoryInterface;
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormInterface;
@@ -12,6 +13,7 @@ use WebServCo\Form\Service\HtmlPostForm;
 
 final class SearchItemFormFactory extends AbstractFormFactory implements SearchItemFormFactoryInterface
 {
+    #[Override]
     public function createForm(): FormInterface
     {
         return new HtmlPostForm(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Container\Stuff;
 
+use Override;
 use Project\Contract\Container\Stuff\FormFactoryContainerInterface;
 use Project\Contract\Container\Stuff\StuffLocalServiceContainerInterface;
 use WebServCo\Configuration\Contract\ConfigurationGetterInterface;
@@ -24,6 +25,7 @@ final class LocalServiceContainer implements StuffLocalServiceContainerInterface
     ) {
     }
 
+    #[Override]
     public function getFormFactoryContainer(): FormFactoryContainerInterface
     {
         if ($this->formFactoryContainer === null) {
@@ -33,6 +35,7 @@ final class LocalServiceContainer implements StuffLocalServiceContainerInterface
         return $this->formFactoryContainer;
     }
 
+    #[Override]
     public function getStorageContainer(): StuffStorageContainerInterface
     {
         if ($this->storageContainer === null) {

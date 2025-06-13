@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Http;
 
+use Override;
 use Project\Factory\Middleware\ResourceMiddlewareFactory;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -28,6 +29,7 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
      *
      * @phpcs:disable SlevomatCodingStandard.Functions.FunctionLength.FunctionLength
      */
+    #[Override]
     public function createRequestHandler(): RequestHandlerInterface
     {
         $stackHandler = $this->createStackHandler();

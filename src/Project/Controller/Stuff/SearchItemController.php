@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Stuff;
 
+use Override;
 use Project\Contract\Controller\StuffControllerInterface;
 use Project\View\Stuff\SearchItemView;
 use Psr\Http\Message\ResponseInterface;
@@ -16,6 +17,7 @@ use function sprintf;
 
 final class SearchItemController extends AbstractStuffController implements StuffControllerInterface
 {
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Get mandatory userId.

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Container\Stuff;
 
+use Override;
 use Project\Contract\Container\Stuff\FormFactoryContainerInterface;
 use Project\Contract\Factory\Stuff\AuthenticationFormFactoryInterface;
 use Project\Contract\Factory\Stuff\ItemFormFactoryInterface;
@@ -23,6 +24,7 @@ final class FormFactoryContainer implements FormFactoryContainerInterface
     {
     }
 
+    #[Override]
     public function getAuthenticationFormFactory(): AuthenticationFormFactoryInterface
     {
         if ($this->authenticationFormFactory === null) {
@@ -32,6 +34,7 @@ final class FormFactoryContainer implements FormFactoryContainerInterface
         return $this->authenticationFormFactory;
     }
 
+    #[Override]
     public function getItemFormFactory(): ItemFormFactoryInterface
     {
         if ($this->itemFormFactory === null) {
@@ -41,6 +44,7 @@ final class FormFactoryContainer implements FormFactoryContainerInterface
         return $this->itemFormFactory;
     }
 
+    #[Override]
     public function getSearchItemFormFactory(): SearchItemFormFactoryInterface
     {
         if ($this->searchItemFormFactory === null) {

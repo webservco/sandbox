@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Factory\Http;
 
+use Override;
 use Project\Controller\Error\NotFoundController;
 use Psr\Log\LoggerInterface;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
@@ -22,6 +23,7 @@ final class StackHandlerFactory implements RequestHandlerFactoryInterface
     ) {
     }
 
+    #[Override]
     public function createRequestHandler(): StackHandler
     {
         return new StackHandler(

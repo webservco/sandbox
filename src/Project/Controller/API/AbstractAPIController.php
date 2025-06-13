@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Controller\API;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Project\Controller\AbstractController;
 use Project\Middleware\API\ApiAuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
@@ -26,7 +27,7 @@ use function sprintf;
  * An abstract controller with dependencies specific to current module.
  *
  * @todo solve CouplingBetweenObjects
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 abstract class AbstractAPIController extends AbstractController
 {
@@ -61,6 +62,7 @@ abstract class AbstractAPIController extends AbstractController
         );
     }
 
+    #[Override]
     protected function createMainViewContainer(
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
@@ -83,6 +85,7 @@ abstract class AbstractAPIController extends AbstractController
     /**
      * Return local implementation of LocalDependencyContainerInterface
      */
+    #[Override]
     protected function getLocalDependencyContainer(): APILocalServiceContainerInterface
     {
         if (!$this->localDependencyContainer instanceof APILocalServiceContainerInterface) {

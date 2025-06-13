@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\RequestHandler\Dynamic;
 
+use Override;
 use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Http\Service\Message\Request\RequestHandler\Dynamic\AbstractApiDynamicRequestHandler;
 use WebServCo\View\Contract\HTMLRendererInterface;
@@ -22,6 +23,7 @@ final class ApiRequestHandler extends AbstractApiDynamicRequestHandler implement
     /**
      * @return array<string,string> interface/implementation
      */
+    #[Override]
     public function getAvailableViewRenderers(): array
     {
         // @phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder

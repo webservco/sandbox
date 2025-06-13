@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Middleware;
 
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,6 +33,7 @@ final class AuthenticationMiddleware implements MiddlewareInterface
     ) {
     }
 
+    #[Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Check if condition applies.

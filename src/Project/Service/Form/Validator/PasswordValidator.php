@@ -6,6 +6,7 @@ namespace Project\Service\Form\Validator;
 
 use Error;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Throwable;
 use WebServCo\Form\Contract\FormFieldInterface;
 use WebServCo\Form\Contract\FormValidatorInterface;
@@ -16,11 +17,13 @@ final class PasswordValidator implements FormValidatorInterface
     {
     }
 
+    #[Override]
     public function getError(): Throwable
     {
         return new Error('Invalid password.', StatusCodeInterface::STATUS_BAD_REQUEST);
     }
 
+    #[Override]
     public function validate(FormFieldInterface $formField): bool
     {
         return $formField->getValue() === $this->authenticationPassword;
