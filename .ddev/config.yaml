@@ -16,8 +16,8 @@ web_environment: []
 # Custom configuration
 database:
     type: mariadb
-    version: "11.4"
-php_version: "8.4"
+    version: "11.8"
+php_version: "8.5"
 timezone: Europe/Budapest
 webimage_extra_packages: [php-ast]
 webserver_type: apache-fpm
