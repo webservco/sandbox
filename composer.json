@@ -45,7 +45,7 @@
         "webservco/http-request-handler": "^1",
         "webservco/jsonapi": "^1",
         "webservco/jsonapi-application": "^1",
-        "webservco/jwt": "^1",
+        "webservco/jwt": "^2",
         "webservco/log": "^1",
         "webservco/middleware": "^1",
         "webservco/route": "^1",
