@@ -14,3 +14,6 @@ git clone https://github.com/webservco/sandbox.git
 ddev composer update
 ```
 
+## Guides in progress
+
+- [Building applications with the WebServCo components](PracticalReference/index.md)
