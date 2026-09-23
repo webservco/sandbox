@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>PHP: WebServCo component reference - Sandbox</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Sandbox</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Index</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Development</a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">PHP</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/ErrorHandling/" class="dropdown-item">Error Handling</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Application</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/Application/" class="dropdown-item">PHP: Application: index</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_setup/" class="dropdown-item">PHP: Application setup</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_structure/" class="dropdown-item">Application: Project structure</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_todo/" class="dropdown-item">Application: TODO</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Sandbox</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/Sandbox/" class="dropdown-item">PHP: Sandbox: index</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">PracticalReference</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../" class="dropdown-item">PHP: Sandbox: building applications</a>
+</li>
+                                    
+<li>
+    <a href="../application-architecture/" class="dropdown-item">PHP: Application architecture</a>
+</li>
+                                    
+<li>
+    <a href="../coding-standards/" class="dropdown-item">PHP: Coding standards and development</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">PHP: WebServCo component reference</a>
+</li>
+                                    
+<li>
+    <a href="../feature-workflows/" class="dropdown-item">PHP: Feature workflows</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../coding-standards/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../feature-workflows/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#php-webservco-component-reference" class="nav-link">PHP: WebServCo component reference</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#integration-model" class="nav-link">Integration model</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#component-boundaries-used-by-the-app" class="nav-link">Component boundaries used by the app</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#useful-source-files" class="nav-link">Useful source files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="php-webservco-component-reference">PHP: WebServCo component reference</h1>
+<h2 id="integration-model">Integration model</h2>
+<p>The application composes small WebServCo packages through Composer. The <code>WebServCo\</code> namespace contains the component APIs and implementations; <code>Project\</code> contains app-specific wiring and behavior. PSR interfaces define key seams, especially PSR-7 messages, PSR-15 middleware and handlers, PSR-3 logging, and PSR-17 factories.</p>
+<p>Prefer component contracts at application boundaries and concrete implementations inside factories. A new feature should first reuse an installed component interface and service where it fits, then add project-specific code at the nearest app boundary.</p>
+<p>The following table summarizes the WebServCo runtime components visible in the installed dependency tree and how the sandbox uses them. <code>composer.json</code> lists the direct package requirements; some components below are installed transitively.</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Responsibility in this application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>webservco/app-stuff-common</code></td>
+<td>Shared Stuff route name, item DTO/entity, storage contracts, containers, and prepared SQL for the example item feature.</td>
+</tr>
+<tr>
+<td><code>webservco/application</code></td>
+<td>Application lifecycle and runner contracts.</td>
+</tr>
+<tr>
+<td><code>webservco/application-default</code></td>
+<td>Default server and command application implementations.</td>
+</tr>
+<tr>
+<td><code>webservco/application-runner</code></td>
+<td>Connects a PSR request handler to the SAPI response emitter.</td>
+</tr>
+<tr>
+<td><code>webservco/command</code></td>
+<td>Command factory/runner and output contracts/services.</td>
+</tr>
+<tr>
+<td><code>webservco/configuration</code></td>
+<td>INI/PHP configuration loading and typed configuration access.</td>
+</tr>
+<tr>
+<td><code>webservco/controller</code></td>
+<td>Controller contracts, module-specific instantiation, reflection validation, and default controller response/view helpers.</td>
+</tr>
+<tr>
+<td><code>webservco/data</code></td>
+<td>DTO marker and strict/loose data-extraction services.</td>
+</tr>
+<tr>
+<td><code>webservco/database</code></td>
+<td>PDO configuration/container/factory and query helpers.</td>
+</tr>
+<tr>
+<td><code>webservco/dependency-container</code></td>
+<td>Application, service, factory, request, and response containers.</td>
+</tr>
+<tr>
+<td><code>webservco/emitter</code></td>
+<td>SAPI and stack emitters used to send the response.</td>
+</tr>
+<tr>
+<td><code>webservco/environment</code></td>
+<td>Environment identifiers used to control error detail.</td>
+</tr>
+<tr>
+<td><code>webservco/error</code></td>
+<td>PHP error handling service initialized by the default application.</td>
+</tr>
+<tr>
+<td><code>webservco/exception</code></td>
+<td>Logged application and uncaught exception handlers.</td>
+</tr>
+<tr>
+<td><code>webservco/form</code></td>
+<td>Form, field, filter, validator, and POST handling contracts and implementations.</td>
+</tr>
+<tr>
+<td><code>webservco/http</code></td>
+<td>PSR HTTP message factories, server-request creation, and request/response service contracts.</td>
+</tr>
+<tr>
+<td><code>webservco/http-request-handler</code></td>
+<td>Middleware stack, dynamic module handlers, and exception/fallback handlers.</td>
+</tr>
+<tr>
+<td><code>webservco/http-request-service</code></td>
+<td>Request method/body/header and server-attribute services used by containers and API handling.</td>
+</tr>
+<tr>
+<td><code>webservco/http-response-service</code></td>
+<td>Response status-code service.</td>
+</tr>
+<tr>
+<td><code>webservco/jsonapi</code></td>
+<td>JSON:API document, data, and error contracts/DTOs.</td>
+</tr>
+<tr>
+<td><code>webservco/jsonapi-application</code></td>
+<td>JSON:API handler, request validation, service containers, and API view types.</td>
+</tr>
+<tr>
+<td><code>webservco/jwt</code></td>
+<td>HS256 JWT decoder and normalized payload DTO.</td>
+</tr>
+<tr>
+<td><code>webservco/log</code></td>
+<td>Context logger factory and log services.</td>
+</tr>
+<tr>
+<td><code>webservco/middleware</code></td>
+<td>Routing, resource dispatch, exception, logging, and renderer-selection middleware.</td>
+</tr>
+<tr>
+<td><code>webservco/route</code></td>
+<td>Route configuration contract, value object, and PHP route-file loader.</td>
+</tr>
+<tr>
+<td><code>webservco/reflection</code></td>
+<td>Reflection factories/services used to inspect controller interfaces and constructor parameters.</td>
+</tr>
+<tr>
+<td><code>webservco/session</code></td>
+<td>Session configuration, cookie settings, and session service.</td>
+</tr>
+<tr>
+<td><code>webservco/stopwatch</code></td>
+<td>Lap timer and statistics used during startup, request handling, and commands.</td>
+</tr>
+<tr>
+<td><code>webservco/view</code></td>
+<td>View contracts, view containers, renderer selection, HTML/JSON renderers, and template rendering.</td>
+</tr>
+</tbody>
+</table>
+<p>The runtime package constraints are in <code>composer.json</code>. Development tools and their project configuration are described in <a href="../coding-standards/">Coding standards and development</a>.</p>
+<h2 id="component-boundaries-used-by-the-app">Component boundaries used by the app</h2>
+<h3 id="application-and-dependency-containers">Application and dependency containers</h3>
+<p><code>ApplicationDependencyContainer</code> is created once per bootstrap and lazily provides application-wide services. The project passes it into:</p>
+<ul>
+<li><code>ApplicationFactoryFactory</code>, which builds a default server application;</li>
+<li>module local-container factories, which add dependencies to a controller's local container;</li>
+<li>command factories, which construct command dependencies.</li>
+</ul>
+<p><code>ServiceContainer</code> lazily creates the configuration getter and session service, caches loggers and output services by channel, and exposes the injected lap timer. The application dependency container also lazily creates the data-extraction, factory, request, response, and service containers. Module containers cache their own factories and storage services. This keeps object creation in composition code, while controllers use injected containers.</p>
+<h3 id="controllers-and-route-configuration">Controllers and route configuration</h3>
+<p>The route loader turns arrays of route keys and class names into <code>RouteConfiguration</code> objects. The controller instantiator checks the class and its interfaces, selects the module-specific instantiator from the marker interface, and creates a view-services container with a renderer selected for the request.</p>
+<p>An application controller generally:</p>
+<ul>
+<li>implements the marker interface for its module;</li>
+<li>extends <code>Project\Controller\AbstractController</code> directly or the module's abstract controller;</li>
+<li>exposes <code>handle(ServerRequestInterface): ResponseInterface</code>;</li>
+<li>creates a typed view and a <code>ViewContainer</code>;</li>
+<li>returns a response or a redirect.</li>
+</ul>
+<h3 id="views-and-templates">Views and templates</h3>
+<p>The <code>ViewInterface</code> is the data boundary between a controller and renderer. App views extend <code>AbstractView</code>, whose <code>escape()</code> method is intended for HTML escaping. <code>ViewContainer</code> combines a view object with a template name and later receives a <code>TemplateService</code>.</p>
+<p>The HTML renderer includes the requested PHP template in a scoped render method with <code>$view</code> available. The JSON renderers serialize the view object. The base controller wraps only HTML views in a <code>MainView</code>; non-HTML data is rendered directly.</p>
+<h3 id="input-and-data-transfer">Input and data transfer</h3>
+<p>The data extraction container exposes both strict and loose services, with scalar and non-empty variants and array-aware variants:</p>
+<ul>
+<li>use <strong>strict</strong> extraction when the value must already have the expected type;</li>
+<li>use <strong>loose</strong> extraction where scalar coercion is appropriate, such as a route string interpreted as an optional integer;</li>
+<li>use a <strong>non-empty</strong> service when empty values are invalid.</li>
+</ul>
+<p>Forms own filtering and validation of submitted field data. Convert valid form values into a DTO before calling a storage or domain service. The Stuff <code>Item</code> DTO contains the name and description; <code>ItemEntity</code> represents a persisted item with its id and parent relationship.</p>
+<h3 id="storage">Storage</h3>
+<p>The project Stuff local container creates the MySQL PDO container from typed configuration, then supplies the shared <code>StuffStorageContainer</code>. Storage methods use prepared statements, hydrate rows into DTO/entity objects, and include user ownership checks in item queries.</p>
+<p>The database schema is outside this repository. The shared library assumes a <code>stuff_item</code> table and related columns; this app has no migration tooling or schema definition checked in.</p>
+<h2 id="useful-source-files">Useful source files</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Project wiring</th>
+<th>Component implementation to understand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Server app</td>
+<td><code>src/Project/Factory/Application/ApplicationFactoryFactory.php</code>, <code>public/index.php</code></td>
+<td><code>application-default</code>, <code>application-runner</code></td>
+</tr>
+<tr>
+<td>Middleware stack</td>
+<td><code>src/Project/Factory/Http/RequestHandlerFactory.php</code></td>
+<td><code>http-request-handler</code>, <code>middleware</code></td>
+</tr>
+<tr>
+<td>Route dispatch</td>
+<td><code>src/Project/Factory/Middleware/ResourceMiddlewareFactory.php</code></td>
+<td><code>route</code>, dynamic request handlers</td>
+</tr>
+<tr>
+<td>Controller creation</td>
+<td><code>src/Project/Instantiator/Controller/</code></td>
+<td><code>controller</code>, <code>reflection</code></td>
+</tr>
+<tr>
+<td>Page rendering</td>
+<td><code>src/Project/Controller/AbstractController.php</code>, <code>src/Project/View/</code></td>
+<td><code>view</code></td>
+</tr>
+<tr>
+<td>Forms</td>
+<td><code>src/Project/Factory/Form/</code>, <code>src/Project/Controller/Stuff/</code></td>
+<td><code>form</code></td>
+</tr>
+<tr>
+<td>API request</td>
+<td><code>src/Project/Middleware/API/ApiAuthenticationMiddleware.php</code>, <code>src/Project/Controller/API/</code></td>
+<td><code>jwt</code>, <code>jsonapi</code>, <code>jsonapi-application</code></td>
+</tr>
+<tr>
+<td>Stuff persistence</td>
+<td><code>src/Project/Factory/Container/StuffLocalDependencyContainerFactory.php</code></td>
+<td><code>app-stuff-common</code>, <code>database</code>, <code>data</code></td>
+</tr>
+<tr>
+<td>CLI</td>
+<td><code>bin/SandboxTest.php</code>, <code>src/Project/Factory/Command/</code></td>
+<td><code>command</code>, <code>application-default</code></td>
+</tr>
+</tbody>
+</table></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

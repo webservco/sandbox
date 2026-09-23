@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>PHP: Application architecture - Sandbox</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Sandbox</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Index</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Development</a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">PHP</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/ErrorHandling/" class="dropdown-item">Error Handling</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Application</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/Application/" class="dropdown-item">PHP: Application: index</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_setup/" class="dropdown-item">PHP: Application setup</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_structure/" class="dropdown-item">Application: Project structure</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_todo/" class="dropdown-item">Application: TODO</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Sandbox</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/Sandbox/" class="dropdown-item">PHP: Sandbox: index</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">PracticalReference</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../" class="dropdown-item">PHP: Sandbox: building applications</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">PHP: Application architecture</a>
+</li>
+                                    
+<li>
+    <a href="../coding-standards/" class="dropdown-item">PHP: Coding standards and development</a>
+</li>
+                                    
+<li>
+    <a href="../components/" class="dropdown-item">PHP: WebServCo component reference</a>
+</li>
+                                    
+<li>
+    <a href="../feature-workflows/" class="dropdown-item">PHP: Feature workflows</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../coding-standards/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#php-application-architecture" class="nav-link">PHP: Application architecture</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#main-request-path" class="nav-link">Main request path</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-authentication-and-response-path" class="nav-link">API authentication and response path</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#session-authentication-path" class="nav-link">Session authentication path</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-paths" class="nav-link">Error paths</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="php-application-architecture">PHP: Application architecture</h1>
+<h2 id="main-request-path">Main request path</h2>
+<h3 id="project-directory-map">Project directory map</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/Project/Command/</code></td>
+<td>CLI command implementations.</td>
+</tr>
+<tr>
+<td><code>src/Project/Container/</code></td>
+<td>Application and module-local container implementations.</td>
+</tr>
+<tr>
+<td><code>src/Project/Contract/</code></td>
+<td>App-specific interfaces, including module controller markers and container/form-factory contracts.</td>
+</tr>
+<tr>
+<td><code>src/Project/Controller/</code></td>
+<td>Request-to-response orchestration. Controllers use application and local dependencies, then create responses and views.</td>
+</tr>
+<tr>
+<td><code>src/Project/Factory/</code></td>
+<td>Constructs applications, commands, containers, forms, request handlers, and middleware.</td>
+</tr>
+<tr>
+<td><code>src/Project/Instantiator/</code></td>
+<td>Selects and configures module-specific controller instantiators.</td>
+</tr>
+<tr>
+<td><code>src/Project/Middleware/</code></td>
+<td>Project-specific request processing, currently session and API authentication.</td>
+</tr>
+<tr>
+<td><code>src/Project/RequestHandler/</code></td>
+<td>Module request handlers, including renderer capabilities and special route behavior.</td>
+</tr>
+<tr>
+<td><code>src/Project/Service/</code></td>
+<td>Project-specific services and validators.</td>
+</tr>
+<tr>
+<td><code>src/Project/View/</code></td>
+<td>Typed view data objects passed to renderers.</td>
+</tr>
+<tr>
+<td><code>config/{Module}/Routes.php</code></td>
+<td>Route-key-to-controller maps loaded at runtime.</td>
+</tr>
+<tr>
+<td><code>resources/templates/vanilla/</code></td>
+<td>HTML page templates and module-specific templates.</td>
+</tr>
+<tr>
+<td><code>public/</code> and <code>bin/</code></td>
+<td>Web and CLI entry points.</td>
+</tr>
+<tr>
+<td><code>tests/</code></td>
+<td>HTTP request examples; PHPUnit is configured, but no unit tests are currently present.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="web-bootstrap">Web bootstrap</h3>
+<p><code>public/index.php</code> performs the shared web initialization in this order:</p>
+<ol>
+<li>Capture a high-resolution start time with <code>hrtime()</code>.</li>
+<li>Resolve the project root and include Composer's autoloader.</li>
+<li>Create a <code>NullLogger</code>, then start the lap timer and create the <code>ApplicationDependencyContainer</code>.</li>
+<li>Resolve the application logger and load <code>config/.env.ini</code> through <code>ConfigurationFileProcessor</code>.</li>
+<li>Register the uncaught exception handler and record initialization timing.</li>
+<li>Create the server application factories, create the PSR-7 server request from PHP's server data, bootstrap the default application, and run it.</li>
+</ol>
+<p>Initialization is wrapped in a <code>Throwable</code> catch. If setup fails before normal application error handling is ready, the script logs an emergency message when possible, prints a generic initialization message, and exits with status 1. After initialization, exceptions are handled by the application middleware or registered uncaught handler.</p>
+<p><code>public/.htaccess</code> sends paths that are not existing files or directories to <code>index.php</code>. Apache is the configured DDEV web server.</p>
+<h3 id="middleware-order">Middleware order</h3>
+<p><code>RequestHandlerFactory::createRequestHandler()</code> adds these middlewares to <code>StackHandler</code> in the listed order. <code>StackHandler</code> consumes the stack from the first added middleware to the last:</p>
+<ol>
+<li><strong>Exception handler 1</strong> wraps the rest of the pipeline and can render exceptions thrown during content negotiation or routing.</li>
+<li><strong>View renderer setting</strong> reads <code>Accept</code> and sets the requested renderer interface on the request. A missing header is treated as <code>*/*</code>.</li>
+<li><strong>Route middleware</strong> maps a recognized URL prefix to numbered route-part attributes.</li>
+<li><strong>Session authentication</strong> only acts when route part 1 is <code>stuff</code>; other modules pass straight through.</li>
+<li><strong>Request logger</strong> logs requests that continue to this point.</li>
+<li><strong>API authentication</strong> only acts when route part 1 is <code>api</code>.</li>
+<li><strong>Exception handler 2</strong> wraps resource dispatch and controller execution so application exceptions can use the normal response path.</li>
+<li><strong>Resource middleware</strong> selects the dynamic request handler for <code>api</code>, <code>sandbox</code>, or <code>stuff</code>.</li>
+<li>The selected module handler resolves its route configuration, chooses a renderer, instantiates the controller, and calls <code>handle()</code>.</li>
+</ol>
+<p>When no middleware handles a request, <code>StackHandler</code> calls its fallback <code>ExceptionRequestHandler</code>, configured with <code>NotFoundController</code>. A recognized module prefix with an unconfigured route reaches its module handler and currently throws <code>UnexpectedValueException</code>; that is sent through <code>ErrorController</code>, rather than the fallback 404 controller.</p>
+<p>The stack is consumed as it handles a request. The application runner creates a request handler for the server application run, which handles that request once.</p>
+<h3 id="route-parts-and-route-configuration">Route parts and route configuration</h3>
+<p><code>RouteMiddleware</code> uses a base path of <code>/</code>, default route <code>sandbox/test</code>, and the handled prefixes <code>api</code>, <code>sandbox</code>, and <code>stuff</code>. It strips the base path and surrounding slashes, splits the rest on <code>/</code>, and stores the parts as request attributes named by the HTTP request component's route-part template.</p>
+<table>
+<thead>
+<tr>
+<th>Request</th>
+<th>Route part 1</th>
+<th>Route part 2</th>
+<th>Route part 3</th>
+<th>Route lookup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td><code>sandbox</code></td>
+<td><code>test</code></td>
+<td>—</td>
+<td><code>config/Sandbox/Routes.php</code> key <code>test</code></td>
+</tr>
+<tr>
+<td><code>/sandbox/test/hello</code></td>
+<td><code>sandbox</code></td>
+<td><code>test</code></td>
+<td><code>hello</code></td>
+<td>key <code>test</code>; the controller reads part 3</td>
+</tr>
+<tr>
+<td><code>/stuff/items/42</code></td>
+<td><code>stuff</code></td>
+<td><code>items</code></td>
+<td><code>42</code></td>
+<td><code>config/Stuff/Routes.php</code> key <code>items</code></td>
+</tr>
+<tr>
+<td><code>/api/v1/version</code></td>
+<td><code>api</code></td>
+<td><code>v1</code></td>
+<td><code>version</code></td>
+<td>API handler combines parts 2 and 3 as <code>v1/version</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>ResourceMiddlewareFactory</code> loads each <code>config/{Module}/Routes.php</code> file and builds <code>RouteConfiguration</code> objects from the string-to-controller map. Standard dynamic handlers use part 2 as the key. The API handler uses the API version as part 2 and endpoint name as part 3, with an optional fourth part.</p>
+<p>Route parts are stripped of tags and passed through <code>htmlspecialchars()</code> by the shared route middleware. This is route normalization, not a substitute for validating a value for the operation that consumes it or escaping output for its final context.</p>
+<h3 id="controller-creation-and-dependencies">Controller creation and dependencies</h3>
+<p>Every application controller implements <code>WebServCo\Controller\Contract\ControllerInterface</code> through a module marker interface in <code>Project\Contract\Controller</code>. The module marker is the dispatch key for controller creation:</p>
+<ol>
+<li><code>ControllerInstantiator</code> checks the configured class exists and implements the controller contract.</li>
+<li><code>SpecificModuleControllerInstantiator</code> checks its ordered interface-to-instantiator map.</li>
+<li>The selected module instantiator creates that module's local dependency container.</li>
+<li><code>AbstractModuleControllerInstantiator</code> validates the controller constructor types and uses reflection to pass the application container, local container, and view-services container.</li>
+</ol>
+<p>The most specific marker interface must appear before any broader marker in <code>SpecificModuleControllerInstantiator::getAvailableModuleControllerInstantiators()</code>.</p>
+<p>There are three dependency scopes:</p>
+<ul>
+<li><strong>Application container</strong>: shared configuration, data-extraction, HTTP factories and services, logger, session, and lap timer.</li>
+<li><strong>Module-local container</strong>: services needed only in a module. The Sandbox and Error modules use an empty container; API uses the JSON:API local container; Stuff adds its form factories and storage container.</li>
+<li><strong>View-services container</strong>: the selected renderer and <code>ViewContainerFactory</code> for the current controller.</li>
+</ul>
+<p>Container implementations lazily create and cache their contained objects. Module factories are the place to add module-specific dependencies; controller constructors should receive their existing three container arguments from the instantiator.</p>
+<h3 id="content-negotiation-and-rendering">Content negotiation and rendering</h3>
+<p>The middleware translates supported <code>Accept</code> values into renderer interfaces:</p>
+<ul>
+<li><code>text/html</code> selects HTML where the module provides it.</li>
+<li><code>application/json</code> selects JSON for Sandbox and Stuff.</li>
+<li><code>application/vnd.api+json</code> selects JSON:API for the API module.</li>
+<li><code>*/*</code> means any renderer; the resolver picks the first renderer in the module's renderer list.</li>
+</ul>
+<p>The module handlers declare supported renderers in <code>getAvailableViewRenderers()</code>. The API list puts JSON:API first and HTML second; Sandbox and Stuff list HTML first and JSON second. Unsupported explicit media types throw and are handled by exception middleware. The exception request handler has its own HTML/JSON/JSON:API renderer set and falls back to JSON if no requested type can be resolved.</p>
+<p>Controllers create a view object, wrap it in a <code>ViewContainer</code> with a template name such as <code>stuff/item</code>, and pass the container to <code>createResponse()</code>. The view container gets its <code>TemplateService</code> from <code>Project\Controller\AbstractController</code>, which points at <code>resources/templates/vanilla</code> and appends <code>.php</code>.</p>
+<p>For HTML responses, <code>AbstractDefaultControllerBase</code> renders the page view first, puts that HTML string in <code>MainView::data</code>, then renders the module's main template. API, Sandbox, Stuff, and Error abstract controllers select their own main template. For non-HTML renderers, the page container is rendered directly and no HTML main view is wrapped around it.</p>
+<p>Each template receives its typed view as <code>$view</code>. Templates assert the expected view type, then output that view's values. <code>AbstractView::escape()</code> performs HTML escaping for a nullable string. Use it for dynamic text and attribute values; filtering input or sanitizing a route does not make a value safe for HTML.</p>
+<h3 id="response-creation">Response creation</h3>
+<p><code>AbstractDefaultController::createResponse()</code> creates the response through the application response factory, renders a body when a view is present, and sets <code>Content-Type</code> from the selected renderer and <code>Content-Length</code> from the stream size. <code>createRedirectResponse()</code> checks that the status is a redirect status before adding the <code>Location</code> header. The project-level <code>createLocalRedirectResponse()</code> uses configured <code>BASE_URL</code> and defaults to <code>303 See Other</code>.</p>
+<h2 id="api-authentication-and-response-path">API authentication and response path</h2>
+<p><code>ApiAuthenticationMiddleware</code> runs for the <code>api</code> prefix. It expects an <code>Authorization: Bearer &lt;JWT&gt;</code> header, decodes using HS256 and <code>JWT_SECRET</code>, requires scalar <code>iss</code> and <code>sub</code> claims, and accepts the token only when <code>iss</code> equals configured <code>API_KEY</code>. It writes <code>sub</code> to the request's <code>userId</code> attribute. API controllers read that attribute through the strict data-extraction service.</p>
+<p><code>ApiRequestHandler</code> advertises JSON:API and HTML renderers. <code>APIController</code> creates a JSON:API handler that accepts GET, processes the request, and builds the example <code>ItemView</code>; its metadata includes the route and configured API version. Invalid request data is converted into JSON:API error objects by <code>AbstractAPIController</code>. Both <code>v1/about</code> and <code>v1/version</code> currently map to <code>APIController</code>; endpoint-specific business logic is not implemented.</p>
+<h2 id="session-authentication-path">Session authentication path</h2>
+<p><code>AuthenticationMiddleware</code> acts only under <code>/stuff</code>. It starts a session in web SAPIs, permits <code>/stuff/authenticate</code> through while unauthenticated, and otherwise stores a next-location value and returns a 303 redirect. An authenticated request receives <code>isAuthenticated</code> and <code>userId</code> attributes.</p>
+<p><code>AuthenticationController</code> builds a password form using the configured password. A valid submission stores <code>isAuthenticated</code> and a generated <code>userId</code> in the session, clears the saved next location, and redirects back to the requested page (or <code>/stuff/items</code>). The logout controller destroys the session and redirects to authentication.</p>
+<p>This is a small demonstration login: it uses one configured shared password and derives its example user id from that password. It is not a full user-account or production authentication design.</p>
+<h2 id="error-paths">Error paths</h2>
+<ul>
+<li><strong>Unknown top-level path</strong>: no route prefix claims it, so the stack fallback invokes <code>NotFoundController</code> and returns 404.</li>
+<li><strong>Unknown route inside a known module</strong>: the dynamic handler throws, and exception middleware invokes <code>ErrorController</code>.</li>
+<li><strong>Application exception during dispatch</strong>: exception middleware logs through the exception handler, adds the throwable to the request, then calls the configured error controller.</li>
+<li><strong>Exception before middleware is built or an exception while rendering an error</strong>: the registered uncaught handler logs and emits a generic message; in a web SAPI it sets status 500.</li>
+</ul>
+<p><code>ErrorController</code> reveals exception code and message only in development and testing. In staging and production it uses a generic message and a 500 display code. It accepts an exception's numeric HTTP status only if the status code is recognized; otherwise it responds with 500.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

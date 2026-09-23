@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>PHP: Feature workflows - Sandbox</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Sandbox</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Index</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Development</a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">PHP</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/ErrorHandling/" class="dropdown-item">Error Handling</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Application</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/Application/" class="dropdown-item">PHP: Application: index</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_setup/" class="dropdown-item">PHP: Application setup</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_structure/" class="dropdown-item">Application: Project structure</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_todo/" class="dropdown-item">Application: TODO</a>
+</li>
+            
+<li>
+    <a href="../../Development/PHP/Application/application_workflow/" class="dropdown-item">Application: Workflow (WIP)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Sandbox</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Development/PHP/Sandbox/" class="dropdown-item">PHP: Sandbox: index</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">PracticalReference</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../" class="dropdown-item">PHP: Sandbox: building applications</a>
+</li>
+                                    
+<li>
+    <a href="../application-architecture/" class="dropdown-item">PHP: Application architecture</a>
+</li>
+                                    
+<li>
+    <a href="../coding-standards/" class="dropdown-item">PHP: Coding standards and development</a>
+</li>
+                                    
+<li>
+    <a href="../components/" class="dropdown-item">PHP: WebServCo component reference</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">PHP: Feature workflows</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../components/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#php-feature-workflows" class="nav-link">PHP: Feature workflows</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#add-a-page-to-an-existing-module" class="nav-link">Add a page to an existing module</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#add-a-new-top-level-module" class="nav-link">Add a new top-level module</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#handle-a-form" class="nav-link">Handle a form</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#add-or-change-a-stuff-storage-operation" class="nav-link">Add or change a Stuff storage operation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#add-an-api-route" class="nav-link">Add an API route</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#add-middleware" class="nav-link">Add middleware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#add-a-cli-command" class="nav-link">Add a CLI command</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#local-development-references" class="nav-link">Local development references</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="php-feature-workflows">PHP: Feature workflows</h1>
+<h2 id="add-a-page-to-an-existing-module">Add a page to an existing module</h2>
+<p>For an ordinary page in an existing module, follow this sequence:</p>
+<ol>
+<li>Add a route key and controller class to the module's <code>config/{Module}/Routes.php</code>.</li>
+<li>Create the controller under <code>src/Project/Controller/{Module}/</code>. Implement the module marker controller interface, commonly by extending that module's abstract controller.</li>
+<li>Create a view under <code>src/Project/View/{Module}/</code>. Keep the view as a typed data object; the existing views extend <code>AbstractView</code> and expose constructor-promoted <code>public readonly</code> properties.</li>
+<li>In the controller's <code>handle()</code> method, collect validated inputs and call services. Create a view container with the view factory and a template name relative to <code>resources/templates/vanilla</code>.</li>
+<li>Add the matching PHP template. Assert the expected view class and escape dynamic HTML output.</li>
+<li>If the page needs a service not already available, add it through the module-local dependency-container interface, implementation, and factory.</li>
+</ol>
+<p>The existing Sandbox route is the smallest example: <code>config/Sandbox/Routes.php</code> maps <code>test</code> to <code>TestController</code>; the controller reads route part 3, creates <code>TestView</code>, selects <code>sandbox/test</code>, and uses the Sandbox main layout.</p>
+<p>For a controller response, the usual shape is:</p>
+<pre><code class="language-php">public function handle(ServerRequestInterface $request): ResponseInterface
+{
+    $viewContainer = $this-&gt;viewServicesContainer
+        -&gt;getViewContainerFactory()
+        -&gt;createViewContainerFromView(
+            new ExampleView($someValue),
+            'module/example',
+        );
+
+    return $this-&gt;createResponse($request, $viewContainer);
+}
+</code></pre>
+<p>The inherited controller base provides the application, local, and view-services containers, <code>createResponse()</code>, <code>createCommonView()</code>, and the HTML page-layout path. Use the module's abstract controller when it already chooses the correct main layout.</p>
+<h2 id="add-a-new-top-level-module">Add a new top-level module</h2>
+<p>Adding a module requires wiring each dispatch boundary:</p>
+<ol>
+<li>Add its route prefix to the handled paths in <code>RequestHandlerFactory</code>.</li>
+<li>Add a module request handler to <code>ResourceMiddlewareFactory</code> and include it in the resource-handler map. The handler declares its renderer interface-to-class map and uses the right route-part convention.</li>
+<li>Add <code>config/{Module}/Routes.php</code>.</li>
+<li>Add a marker interface under <code>src/Project/Contract/Controller/</code> and a module controller instantiator under <code>src/Project/Instantiator/Controller/</code>.</li>
+<li>Add the marker-to-instantiator pair to <code>SpecificModuleControllerInstantiator</code>, keeping the required order.</li>
+<li>Add a module-local dependency-container contract, implementation, and factory only when the module needs its own services.</li>
+<li>Add an abstract module controller when pages share layout or module-specific request helpers.</li>
+<li>Add views, templates, and tests or HTTP examples as appropriate.</li>
+</ol>
+<p>A module is more than a route-file directory: route-prefix dispatch and controller construction are both explicit.</p>
+<h2 id="handle-a-form">Handle a form</h2>
+<h3 id="factory">Factory</h3>
+<p>Create a form factory that implements <code>FormFactoryInterface</code> (or a module-specific child interface) and returns an <code>HtmlPostForm</code>. Define each <code>FormField</code> with an id, required flag, submitted name, label/placeholder, field validators, and optional initial value.</p>
+<p>The current <code>HtmlPostForm</code> reads submitted data using each field's id, while templates write the field's name attribute. The examples use the same string for both; preserve that mapping or provide a form implementation that supports a different mapping.</p>
+<p><code>Project\Factory\Form\AbstractFormFactory</code> provides the app's shared form filters and validators:</p>
+<ul>
+<li>Form-level filters: trim, then strip HTML tags.</li>
+<li>Form-level validator: required-field validation.</li>
+<li>Helpers for minimum and maximum character length, with errors carrying a 400 code.</li>
+</ul>
+<p>The Stuff examples add field-specific validators. <code>ItemFormFactory::setItem()</code> supplies initial values for edit mode. The form-factory container provides a single lazily created factory per local container.</p>
+<h3 id="controller-lifecycle">Controller lifecycle</h3>
+<ol>
+<li>Get the module form factory and create the form.</li>
+<li>Call <code>handleRequest($request)</code>.</li>
+<li>On a non-POST request, <code>HtmlPostForm</code> records a method error and is not sent; the page can render with 200.</li>
+<li>On a POST, it reads scalar values from the parsed body, filters values, then runs general and field-level validators.</li>
+<li>If <code>isSent()</code> and <code>isValid()</code> are both true, convert validated values to the operation's DTO and call the service/storage layer.</li>
+<li>Redirect after successful mutation. Otherwise render the form with the form's response status.</li>
+</ol>
+<p><code>AuthenticationController</code>, <code>ItemController</code>, and <code>SearchItemController</code> show the pattern. Keep input interpretation in the request/form path and pass a typed DTO such as <code>WebServCo\Stuff\DataTransfer\Item\Item</code> into storage.</p>
+<p>The form filters are input processing, not output escaping. Escape values again when inserting them into HTML or attributes.</p>
+<h2 id="add-or-change-a-stuff-storage-operation">Add or change a Stuff storage operation</h2>
+<p>The Stuff controllers depend on <code>StuffLocalServiceContainerInterface</code>, whose implementation exposes a storage container. The project-specific local container composes the shared library's <code>StuffStorageContainer</code> with the application's data-extraction and PDO containers.</p>
+<p>The shared <code>webservco/app-stuff-common</code> package separates storage responsibilities:</p>
+<ul>
+<li><code>ItemStorage</code> creates, retrieves, updates, and deletes an item.</li>
+<li><code>ItemEntityStorage</code> retrieves and iterates records with ids, parent ids, and item counts.</li>
+<li><code>SearchItemEntityStorage</code> iterates matching records.</li>
+<li><code>Item</code> is the data-transfer object; <code>ItemEntity</code> adds persistence identity and parent/count data.</li>
+</ul>
+<p>The current SQL uses prepared statements and scopes item lookup and mutation by both item id and user id. Keep that user scope on every operation that addresses a private record. <code>ItemController</code> demonstrates create/update; <code>ItemsController</code> demonstrates parent and ancestor loading; <code>SearchItemController</code> demonstrates search. The SQL and expected table live in the shared package. There is no schema or migration in this repository, so a new deployment must supply its own database setup.</p>
+<p>For a new application-specific dependency, extend the local-container contract, add a lazy getter to its implementation, and construct it in the module local-container factory. Keep construction in factories/containers rather than controllers.</p>
+<h2 id="add-an-api-route">Add an API route</h2>
+<ol>
+<li>Add an API route key such as <code>v1/example</code> in <code>config/API/Routes.php</code>.</li>
+<li>Point it at a controller implementing <code>APIControllerInterface</code>, or add a more specific controller marker and update the ordered module-instantiator map.</li>
+<li><code>ApiRequestHandler</code> forms the lookup key from API version (route part 2), endpoint (part 3), and optional part 4.</li>
+<li>Add request validation and response construction in the controller. Use the JSON:API handler/service and DTOs when the endpoint follows JSON:API.</li>
+<li>Ensure <code>application/vnd.api+json</code> is accepted by the client. <code>application/json</code> is not the JSON:API media type.</li>
+<li>Add an HTTP example under <code>tests/HTTP/HTTPTests.http</code>.</li>
+</ol>
+<p>The existing API controller is an example, not a finished resource API: both configured paths use it, it accepts GET, and it returns the same sample resource shape. The middleware's identity is the signed JWT subject; the controller should still authorize access to any requested resource.</p>
+<h2 id="add-middleware">Add middleware</h2>
+<p>Implement <code>Psr\Http\Server\MiddlewareInterface</code>, inject the services it needs, and return either a response or <code>$handler-&gt;handle($request)</code> with updated immutable request attributes. Register it in <code>RequestHandlerFactory</code> at the point that establishes the needed ordering:</p>
+<ul>
+<li>before route middleware if it must run without route attributes;</li>
+<li>after route middleware if it is prefix-specific;</li>
+<li>outside an exception middleware if its own failures must be handled by that layer;</li>
+<li>inside an exception middleware if its failures should be converted through the configured error controller.</li>
+</ul>
+<p>The project has separate session and API authentication middleware because they have different route scopes and credentials.</p>
+<h2 id="add-a-cli-command">Add a CLI command</h2>
+<ol>
+<li>Add the command under <code>src/Project/Command/</code> and implement <code>CommandRunnerInterface</code>, usually by extending <code>Project\Command\AbstractCommand</code>.</li>
+<li>Add a <code>CommandFactoryInterface</code> implementation under <code>src/Project/Factory/Command/</code>; inject shared dependencies from the application container.</li>
+<li>Add a small executable wrapper in <code>bin/</code> if the command should be launched directly.</li>
+<li>In the runner script, use the same startup sequence as <code>bin/SandboxTest.php</code>: autoload, timer, application dependency container, logger, config file, uncaught handler, command factory, and <code>DefaultCommandApplicationFactory</code>.</li>
+<li>Bootstrap and run the command application.</li>
+</ol>
+<p><code>bin/sandbox-test</code> is deliberately a thin PHP executable wrapper for <code>bin/SandboxTest.php</code>. The command itself writes through the command output service and records lap-timer events.</p>
+<h2 id="local-development-references">Local development references</h2>
+<ul>
+<li>Start the environment with <code>ddev start</code>.</li>
+<li>Install Composer dependencies with <code>ddev composer install</code>.</li>
+<li>Run the CLI example with <code>ddev exec bin/sandbox-test</code>.</li>
+<li>The HTTP request collection is <code>tests/HTTP/HTTPTests.http</code>; it can be used with the VS Code REST Client extension or by running the included cURL examples.</li>
+<li>The project's Composer scripts are listed in <a href="../coding-standards/">Coding standards and development</a>.</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
