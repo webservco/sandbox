@@ -16,4 +16,7 @@ ddev composer update
 
 ## Guides in progress
 
+- [PHP: Sandbox: index](Development/PHP/Sandbox/index.md)
+- [PHP: Application: index](Development/PHP/Application/index.md)
+- [Error Handling](Development/PHP/ErrorHandling.md)
 - [Building applications with the WebServCo components](PracticalReference/index.md)
