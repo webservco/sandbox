@@ -121,6 +121,6 @@
 - `src/Project/RequestHandler/Dynamic/ApiRequestHandler.php`
 - `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php`
     - `createApiRequestHandler`
-    - `getResouceMiddlewareHandlers`
+    - `getResourceMiddlewareHandlers`
 
 ---

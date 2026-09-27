@@ -38,7 +38,7 @@ final class ResourceMiddlewareFactory
 
         return new ResourceMiddleware(
             // List of requests handlers for this middleware.
-            $this->getResouceMiddlewareHandlers(
+            $this->getResourceMiddlewareHandlers(
                 $this->controllerInstantiator,
                 $projectPath,
                 $this->viewRendererResolver,
@@ -98,7 +98,7 @@ final class ResourceMiddlewareFactory
      *
      * @return array<string,\Psr\Http\Server\RequestHandlerInterface>
      */
-    private function getResouceMiddlewareHandlers(
+    private function getResourceMiddlewareHandlers(
         ControllerInstantiatorInterface $controllerInstantiator,
         string $projectPath,
         ViewRendererResolverInterface $viewRendererResolver,
