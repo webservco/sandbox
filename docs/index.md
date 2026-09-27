@@ -19,4 +19,5 @@ ddev composer update
 - [PHP: Sandbox: index](Development/PHP/Sandbox/index.md)
 - [PHP: Application: index](Development/PHP/Application/index.md)
 - [Error Handling](Development/PHP/ErrorHandling.md)
+- [Partial template rendering](WIP/partial-template-rendering.md)
 - [Building applications with the WebServCo components](PracticalReference/index.md)
