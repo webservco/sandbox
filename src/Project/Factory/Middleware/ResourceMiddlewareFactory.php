@@ -38,50 +38,37 @@ final class ResourceMiddlewareFactory
 
         return new ResourceMiddleware(
             // List of requests handlers for this middleware.
-            $this->getResourceMiddlewareHandlers(
-                $this->controllerInstantiator,
-                $projectPath,
-                $this->viewRendererResolver,
-            ),
+            $this->getResourceMiddlewareHandlers($projectPath),
             $this->serverRequestAttributeService,
         );
     }
 
-    private function createApiRequestHandler(
-        ControllerInstantiatorInterface $controllerInstantiator,
-        string $projectPath,
-        ViewRendererResolverInterface $viewRendererResolver,
-    ): RequestHandlerInterface {
+    private function createApiRequestHandler(string $projectPath): RequestHandlerInterface
+    {
         return new ApiRequestHandler(
-            $controllerInstantiator,
+            $this->controllerInstantiator,
             $this->serverRequestAttributeService,
-            $viewRendererResolver,
+            $this->viewRendererResolver,
             $this->getRoutesConfiguration($projectPath, 'API'),
         );
     }
 
-    private function createSandboxRequestHandler(
-        ControllerInstantiatorInterface $controllerInstantiator,
-        string $projectPath,
-        ViewRendererResolverInterface $viewRendererResolver,
-    ): RequestHandlerInterface {
+    private function createSandboxRequestHandler(string $projectPath): RequestHandlerInterface
+    {
         return new SandboxRequestHandler(
-            $controllerInstantiator,
+            $this->controllerInstantiator,
             $this->serverRequestAttributeService,
-            $viewRendererResolver,
+            $this->viewRendererResolver,
             $this->getRoutesConfiguration($projectPath, 'Sandbox'),
         );
     }
 
-    private function createStuffRequestHandler(
-        ControllerInstantiatorInterface $controllerInstantiator,
-        string $projectPath,
-        ViewRendererResolverInterface $viewRendererResolver,
-    ): RequestHandlerInterface {
+    private function createStuffRequestHandler(string $projectPath): RequestHandlerInterface
+    {
         return new StuffRequestHandler(
-            $controllerInstantiator,
+            $this->controllerInstantiator,
             $this->serverRequestAttributeService,
-            $viewRendererResolver,
+            $this->viewRendererResolver,
             $this->getRoutesConfiguration($projectPath, 'Stuff'),
         );
     }
@@ -98,30 +85,19 @@ final class ResourceMiddlewareFactory
      *
      * @return array<string,\Psr\Http\Server\RequestHandlerInterface>
      */
-    private function getResourceMiddlewareHandlers(
-        ControllerInstantiatorInterface $controllerInstantiator,
-        string $projectPath,
-        ViewRendererResolverInterface $viewRendererResolver,
-    ): array {
+    private function getResourceMiddlewareHandlers(string $projectPath): array
+    {
         // Make sure path contains trailing slash (trim + add back).
         $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         // These are part 1 of the route values (only use the part 1 of the processed route).
         return [
             // Request handler for /api requests.
-            'api' => $this->createApiRequestHandler($controllerInstantiator, $projectPath, $viewRendererResolver),
+            'api' => $this->createApiRequestHandler($projectPath),
             // Request handler for /sandbox requests.
-            'sandbox' => $this->createSandboxRequestHandler(
-                $controllerInstantiator,
-                $projectPath,
-                $viewRendererResolver,
-            ),
+            'sandbox' => $this->createSandboxRequestHandler($projectPath),
             // Request handler for /stuff requests.
-            RouteInterface::ROUTE => $this->createStuffRequestHandler(
-                $controllerInstantiator,
-                $projectPath,
-                $viewRendererResolver,
-            ),
+            RouteInterface::ROUTE => $this->createStuffRequestHandler($projectPath),
         ];
     }
 
