@@ -32,7 +32,7 @@ final class NotFoundController extends AbstractErrorController implements ErrorC
             new NotFoundView(
                 $request->getMethod(),
                 $request->getUri()->__toString(),
-                $request->getHeaderLine('UserAgent'),
+                $request->getHeaderLine('User-Agent'),
             ),
             'error/notfound',
         );
