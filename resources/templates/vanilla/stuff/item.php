@@ -114,12 +114,17 @@ $backUrl = sprintf(
         <?php
         // When editing and existing item.
         if ($view->itemEntity !== null) {
+            /**
+             * Use a local variable: Phan does not narrow the nested property in the ternary
+             * ("PhanTypeMismatchArgumentNullableInternal", "PhanPluginPrintfIncompatibleArgumentType").
+             */
+            $parentItemId = $view->itemEntity->parentItemId;
             $itemDeleteUrl = sprintf(
                 '%sitem-delete/%d%s',
                 $routeUrl,
                 $view->itemEntity->id,
-                $view->itemEntity->parentItemId !== null
-                    ? sprintf('?parent=%d', $view->itemEntity->parentItemId)
+                $parentItemId !== null
+                    ? sprintf('?parent=%d', $parentItemId)
                     : '',
             );
             ?>

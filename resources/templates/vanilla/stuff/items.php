@@ -11,11 +11,14 @@ assert(isset($view) && $view instanceof ItemsView);
 
 $routeUrl = sprintf('%s%s/', $view->commonView->baseUrl, RouteInterface::ROUTE);
 
-$itemAddUrl = sprintf(
-    '%sitem%s',
-    $routeUrl,
-    $view->parentItemEntity !== null ? sprintf('?parent=%d', $view->parentItemEntity->id) : '',
-);
+$itemAddUrl = sprintf('%sitem', $routeUrl);
+/**
+ * Not using a ternary inside the `sprintf` arguments: Phan (6.0.7) narrows it incorrectly in the global scope,
+ * and the narrowing leaks into the null checks below ("PhanImpossibleTypeComparisonInGlobalScope").
+ */
+if ($view->parentItemEntity !== null) {
+    $itemAddUrl .= sprintf('?parent=%d', $view->parentItemEntity->id);
+}
 ?>
 
 <hgroup>
