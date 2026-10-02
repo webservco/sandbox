@@ -2,34 +2,33 @@
 
 declare(strict_types=1);
 
+use WebServCo\View\Contract\HTMLRendererInterface;
 use WebServCo\View\View\MainView;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
+
+/**
+ * `$this` is the renderer (the template is required from inside it); used to render partial templates.
+ *
+ * Typing of `$this`:
+ * - Psalm: `@psalm-scope-this` (requires a class; an `assert` alone does not work);
+ * - PHPStan: `@phpstan-var` (an `assert` alone requires `isset($this)`, which Psalm reports as redundant);
+ * - Phan: can not type `$this` outside a class;
+ * - IDE (eg. PhpStorm, autocomplete): the `assert` below (it does not read the tags above).
+ *
+ * @psalm-scope-this \WebServCo\View\Service\HTMLRenderer
+ * @phpstan-var \WebServCo\View\Contract\HTMLRendererInterface $this
+ * @phan-file-suppress PhanUndeclaredThis
+ */
+assert($this instanceof HTMLRendererInterface);
+
+$partTpl = __DIR__ . '/../_partial/%s.php';
 ?>
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>main.sandbox.default</title>
-        <?php
-        /**
-         * Avoid using the base tag;
-         * "Links pointing to a fragment in the document — e.g. <a href="#some-id">
-         * — are resolved with the <base>, triggering an HTTP request
-         * to the base URL with the fragment attached."
-         * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-         */
-        ?>
-        <?php
-        /**
-         * Prevent separate favicon request.
-         * Source: https://stackoverflow.com/a/13416784/14583382
-         */
-        ?>
-        <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
-    </head>
+    <?php // An example of rendering a partial template ?>
+    <?=$this->renderView($view->commonView, sprintf($partTpl, 'head'))?>
     <body>
         <h1>Hello, world!</h1>
 
