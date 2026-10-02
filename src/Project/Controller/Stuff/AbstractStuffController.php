@@ -22,7 +22,7 @@ abstract class AbstractStuffController extends AbstractController
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
     ): ViewContainerInterface {
-        return $this->createMainViewContainerWithTemplate($request, 'main/main.stuff.pico', $viewContainer);
+        return $this->createMainViewContainerWithTemplate($request, '_main/main.stuff.pico', $viewContainer);
     }
 
     /**

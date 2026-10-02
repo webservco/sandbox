@@ -45,7 +45,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
                 $this->getDisplayCode($throwable),
                 $this->getDisplayMessage($throwable),
             ),
-            'error/error',
+            '_error/error',
         );
     }
 

@@ -34,7 +34,7 @@ final class NotFoundController extends AbstractErrorController implements ErrorC
                 $request->getUri()->__toString(),
                 $request->getHeaderLine('User-Agent'),
             ),
-            'error/notfound',
+            '_error/notfound',
         );
     }
 }

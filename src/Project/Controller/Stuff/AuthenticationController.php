@@ -67,7 +67,7 @@ final class AuthenticationController extends AbstractStuffController implements 
     ): ViewContainerInterface {
         return $this->createMainViewContainerWithTemplate(
             $request,
-            'main/main.stuff.notauthenticated.pico',
+            '_main/main.stuff.notauthenticated.pico',
             $viewContainer,
         );
     }

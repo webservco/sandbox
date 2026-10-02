@@ -67,7 +67,7 @@ abstract class AbstractAPIController extends AbstractController
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
     ): ViewContainerInterface {
-        return $this->createMainViewContainerWithTemplate($request, 'main/main.api.default', $viewContainer);
+        return $this->createMainViewContainerWithTemplate($request, '_main/main.api.default', $viewContainer);
     }
 
     protected function getApiVersionString(): string

@@ -19,6 +19,6 @@ abstract class AbstractSandboxController extends AbstractController
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
     ): ViewContainerInterface {
-        return $this->createMainViewContainerWithTemplate($request, 'main/main.sandbox.default', $viewContainer);
+        return $this->createMainViewContainerWithTemplate($request, '_main/main.sandbox.default', $viewContainer);
     }
 }
