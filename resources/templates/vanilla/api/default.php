@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-// @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 use WebServCo\JSONAPI\View\ItemView;
 
+// @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof ItemView);
 
 /**
