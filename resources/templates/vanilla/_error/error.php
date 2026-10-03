@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Project\View\Error\ErrorView;
 
-// @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof ErrorView);
 ?>
 <div>

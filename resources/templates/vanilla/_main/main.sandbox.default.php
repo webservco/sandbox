@@ -5,7 +5,7 @@ declare(strict_types=1);
 use WebServCo\View\Contract\HTMLRendererInterface;
 use WebServCo\View\View\MainView;
 
-// @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
+// @phan-suppress-next-line PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
 
 /**
