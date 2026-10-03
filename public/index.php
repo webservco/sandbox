@@ -107,7 +107,7 @@ try {
     exit(1);
 }
 
-/**
+/*
  * Code above is common for any web controllers or command runners.
  * Code below is custom for current script.
  */
