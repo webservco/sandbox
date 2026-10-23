@@ -2,7 +2,7 @@
     "repositories" : [
         {
             "type" : "path",
-            "url" : "~/p/parcelvalue-v3/framework",
+            "url" : "~/p/webservco-app/app-stuff-common",
             "options" : {
                 "symlink" : true
             }

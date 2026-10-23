@@ -63,7 +63,7 @@ clear && ddev exec php -d max_execution_time=1 public/index.php arg1 2 3.5 null
 # Enable small limits in webapp `.ddev/php/99-custom.ini`, then:
 # clear && curl --request HEAD --form 'key1=value1' --form 'int=1' --form 'float=2.5' --form 'bool=true' "https://sandbox.ddev.site/form?gkey1=value1&gkey2=value2&gint=1&gfloat=2.5&gbool=true"
 # Similar test in PV site:
-# clear && curl -w "\n" --request POST --form 'key1=value1' --form 'key2=value2' https://my-parcelvalue.ddev.site
+# clear && curl -w "\n" --request POST --form 'key1=value1' --form 'key2=value2' https://sandbox.ddev.site
 
 ###
 
