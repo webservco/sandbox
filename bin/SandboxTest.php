@@ -132,5 +132,5 @@ $application = $applicationFactory->createCommandApplication(
 );
 // @phpcs:enable
 $application->bootstrap();
-$application->run();
 // No need to call `$application->shutdown();` it is registered as shutdown function.
+exit($application->run() ? 0 : 1);
