@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands (beyond those in AGENTS.md)
 
 - Auto-fix coding standard issues: `ddev composer fix:phpcs`
-- Run a single test: `ddev exec vendor/bin/phpunit --configuration vendor/webservco/coding-standards/phpunit/phpunit-10.xml --filter <TestName>` (the suite reads `tests/Unit/`, which is currently empty; `tests/HTTP/HTTPTests.http` holds manual HTTP requests).
+- Run a single test: `ddev exec vendor/bin/phpunit --configuration vendor/webservco/coding-standards/phpunit/phpunit-13.xml --filter <TestName>` (the suite reads `tests/Unit/`, which is currently empty; `tests/HTTP/HTTPTests.http` holds manual HTTP requests).
 - Lint, PHPCS, PHPStan (level max), PHPMD, Psalm and Phan all run over `bin config public resources src tests`, so templates and route files must pass static analysis too. Rule sets come from `vendor/webservco/coding-standards/`, plus `.phpcs/php-coding-standard.xml` for PHPCS.
 
 ## Architecture
