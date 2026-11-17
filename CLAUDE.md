@@ -16,7 +16,7 @@ The application is assembled from many small `webservco/*` Composer packages (in
 
 ### Bootstrapping
 
-`public/index.php` (web) and `bin/SandboxTest.php` (CLI, run via the `bin/sandbox-test` wrapper) share the same initialization: create an `ApplicationDependencyContainer`, load `config/.env.ini` (gitignored; `config/.env.development.ini` is the tracked template), and install the exception handler. After that the web entry point builds a server application through `ApplicationFactoryFactory`, and the CLI builds a command application through `TestCommandFactory`.
+`public/index.php` (web) and `bin/SandboxTest.php` (CLI, run via the `bin/sandbox-test` wrapper) share the same initialization through `DefaultApplicationInitializer` (`webservco/application-default`): create an `ApplicationDependencyContainer`, load `config/.env.ini` (gitignored; `config/.env.development.ini` is the tracked template), and install the exception handler. After that the web entry point builds a server application through `ApplicationFactoryFactory`, and the CLI builds a command application through `TestCommandFactory`.
 
 ### Request pipeline
 

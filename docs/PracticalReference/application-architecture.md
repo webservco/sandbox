@@ -26,13 +26,11 @@
 `public/index.php` performs the shared web initialization in this order:
 
 1. Capture a high-resolution start time with `hrtime()`.
-2. Resolve the project root and include Composer's autoloader.
-3. Create a `NullLogger`, then start the lap timer and create the `ApplicationDependencyContainer`.
-4. Resolve the application logger and load `config/.env.ini` through `ConfigurationFileProcessor`.
-5. Register the uncaught exception handler and record initialization timing.
-6. Create the server application factories, create the PSR-7 server request from PHP's server data, bootstrap the default application, and run it.
+2. Include Composer's autoloader.
+3. Call `DefaultApplicationInitializer::initialize()` (`webservco/application-default`) with the project root and the start time. It makes the project path absolute, starts the lap timer, creates the `ApplicationDependencyContainer`, resolves the application logger, loads `config/.env.ini`, registers the uncaught exception handler, and records initialization timing.
+4. Create the server application factories through `ApplicationFactoryFactory`, create the PSR-7 server request from PHP's server data, bootstrap the default application, and run it.
 
-Initialization is wrapped in a `Throwable` catch. If setup fails before normal application error handling is ready, the script logs an emergency message when possible, prints a generic initialization message, and exits with status 1. After initialization, exceptions are handled by the application middleware or registered uncaught handler.
+Initialization is wrapped in a `Throwable` catch. If setup fails before normal application error handling is ready, the initializer logs an emergency message when possible and throws again; the script prints a generic initialization message and exits with status 1. After initialization, exceptions are handled by the application middleware or registered uncaught handler.
 
 `public/.htaccess` sends paths that are not existing files or directories to `index.php`. Apache is the configured DDEV web server.
 

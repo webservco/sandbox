@@ -117,7 +117,7 @@ The project has separate session and API authentication middleware because they 
 1. Add the command under `src/Project/Command/` and implement `CommandRunnerInterface`, usually by extending `Project\Command\AbstractCommand`.
 2. Add a `CommandFactoryInterface` implementation under `src/Project/Factory/Command/`; inject shared dependencies from the application container.
 3. Add a small executable wrapper in `bin/` if the command should be launched directly.
-4. In the runner script, use the same startup sequence as `bin/SandboxTest.php`: autoload, timer, application dependency container, logger, config file, uncaught handler, command factory, and `DefaultCommandApplicationFactory`.
+4. In the runner script, use the same startup sequence as `bin/SandboxTest.php`: autoload, `DefaultApplicationInitializer` (timer, application dependency container, logger, config file, uncaught handler), command factory, and `DefaultCommandApplicationFactory`.
 5. Bootstrap the command application, and end the script with `exit($application->run() ? 0 : 1);` so the command's result becomes the exit code.
 
 `bin/sandbox-test` is deliberately a thin PHP executable wrapper for `bin/SandboxTest.php`. The command itself writes through the command output service and records lap-timer events.

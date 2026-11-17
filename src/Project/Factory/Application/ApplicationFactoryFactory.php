@@ -12,39 +12,28 @@ use WebServCo\Controller\Factory\ControllerInstantiatorFactory;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
 use WebServCo\Error\Factory\DefaultErrorHandlingServiceFactory;
 use WebServCo\Exception\Contract\ExceptionHandlerInterface;
+use WebServCo\Exception\Factory\DefaultExceptionHandlerFactory;
 use WebServCo\Http\Factory\Message\Request\Server\ServerRequestFromServerDataFactory;
 use WebServCo\View\Service\ViewRendererResolver;
 
-use function rtrim;
-
-use const DIRECTORY_SEPARATOR;
-
 final class ApplicationFactoryFactory
 {
-    public function __construct(
-        private ApplicationDependencyContainerInterface $applicationDependencyContainer,
-        private ExceptionHandlerInterface $exceptionHandler,
-    ) {
+    public function __construct(private ApplicationDependencyContainerInterface $applicationDependencyContainer)
+    {
     }
 
-    public function createServerApplicationFactory(string $projectPath): DefaultServerApplicationFactory
+    public function createServerApplicationFactory(): DefaultServerApplicationFactory
     {
-        // Make sure path contains trailing slash (trim + add back).
-        $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-
         return new DefaultServerApplicationFactory(
-            $this->createApplicationRunnerFactory($projectPath),
+            $this->createApplicationRunnerFactory(),
             new DefaultErrorHandlingServiceFactory(),
             $this->applicationDependencyContainer->getServiceContainer(),
             new ServerRequestFromServerDataFactory(),
         );
     }
 
-    private function createApplicationRunnerFactory(string $projectPath): ApplicationRunnerFactory
+    private function createApplicationRunnerFactory(): ApplicationRunnerFactory
     {
-        // Make sure path contains trailing slash (trim + add back).
-        $projectPath = rtrim($projectPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-
         $controllerInstantiatorFactory = $this->createControllerInstantiatorFactory();
 
         return new ApplicationRunnerFactory(
@@ -54,8 +43,11 @@ final class ApplicationFactoryFactory
                     $this->applicationDependencyContainer,
                     new SpecificModuleControllerInstantiator(),
                 ),
-                $this->exceptionHandler,
-                $projectPath,
+                $this->createExceptionHandler(),
+                // The absolute project path, with the trailing separator.
+                $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()->getString(
+                    'PROJECT_PATH',
+                ),
                 new ViewRendererResolver(),
             ),
         );
@@ -64,5 +56,17 @@ final class ApplicationFactoryFactory
     private function createControllerInstantiatorFactory(): ControllerInstantiatorFactory
     {
         return new ControllerInstantiatorFactory();
+    }
+
+    /**
+     * The same logger as the uncaught exception handler that `DefaultApplicationInitializer` sets.
+     */
+    private function createExceptionHandler(): ExceptionHandlerInterface
+    {
+        $exceptionHandlerFactory = new DefaultExceptionHandlerFactory();
+
+        return $exceptionHandlerFactory->createExceptionHandler(
+            $this->applicationDependencyContainer->getServiceContainer()->getLogger('application'),
+        );
     }
 }
