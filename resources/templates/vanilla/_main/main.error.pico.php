@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-use WebServCo\Stuff\Contract\RouteInterface;
 use WebServCo\View\View\MainView;
 
 // @phan-suppress-next-line PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
 
-$routeUrl = sprintf('%s%s/', $view->commonView->baseUrl, RouteInterface::ROUTE);
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,9 +22,6 @@ $routeUrl = sprintf('%s%s/', $view->commonView->baseUrl, RouteInterface::ROUTE);
             <nav>
                 <ul>
                     <li><strong><a href="<?=$view->commonView->baseUrl?>">Home</a></strong></li>
-                </ul>
-                <ul>
-                    <li><a href="<?=$routeUrl?>logout">Logout</a></li>
                 </ul>
             </nav>
             <hr>

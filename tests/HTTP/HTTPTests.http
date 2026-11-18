@@ -49,8 +49,9 @@ curl --silent --header "Accept: application/vnd.api+json" --data "a=b" -w "\n" h
 
 # cURL - Stuff: session, CSRF token, flash messages. Set P to AUTHENTICATION_PASSWORD (config/.env.ini) first.
 # The login form's token; the login without it (403) and with a wrong one (403); with it: 303 and a new session ID
-# (Set-Cookie); the next page shows "You are logged in." once (then 0). Logout: 303 and a new session that holds only
-# the message; the login form shows "You are logged out." (in German after ?lang=de)
+# (Set-Cookie); the next page shows "You are logged in." once (then 0), and has the new token. Logout: a GET only
+# redirects to the items (no Set-Cookie); a POST without the token gets 403; with it: 303 and a new session that holds
+# only the message; the login form shows "You are logged out." (in German after ?lang=de)
 J=$(mktemp); curl --silent --output /dev/null --cookie-jar "$J" https://sandbox.ddev.site/stuff/item; \
   T=$(curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/authenticate | grep -o -E 'name="csrf_token" value="[0-9a-f]{64}"' | grep -o -E '[0-9a-f]{64}'); \
   curl --silent --cookie "$J" --data-urlencode "password=$P" --output /dev/null --write-out "%{http_code}\n" https://sandbox.ddev.site/stuff/authenticate; \
@@ -58,8 +59,26 @@ J=$(mktemp); curl --silent --output /dev/null --cookie-jar "$J" https://sandbox.
   curl --silent --cookie "$J" --cookie-jar "$J" --data-urlencode "password=$P" --data "csrf_token=$T" --output /dev/null --dump-header - https://sandbox.ddev.site/stuff/authenticate | grep -i -E '^(HTTP|location|set-cookie)'; \
   curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item | grep -A1 '<article role="status"'; \
   curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item | grep -c '<article role="status"'; \
-  curl --silent --cookie "$J" --cookie-jar "$J" --output /dev/null --dump-header - "https://sandbox.ddev.site/stuff/logout?lang=de" | grep -i -E '^(HTTP|location|set-cookie)'; \
+  T=$(curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item | grep -o -E 'name="csrf_token" value="[0-9a-f]{64}"' | head -1 | grep -o -E '[0-9a-f]{64}'); \
+  curl --silent --cookie "$J" --output /dev/null --dump-header - https://sandbox.ddev.site/stuff/logout | grep -i -E '^(HTTP|location|set-cookie)'; \
+  curl --silent --cookie "$J" --data "a=b" --output /dev/null --write-out "%{http_code}\n" https://sandbox.ddev.site/stuff/logout; \
+  curl --silent --cookie "$J" --cookie-jar "$J" --data "csrf_token=$T" --output /dev/null --dump-header - "https://sandbox.ddev.site/stuff/logout?lang=de" | grep -i -E '^(HTTP|location|set-cookie)'; \
   curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/authenticate | grep -A1 '<article role="status"'; \
+  rm "$J"
+
+# cURL - Stuff: deleting an item. Needs the `stuff_item` table, which this repository doesn't create. Set P first.
+# Login; a new item (303 to its list); the item page links to the confirmation page; the confirmation page (its
+# question and form); a POST without the token (403); with it: 303 to the list the item was in, then "Item deleted: …"
+J=$(mktemp); curl --silent --output /dev/null --cookie-jar "$J" https://sandbox.ddev.site/stuff/item; \
+  T=$(curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/authenticate | grep -o -E 'name="csrf_token" value="[0-9a-f]{64}"' | grep -o -E '[0-9a-f]{64}'); \
+  curl --silent --cookie "$J" --cookie-jar "$J" --data-urlencode "password=$P" --data "csrf_token=$T" --output /dev/null https://sandbox.ddev.site/stuff/authenticate; \
+  T=$(curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item | grep -o -E 'name="csrf_token" value="[0-9a-f]{64}"' | head -1 | grep -o -E '[0-9a-f]{64}'); \
+  I=$(curl --silent --cookie "$J" --data "csrf_token=$T&name=Test+item&description=Test" --output /dev/null --write-out "%{redirect_url}" https://sandbox.ddev.site/stuff/item | grep -o -E '[0-9]+$'); echo "item $I"; \
+  curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item/$I | grep 'item-delete'; \
+  curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item-delete/$I | grep -E 'Delete \[|action=|<button'; \
+  curl --silent --cookie "$J" --data "a=b" --output /dev/null --write-out "%{http_code}\n" https://sandbox.ddev.site/stuff/item-delete/$I; \
+  curl --silent --cookie "$J" --data "csrf_token=$T" --output /dev/null --dump-header - https://sandbox.ddev.site/stuff/item-delete/$I | grep -i -E '^(HTTP|location)'; \
+  curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/items | grep -A1 '<article role="status"'; \
   rm "$J"
 
 ###

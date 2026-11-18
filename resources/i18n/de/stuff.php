@@ -6,6 +6,7 @@ declare(strict_types=1);
 // Not adding namespace declaration (Psalm dead code error).
 // Not using docblock here to prevent "The file-level docblock must follow the opening PHP tag in the file header"
 return [
+    'flash.item_deleted' => 'Element gelöscht: {name}',
     'flash.logged_in' => 'Sie sind angemeldet.',
     'flash.logged_out' => 'Sie sind abgemeldet.',
 ];

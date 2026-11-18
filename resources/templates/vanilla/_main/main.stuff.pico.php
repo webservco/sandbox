@@ -42,7 +42,14 @@ $routeUrl = sprintf('%s%s/', $view->commonView->baseUrl, RouteInterface::ROUTE);
                     <li><strong><a href="<?=$routeUrl?>items">Home</a></strong></li>
                 </ul>
                 <ul>
-                    <li><a href="<?=$routeUrl?>logout">Logout</a></li>
+                    <li>
+                        <?php // Logout is a POST, with the token: another site can't log the user out. ?>
+                        <form method="post" action="<?=$routeUrl?>logout">
+                            <input type="hidden" name="<?=CsrfTokenServiceInterface::FIELD_NAME?>"
+                                value="<?=$view->csrfToken?>">
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </nav>
             <hr>

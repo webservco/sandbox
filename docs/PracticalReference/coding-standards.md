@@ -69,8 +69,6 @@ The HTTP collection assumes the local DDEV host and current routes. Adapt the UR
 These are facts about the sandbox examples, not general recommendations for production applications:
 
 - **HTML output:** several Stuff templates print item names, descriptions, titles, and form error text directly. Other templates use `AbstractView::escape()`. Escape dynamic text and attribute data at the output context; `strip_tags()` during form processing is not an HTML output-escaping strategy.
-- **Deletion:** `item-delete/{id}` is a link that performs a state change on a GET request and has no confirmation or CSRF token: the CSRF middleware checks only the other methods. Use an appropriate state-changing method and CSRF protection in a real application.
-- **Logout:** `stuff/logout` is a GET link too, so another site can log a user out. A real application logs out with a POST form, with the token.
 - **Authentication:** the Stuff module compares against one configured password and derives a user id from it. It is a demonstration path, not a user store or a production password design.
 - **API examples:** the two configured endpoint names share one controller and sample resource response. Implement route-specific behavior and authorization before using the pattern as an actual API.
 - **Routing errors:** an unknown top-level prefix reaches the 404 fallback, while an unknown route inside a recognized module currently becomes an exception response.

@@ -103,7 +103,7 @@ The form filters are input processing, not output escaping. Escape values again 
 
 3. A request sent with JavaScript can send the token in the header `X-CSRF-Token` (`CsrfTokenServiceInterface::HEADER_NAME`) instead.
 
-The form classes ignore the field. A form of a module without the services in its local container gets them the way the Stuff container does: `CsrfTokenService` and `FlashMessageService` on the store of `SessionStoreFactory`. `AuthenticationController` (`stuff/authentication`), `ItemController` (`stuff/item`) and the search form of the Stuff layout show the field.
+The form classes ignore the field. A form of a module without the services in its local container gets them the way the Stuff container does: `CsrfTokenService` and `FlashMessageService` on the store of `SessionStoreFactory`. `AuthenticationController` (`stuff/authentication`), `ItemController` (`stuff/item`), `ItemDeleteController` (`stuff/item_delete`), and the search form and logout button of the Stuff layout show the field.
 
 ## Show a result message
 
@@ -122,7 +122,18 @@ A flash message tells the user the result of an action on the next page, once ([
     Write the key in full, so that the catalog check finds it. The types are `Success`, `Info`, `Warning` and `Danger`. Parameters of the message go into a third argument, `['name' => $value]`. The same message waiting twice is stored once.
 3. Nothing else: the layout (`AbstractStuffController::createStuffMainViewContainer()`) takes the waiting messages after the page is rendered and shows them in the language of the request. A JSON response or a redirect leaves them waiting.
 
-`AuthenticationController` (login, `Success`) and `LogoutController` (logout, `Info`; after `destroy()`, the message starts a new session) are the examples. Another module needs the same layout part: a layout view with the messages, filled by its abstract controller.
+`AuthenticationController` (login, `Success`), `LogoutController` (logout, `Info`; after `destroy()`, the message starts a new session) and `ItemDeleteController` (`Success`, with the item's name as a parameter) are the examples. Another module needs the same layout part: a layout view with the messages, filled by its abstract controller.
+
+## Confirm a destructive action
+
+Every state change is a POST with the token, so a link can't change anything. A destructive action asks first, with one URL for both steps:
+
+1. **GET**: a confirmation page with the question and a POST form to the same URL (`action` is the current URL), with only the token field, a submit button and a cancel link.
+2. **POST**: the action, a flash message ([Show a result message](#show-a-result-message)), and a redirect (303). The CSRF middleware has checked the token before the controller runs.
+
+The controller tells them apart by the method (`RequestMethodInterface::METHOD_POST`). A link to the action points at the GET page, so it works without JavaScript. The example is the item deletion: the item page links to `item-delete/{id}`; `ItemDeleteController` loads the item (it throws when the user has no such item), shows `stuff/item_delete` or deletes it and redirects to the list it was in.
+
+An action that destroys nothing, such as logout, needs no confirmation page: a POST form with the token (the logout button of the Stuff layout), and a GET of its URL only redirects.
 
 ## Add or change a Stuff storage operation
 
@@ -135,7 +146,7 @@ The shared `webservco/app-stuff-common` package separates storage responsibiliti
 - `SearchItemEntityStorage` iterates matching records.
 - `Item` is the data-transfer object; `ItemEntity` adds persistence identity and parent/count data.
 
-The current SQL uses prepared statements and scopes item lookup and mutation by both item id and user id. Keep that user scope on every operation that addresses a private record. `ItemController` demonstrates create/update; `ItemsController` demonstrates parent and ancestor loading; `SearchItemController` demonstrates search. The SQL and expected table live in the shared package. There is no schema or migration in this repository, so a new deployment must supply its own database setup.
+The current SQL uses prepared statements and scopes item lookup and mutation by both item id and user id. Keep that user scope on every operation that addresses a private record. `ItemController` demonstrates create/update; `ItemsController` demonstrates parent and ancestor loading; `SearchItemController` demonstrates search; `ItemDeleteController` demonstrates deletion. The SQL and expected table live in the shared package. There is no schema or migration in this repository, so a new deployment must supply its own database setup.
 
 For a new application-specific dependency, extend the local-container contract, add a lazy getter to its implementation, and construct it in the module local-container factory. Keep construction in factories/containers rather than controllers.
 

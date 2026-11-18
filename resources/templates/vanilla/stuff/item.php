@@ -113,26 +113,11 @@ $backUrl = sprintf(
 
     <fieldset>
         <button type="submit">Submit</button>
-        <?php
-        // When editing and existing item.
-        if ($view->itemEntity !== null) {
-            /**
-             * Use a local variable: Phan does not narrow the nested property in the ternary
-             * ("PhanTypeMismatchArgumentNullableInternal", "PhanPluginPrintfIncompatibleArgumentType").
-             */
-            $parentItemId = $view->itemEntity->parentItemId;
-            $itemDeleteUrl = sprintf(
-                '%sitem-delete/%d%s',
-                $routeUrl,
-                $view->itemEntity->id,
-                $parentItemId !== null
-                    ? sprintf('?parent=%d', $parentItemId)
-                    : '',
-            );
-            ?>
+        <?php // When editing an existing item: the confirmation page, which deletes on POST. ?>
+        <?php if ($view->itemEntity !== null) { ?>
             <p>
-                <a role="button" href="<?=$itemDeleteUrl?>" title="Delete item">
-                    Delete item (direct action, no confirmation asked!)
+                <a role="button" href="<?=$routeUrl?>item-delete/<?=$view->itemEntity->id?>" title="Delete item">
+                    Delete item
                 </a>
             </p>
         <?php } ?>
