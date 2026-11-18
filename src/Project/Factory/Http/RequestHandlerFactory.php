@@ -61,7 +61,11 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
          * - exception handler middleware will output a processed response like all the others in the application.
          */
         $exceptionHandlerMiddlewareFactory = $this->createExceptionHandlerMiddlewareFactory();
-        $exceptionHandlerMiddleware = $exceptionHandlerMiddlewareFactory->createExceptionHandlerMiddleware();
+        // Renders the error page; shared by both exception handlers and the CSRF middleware.
+        $errorRequestHandler = $exceptionHandlerMiddlewareFactory->createErrorRequestHandler();
+        $exceptionHandlerMiddleware = $exceptionHandlerMiddlewareFactory->createExceptionHandlerMiddleware(
+            $errorRequestHandler,
+        );
         $stackHandler->addMiddleware($exceptionHandlerMiddleware);
 
         // ViewRenderer setting middleware.
@@ -79,6 +83,18 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
             ),
         );
 
+        $sessionMiddlewareFactory = $this->createSessionMiddlewareFactory();
+
+        /**
+         * Session middleware (`webservco/middleware`): resumes the session of a request that sends the session cookie,
+         * and sends `Cache-Control: private, no-cache` with a response to a request with a session.
+         *
+         * Before the authentication middleware, which starts the session for the stuff module.
+         * Inside the first exception handler, so that a session that can't start gets the error page;
+         * outside the second, so that the error pages it renders get the header too.
+         */
+        $stackHandler->addMiddleware($sessionMiddlewareFactory->createSessionMiddleware());
+
         $stackHandler->addMiddleware($this->createAuthenticationMiddleware());
 
         // Request logging middleware.
@@ -95,6 +111,15 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
          * Exception handler middleware (2).
          */
         $stackHandler->addMiddleware($exceptionHandlerMiddleware);
+
+        /**
+         * CSRF middleware (`webservco/middleware`): checks the token of every request that isn't GET, HEAD or OPTIONS,
+         * except in the API module.
+         *
+         * After the route middleware (it reads route part 1) and the session middleware (it needs the resumed session);
+         * after the second exception handler, so that the request log has the refused requests.
+         */
+        $stackHandler->addMiddleware($sessionMiddlewareFactory->createCsrfMiddleware($errorRequestHandler));
 
         // Resource middleware; handles requests that are routed by the RouteMiddleware.
         $stackHandler->addMiddleware($this->createResourceMiddleware());

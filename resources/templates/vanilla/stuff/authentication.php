@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Fig\Http\Message\StatusCodeInterface;
 use Project\View\Stuff\AuthenticationView;
+use WebServCo\Session\Contract\CsrfTokenServiceInterface;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof AuthenticationView);
@@ -25,6 +26,7 @@ if ($view->form->getErrors() !== []) {
 
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
+    <input type="hidden" name="<?=CsrfTokenServiceInterface::FIELD_NAME?>" value="<?=$view->csrfToken?>">
 
     <?php if ($displayErrors !== []) { ?>
         <p>

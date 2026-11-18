@@ -8,6 +8,7 @@ use Override;
 use Project\Contract\Controller\StuffControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use WebServCo\Session\Model\Enum\FlashMessageType;
 use WebServCo\Stuff\Contract\RouteInterface;
 
 use function sprintf;
@@ -29,6 +30,15 @@ final class LogoutController extends AbstractStuffController implements StuffCon
 
         // Logout.
         $this->applicationDependencyContainer->getServiceContainer()->getSessionService()->destroy();
+
+        /**
+         * Shown on the authentication page. Adding it starts a new session, with a new ID: it holds only the message.
+         * The key is written in full, so that the catalog check finds it.
+         */
+        $this->getLocalDependencyContainer()->getFlashMessageService()->add(
+            FlashMessageType::Info,
+            'stuff.flash.logged_out',
+        );
 
         // Redirect.
         return $this->createLocalRedirectResponse(sprintf('%s/authenticate', RouteInterface::ROUTE));

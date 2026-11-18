@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Project\Factory\Middleware\ExceptionHandlerMiddlewareFactory;
+use Project\Factory\Middleware\SessionMiddlewareFactory;
+use Project\Factory\Session\SessionStoreFactory;
 use Project\Middleware\API\ApiAuthenticationMiddleware;
 use Project\Middleware\AuthenticationMiddleware;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
@@ -53,11 +55,14 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
 
     protected function createAuthenticationMiddleware(): AuthenticationMiddleware
     {
+        $sessionStoreFactory = new SessionStoreFactory($this->applicationDependencyContainer);
+
         return new AuthenticationMiddleware(
             $this->applicationDependencyContainer->getDataExtractionContainer(),
             $this->applicationDependencyContainer->getFactoryContainer()->getResponseFactory(),
             $this->applicationDependencyContainer->getRequestServiceContainer()->getServerRequestAttributeService(),
             $this->applicationDependencyContainer->getServiceContainer()->getSessionService(),
+            $sessionStoreFactory->createStoragePath(),
         );
     }
 
@@ -69,6 +74,11 @@ abstract class AbstractRequestHandlerFactory implements RequestHandlerFactoryInt
             $this->applicationDependencyContainer->getServiceContainer()->getLogger('application'),
             $this->viewRendererResolver,
         );
+    }
+
+    protected function createSessionMiddlewareFactory(): SessionMiddlewareFactory
+    {
+        return new SessionMiddlewareFactory($this->applicationDependencyContainer);
     }
 
     protected function createStackHandler(): StackHandler

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Fig\Http\Message\StatusCodeInterface;
 use Project\View\Stuff\ItemView;
+use WebServCo\Session\Contract\CsrfTokenServiceInterface;
 use WebServCo\Stuff\Contract\RouteInterface;
 
 // @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
@@ -42,6 +43,7 @@ $backUrl = sprintf(
 
 <form enctype="multipart/form-data" method="post"
     action="<?=$view->commonView->currentUrl?>">
+    <input type="hidden" name="<?=CsrfTokenServiceInterface::FIELD_NAME?>" value="<?=$view->csrfToken?>">
 
     <?php if ($displayErrors !== []) { ?>
         <p>

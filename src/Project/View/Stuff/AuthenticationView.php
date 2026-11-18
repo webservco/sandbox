@@ -14,7 +14,11 @@ use WebServCo\View\View\CommonView;
  */
 final class AuthenticationView extends AbstractView implements ViewInterface
 {
-    public function __construct(public readonly CommonView $commonView, public readonly FormInterface $form)
-    {
+    public function __construct(
+        public readonly CommonView $commonView,
+        // The CSRF token of the session, for the form's hidden field.
+        public readonly string $csrfToken,
+        public readonly FormInterface $form,
+    ) {
     }
 }

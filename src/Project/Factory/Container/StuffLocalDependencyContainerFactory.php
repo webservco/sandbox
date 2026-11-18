@@ -6,6 +6,7 @@ namespace Project\Factory\Container;
 
 use Override;
 use Project\Container\Stuff\LocalServiceContainer;
+use Project\Factory\Session\SessionStoreFactory;
 use WebServCo\Database\Factory\PDOContainerMySQLFactory;
 use WebServCo\DependencyContainer\Contract\ApplicationDependencyContainerInterface;
 use WebServCo\DependencyContainer\Contract\LocalDependencyContainerFactoryInterface;
@@ -33,10 +34,13 @@ final class StuffLocalDependencyContainerFactory implements LocalDependencyConta
                 ->getString('DB_PASSWORD'),
         );
 
+        $sessionStoreFactory = new SessionStoreFactory($this->applicationDependencyContainer);
+
         return new LocalServiceContainer(
             $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter(),
             $this->applicationDependencyContainer->getDataExtractionContainer(),
             $pdoContainerFactory->createPDOContainer(),
+            $sessionStoreFactory->createSessionStore(),
         );
     }
 }

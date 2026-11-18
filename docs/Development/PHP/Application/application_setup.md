@@ -48,3 +48,4 @@
 - `src`
 - `tests`
 - `var/log`
+- `var/sessions`

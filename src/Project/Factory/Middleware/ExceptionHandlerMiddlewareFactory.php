@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Project\Factory\Middleware;
 
 use Project\Controller\Error\ErrorController;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use WebServCo\Controller\Contract\ControllerInstantiatorInterface;
 use WebServCo\Exception\Contract\ExceptionHandlerInterface;
@@ -23,16 +24,24 @@ final class ExceptionHandlerMiddlewareFactory
     ) {
     }
 
-    public function createExceptionHandlerMiddleware(): ExceptionHandlerMiddleware
+    /**
+     * Renders the error page (`ErrorController`) of the `throwable` request attribute.
+     *
+     * Used by the exception handler middleware, and by the CSRF middleware for a refused request.
+     */
+    public function createErrorRequestHandler(): RequestHandlerInterface
     {
-        return new ExceptionHandlerMiddleware(
-            $this->exceptionHandler,
-            new ExceptionRequestHandler(
-                $this->controllerInstantiator,
-                $this->logger,
-                $this->viewRendererResolver,
-                new RouteConfiguration(ErrorController::class),
-            ),
+        return new ExceptionRequestHandler(
+            $this->controllerInstantiator,
+            $this->logger,
+            $this->viewRendererResolver,
+            new RouteConfiguration(ErrorController::class),
         );
+    }
+
+    public function createExceptionHandlerMiddleware(
+        RequestHandlerInterface $errorRequestHandler,
+    ): ExceptionHandlerMiddleware {
+        return new ExceptionHandlerMiddleware($this->exceptionHandler, $errorRequestHandler);
     }
 }

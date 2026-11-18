@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+use Project\View\Stuff\MainView;
+use WebServCo\Session\Contract\CsrfTokenServiceInterface;
 use WebServCo\Stuff\Contract\RouteInterface;
-use WebServCo\View\View\MainView;
 
 // @phan-suppress-next-line PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
@@ -48,12 +49,19 @@ $routeUrl = sprintf('%s%s/', $view->commonView->baseUrl, RouteInterface::ROUTE);
         </header>
 
         <main>
+            <?php // Flash messages: in the language of the request (the module's pages are in English). ?>
+            <?php foreach ($view->flashMessages as $flashMessage) { ?>
+                <article role="status" data-type="<?=$flashMessage->type->value?>" lang="<?=$view->languageCode()?>">
+                    <?=$view->text($flashMessage->key, $flashMessage->parameters)?>
+                </article>
+            <?php } ?>
             <?=$view->data?>
         </main>
 
         <footer>
             <form enctype="multipart/form-data" method="post"
                 action="<?=$routeUrl?>search_item">
+                <input type="hidden" name="<?=CsrfTokenServiceInterface::FIELD_NAME?>" value="<?=$view->csrfToken?>">
                 <input type="search" id="search_item" name="search_item" placeholder="Search">
             </form>
         </footer>

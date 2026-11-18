@@ -104,7 +104,7 @@
 
 ### Templates
 
-- `resources/templates/vanilla/main/main.api.default.php`
+- `resources/templates/vanilla/_main/main.api.default.php`
 - `resources/templates/vanilla/api/default.php`
 
 ### Controller

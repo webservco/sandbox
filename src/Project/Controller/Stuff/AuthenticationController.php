@@ -11,6 +11,7 @@ use Project\View\Stuff\AuthenticationView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebServCo\Form\Contract\FormInterface;
+use WebServCo\Session\Model\Enum\FlashMessageType;
 use WebServCo\Stuff\Contract\RouteInterface;
 use WebServCo\View\Contract\ViewContainerInterface;
 
@@ -34,6 +35,13 @@ final class AuthenticationController extends AbstractStuffController implements 
 
         // Handle form.
         if ($form->isSent() && $form->isValid()) {
+            /**
+             * A new session ID and a new CSRF token: the ones known before the login don't work after it
+             * (session fixation).
+             */
+            $this->applicationDependencyContainer->getServiceContainer()->getSessionService()->regenerateId();
+            $this->getLocalDependencyContainer()->getCsrfTokenService()->renewToken();
+
             // Set authenticated.
             $this->setAuthenticated($this->generateUserId());
 
@@ -42,6 +50,12 @@ final class AuthenticationController extends AbstractStuffController implements 
 
             // Clear next URL.
             $this->clearNextLocation();
+
+            // Shown on the next page. The key is written in full, so that the catalog check finds it.
+            $this->getLocalDependencyContainer()->getFlashMessageService()->add(
+                FlashMessageType::Success,
+                'stuff.flash.logged_in',
+            );
 
             // Redirect.
             return $this->createLocalRedirectResponse($nextLocation);
@@ -65,11 +79,7 @@ final class AuthenticationController extends AbstractStuffController implements 
         ServerRequestInterface $request,
         ViewContainerInterface $viewContainer,
     ): ViewContainerInterface {
-        return $this->createMainViewContainerWithTemplate(
-            $request,
-            '_main/main.stuff.notauthenticated.pico',
-            $viewContainer,
-        );
+        return $this->createStuffMainViewContainer($request, '_main/main.stuff.notauthenticated.pico', $viewContainer);
     }
 
     private function clearNextLocation(): bool
@@ -93,6 +103,7 @@ final class AuthenticationController extends AbstractStuffController implements 
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new AuthenticationView(
                 $this->createCommonView($request),
+                $this->getLocalDependencyContainer()->getCsrfTokenService()->getToken(),
                 $form,
             ),
             'stuff/authentication',

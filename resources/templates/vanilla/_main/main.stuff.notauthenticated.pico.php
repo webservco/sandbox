@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use WebServCo\View\View\MainView;
+use Project\View\Stuff\MainView;
 
-// @phan-suppress-next-line PhanRedundantConditionInGlobalScope
+// @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
 assert(isset($view) && $view instanceof MainView);
 ?>
 <!doctype html>
@@ -37,6 +37,12 @@ assert(isset($view) && $view instanceof MainView);
         </header>
 
         <main>
+            <?php // Flash messages: in the language of the request (the module's pages are in English). ?>
+            <?php foreach ($view->flashMessages as $flashMessage) { ?>
+                <article role="status" data-type="<?=$flashMessage->type->value?>" lang="<?=$view->languageCode()?>">
+                    <?=$view->text($flashMessage->key, $flashMessage->parameters)?>
+                </article>
+            <?php } ?>
             <?=$view->data?>
         </main>
 

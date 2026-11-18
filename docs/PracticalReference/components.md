@@ -34,10 +34,10 @@ The following table summarizes the WebServCo runtime components visible in the i
 | `webservco/jsonapi-application` | JSON:API handler, request validation, service containers, and API view types. |
 | `webservco/jwt` | HS256 JWT decoder and normalized payload DTO. |
 | `webservco/log` | Context logger factory and log services. |
-| `webservco/middleware` | Routing, resource dispatch, exception, logging, and renderer-selection middleware. |
+| `webservco/middleware` | Routing, resource dispatch, exception, logging, and renderer-selection middleware; the session and CSRF middleware. |
 | `webservco/route` | Route configuration contract, value object, and PHP route-file loader. |
 | `webservco/reflection` | Reflection factories/services used to inspect controller interfaces and constructor parameters. |
-| `webservco/session` | Session configuration, cookie settings, and session service. |
+| `webservco/session` | Session configuration, cookie settings, and session service; the session store, the CSRF token and the flash messages. |
 | `webservco/stopwatch` | Lap timer and statistics used during startup, request handling, and commands. |
 | `webservco/view` | View contracts, view containers, renderer selection, HTML/JSON renderers, and template rendering. |
 
@@ -75,14 +75,25 @@ The HTML renderer includes the requested PHP template in a scoped render method 
 
 ### Languages and translations
 
-`webservco/i18n` puts the Sandbox module's pages in the language of the request; its README (`vendor/webservco/i18n/README.md`) has the catalog format, the message rules and the formats. The other modules aren't translated.
+`webservco/i18n` puts the Sandbox module's pages in the language of the request; its README (`vendor/webservco/i18n/README.md`) has the catalog format, the message rules and the formats. The other modules aren't translated, except the Stuff module's flash messages ([Session, CSRF token and flash messages](#session-csrf-token-and-flash-messages)): its pages stay in English.
 
 - **Languages.** The enum `Project\Enum\I18n\Language` implements `LanguageInterface`: English (the default, ICU locale `en_GB`) and German, in the order of the language switch. `LanguageListFactory` is the one place that builds the `LanguageList`.
 - **Language of a request.** `LanguageMiddleware` runs first in the stack, for every module. It takes the language from `?lang=`, the `lang` cookie, `Accept-Language` or the default, in that order, and puts it on the request. Every response gets `Content-Language`; a `?lang=` response sets the cookie, the others vary on `Cookie, Accept-Language`.
-- **Translator and formatter.** `AbstractSandboxController::getLocalizationContainer()` creates them once per request through `RequestLocalizationContainerFactory`: the catalogs of `resources/i18n/`, the request's language, and the display time zone (`DISPLAY_TIME_ZONE`, UTC).
+- **Translator and formatter.** `AbstractController::getLocalizationContainer()` creates them once per request through `RequestLocalizationContainerFactory`: the catalogs of `resources/i18n/`, the request's language, and the display time zone (`DISPLAY_TIME_ZONE`, UTC).
 - **Views.** A localized view extends `AbstractLocalizedView` and takes the container as its first constructor argument. Its template calls `text()`, `date()`, `time()`, `dateTime()` and `number()`, which return escaped text. The module's layout view is `Project\View\Sandbox\MainView` instead of `WebServCo\View\View\MainView`; it carries the language switch, from `LanguageLinkViewFactory`.
 - **Catalogs.** `resources/i18n/{code}/{catalog}.php` returns `name => message`; the key is `{catalog}.{name}`. English is the reference and has every key; a key German lacks falls back to English with a warning in the log.
 - **Checks.** `tests/Unit/Resources/I18n/CatalogTest.php` runs the component's eight catalog checks: structure, message syntax, lookalike letters, parameters, plural categories, duplicate cases, British spelling, and every literal key in `config`, `resources/templates` and `src`.
+
+### Session, CSRF token and flash messages
+
+The Stuff module uses the session store, the CSRF token and the flash messages of `webservco/session`, and the session and CSRF middleware of `webservco/middleware`. Their READMEs (`vendor/webservco/session/README.md`, `vendor/webservco/middleware/README.md`) describe them in full.
+
+- **Session store.** `Factory/Session/SessionStoreFactory` creates it on the application container's session service, with the session files in `var/sessions` (in git only with its `.gitignore`; writable by the web server). A read never starts a session, a write does. `AuthenticationMiddleware` still starts the session itself for every Stuff request, in the same directory (`createStoragePath()`): a session started elsewhere couldn't be resumed.
+- **Session middleware.** Right after the route middleware: it resumes the session of a request that sends the session cookie, and sends `Cache-Control: private, no-cache` with every response to a request with a session, error pages included. A visitor of the Sandbox module gets no session.
+- **CSRF middleware.** Right after the second exception handler: every request that isn't GET, HEAD or OPTIONS needs the session's token, in the form field `csrf_token` or the header `X-CSRF-Token`, in every module except `api` (it uses a JWT). A missing or wrong token gets the error page with 403 and "This page has expired.": `SessionMiddlewareFactory` gives the middleware a `Project\Exception\Http\ClientErrorException`, which `ErrorController` shows in every environment. The refusal is logged as a warning, with the method and the path.
+- **Token and flash message services.** The Stuff local container gives them (`getCsrfTokenService()`, `getFlashMessageService()`). Every Stuff form has the hidden token field: the login form, the item form and the layout's search form.
+- **Login and logout.** A valid login renews the session ID (`regenerateId()`) and the token (`renewToken()`), so that neither works after the login if it was known before, then adds "You are logged in.". Logout destroys the session, then adds "You are logged out.", which starts a new session that holds only the message.
+- **Flash messages.** Stored as type, catalog key and parameters, and taken from the session by the module's layout once the page is rendered (`AbstractStuffController::createStuffMainViewContainer()`, `Project\View\Stuff\MainView`). The layout translates them in the language of the request (catalog `stuff`), each in an `<article role="status">` with its `lang`. A JSON response or a redirect leaves them waiting.
 
 ### Input and data transfer
 
@@ -109,7 +120,8 @@ The database schema is outside this repository. The shared library assumes a `st
 | Route dispatch | `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php` | `route`, dynamic request handlers |
 | Controller creation | `src/Project/Instantiator/Controller/` | `controller`, `reflection` |
 | Page rendering | `src/Project/Controller/AbstractController.php`, `src/Project/View/` | `view` |
-| Languages | `src/Project/Enum/I18n/`, `src/Project/Factory/I18n/`, `src/Project/Controller/Sandbox/AbstractSandboxController.php`, `resources/i18n/` | `i18n` |
+| Languages | `src/Project/Enum/I18n/`, `src/Project/Factory/I18n/`, `src/Project/Controller/AbstractController.php`, `resources/i18n/` | `i18n` |
+| Session, CSRF, flash messages | `src/Project/Factory/Session/`, `src/Project/Factory/Middleware/SessionMiddlewareFactory.php`, `src/Project/Controller/Stuff/`, `src/Project/View/Stuff/MainView.php` | `session`, `middleware` |
 | Forms | `src/Project/Factory/Form/`, `src/Project/Controller/Stuff/` | `form` |
 | API request | `src/Project/Middleware/API/ApiAuthenticationMiddleware.php`, `src/Project/Controller/API/` | `jwt`, `jsonapi`, `jsonapi-application` |
 | Stuff persistence | `src/Project/Factory/Container/StuffLocalDependencyContainerFactory.php` | `app-stuff-common`, `database`, `data` |

@@ -42,7 +42,7 @@ The Sandbox module's pages are translated with `webservco/i18n` ([Languages and 
 5. Run the tests (`ddev xdebug on && ddev composer test; ddev xdebug off`): `CatalogTest` reports a key English lacks, a key only one language has, a wrong plural, a US spelling, and the other catalog problems.
 6. Look at the page in both languages: the language switch links to `?lang=de` and `?lang=en`.
 
-For a page of another module, its abstract controller first needs what `AbstractSandboxController` has: `getLocalizationContainer()` and a localized layout view. When a second module needs them, move them up into `Project\Controller\AbstractController`.
+`getLocalizationContainer()` is in `Project\Controller\AbstractController`, so every module has it. A page of another module needs its view to extend `AbstractLocalizedView`, and its layout a localized view if the layout has texts: the Stuff module's `Project\View\Stuff\MainView` is localized for its flash messages ([Show a result message](#show-a-result-message)).
 
 A new language is a case of `Project\Enum\I18n\Language` (code, ICU locale, native name) and a catalog directory `resources/i18n/{code}/` with every catalog and name of English.
 
@@ -84,11 +84,45 @@ The Stuff examples add field-specific validators. `ItemFormFactory::setItem()` s
 3. On a non-POST request, `HtmlPostForm` records a method error and is not sent; the page can render with 200.
 4. On a POST, it reads scalar values from the parsed body, filters values, then runs general and field-level validators.
 5. If `isSent()` and `isValid()` are both true, convert validated values to the operation's DTO and call the service/storage layer.
-6. Redirect after successful mutation. Otherwise render the form with the form's response status.
+6. Redirect after successful mutation, usually with a flash message ([Show a result message](#show-a-result-message)). Otherwise render the form with the form's response status.
 
 `AuthenticationController`, `ItemController`, and `SearchItemController` show the pattern. Keep input interpretation in the request/form path and pass a typed DTO such as `WebServCo\Stuff\DataTransfer\Item\Item` into storage.
 
 The form filters are input processing, not output escaping. Escape values again when inserting them into HTML or attributes.
+
+### CSRF token
+
+`CsrfMiddleware` refuses every POST without the session's token, in every module except `api` ([Session, CSRF token and flash messages](components.md#session-csrf-token-and-flash-messages)). So every form carries it in a hidden field:
+
+1. The controller gives the view the token: `$this->getLocalDependencyContainer()->getCsrfTokenService()->getToken()`. It starts the session and creates the token when needed. A view property such as `public readonly string $csrfToken` holds it.
+2. The template writes the field first in the form:
+
+    ```php
+    <input type="hidden" name="<?=CsrfTokenServiceInterface::FIELD_NAME?>" value="<?=$view->csrfToken?>">
+    ```
+
+3. A request sent with JavaScript can send the token in the header `X-CSRF-Token` (`CsrfTokenServiceInterface::HEADER_NAME`) instead.
+
+The form classes ignore the field. A form of a module without the services in its local container gets them the way the Stuff container does: `CsrfTokenService` and `FlashMessageService` on the store of `SessionStoreFactory`. `AuthenticationController` (`stuff/authentication`), `ItemController` (`stuff/item`) and the search form of the Stuff layout show the field.
+
+## Show a result message
+
+A flash message tells the user the result of an action on the next page, once ([Session, CSRF token and flash messages](components.md#session-csrf-token-and-flash-messages)). In the Stuff module:
+
+1. Add the text to `resources/i18n/en/stuff.php` and `resources/i18n/de/stuff.php` (`flash.{name}`), as for a translated page ([Translate a page](#translate-a-page)).
+2. In the controller, right before the redirect:
+
+    ```php
+    $this->getLocalDependencyContainer()->getFlashMessageService()->add(
+        FlashMessageType::Success,
+        'stuff.flash.logged_in',
+    );
+    ```
+
+    Write the key in full, so that the catalog check finds it. The types are `Success`, `Info`, `Warning` and `Danger`. Parameters of the message go into a third argument, `['name' => $value]`. The same message waiting twice is stored once.
+3. Nothing else: the layout (`AbstractStuffController::createStuffMainViewContainer()`) takes the waiting messages after the page is rendered and shows them in the language of the request. A JSON response or a redirect leaves them waiting.
+
+`AuthenticationController` (login, `Success`) and `LogoutController` (logout, `Info`; after `destroy()`, the message starts a new session) are the examples. Another module needs the same layout part: a layout view with the messages, filled by its abstract controller.
 
 ## Add or change a Stuff storage operation
 

@@ -7,6 +7,7 @@ namespace Project\Controller\Error;
 use Fig\Http\Message\StatusCodeInterface;
 use Override;
 use Project\Contract\Controller\ErrorControllerInterface;
+use Project\Exception\Http\ClientErrorException;
 use Project\View\Error\ErrorView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -51,7 +52,7 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
 
     private function getDisplayCode(Throwable $throwable): string
     {
-        if ($this->isDevelopment()) {
+        if ($throwable instanceof ClientErrorException || $this->isDevelopment()) {
             return (string) $throwable->getCode();
         }
 
@@ -63,11 +64,12 @@ final class ErrorController extends AbstractErrorController implements ErrorCont
      *
      * Consider:
      * - environment (do not display sensitive information in production),
-     * - exception type (some may contain useful information for consumer)
+     * - exception type (some may contain useful information for consumer): a `ClientErrorException` tells the user
+     *   what happened, in every environment.
      */
     private function getDisplayMessage(Throwable $throwable): string
     {
-        if ($this->isDevelopment()) {
+        if ($throwable instanceof ClientErrorException || $this->isDevelopment()) {
             return $throwable->getMessage();
         }
 

@@ -41,6 +41,27 @@ curl --header "Accept: text/html" -w "\n" --verbose https://sandbox.ddev.site/ap
 # OK
 curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/api/v1/version
 
+# cURL - CSRF: a POST without a session or a token gets the error page (403, "This page has expired."), in every module
+# except api
+curl --silent --dump-header - --data "a=b" https://sandbox.ddev.site/sandbox/test | grep -E '^HTTP|Code:|Message:'
+# The api module isn't checked: its own error (no JWT)
+curl --silent --header "Accept: application/vnd.api+json" --data "a=b" -w "\n" https://sandbox.ddev.site/api/v1/version
+
+# cURL - Stuff: session, CSRF token, flash messages. Set P to AUTHENTICATION_PASSWORD (config/.env.ini) first.
+# The login form's token; the login without it (403) and with a wrong one (403); with it: 303 and a new session ID
+# (Set-Cookie); the next page shows "You are logged in." once (then 0). Logout: 303 and a new session that holds only
+# the message; the login form shows "You are logged out." (in German after ?lang=de)
+J=$(mktemp); curl --silent --output /dev/null --cookie-jar "$J" https://sandbox.ddev.site/stuff/item; \
+  T=$(curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/authenticate | grep -o -E 'name="csrf_token" value="[0-9a-f]{64}"' | grep -o -E '[0-9a-f]{64}'); \
+  curl --silent --cookie "$J" --data-urlencode "password=$P" --output /dev/null --write-out "%{http_code}\n" https://sandbox.ddev.site/stuff/authenticate; \
+  curl --silent --cookie "$J" --data-urlencode "password=$P" --data "csrf_token=${T}0" --output /dev/null --write-out "%{http_code}\n" https://sandbox.ddev.site/stuff/authenticate; \
+  curl --silent --cookie "$J" --cookie-jar "$J" --data-urlencode "password=$P" --data "csrf_token=$T" --output /dev/null --dump-header - https://sandbox.ddev.site/stuff/authenticate | grep -i -E '^(HTTP|location|set-cookie)'; \
+  curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item | grep -A1 '<article role="status"'; \
+  curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/item | grep -c '<article role="status"'; \
+  curl --silent --cookie "$J" --cookie-jar "$J" --output /dev/null --dump-header - "https://sandbox.ddev.site/stuff/logout?lang=de" | grep -i -E '^(HTTP|location|set-cookie)'; \
+  curl --silent --cookie "$J" https://sandbox.ddev.site/stuff/authenticate | grep -A1 '<article role="status"'; \
+  rm "$J"
+
 ###
 
 # CGI (not CLI and not HTTP)

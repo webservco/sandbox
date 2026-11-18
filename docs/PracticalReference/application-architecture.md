@@ -10,8 +10,9 @@
 | `src/Project/Container/` | Application and module-local container implementations. |
 | `src/Project/Contract/` | App-specific interfaces, including module controller markers and container/form-factory contracts. |
 | `src/Project/Enum/` | App-specific enums: the languages (`I18n\Language`). |
+| `src/Project/Exception/` | App-specific exceptions: `Http\ClientErrorException`, a client error the error page shows in every environment. |
 | `src/Project/Controller/` | Request-to-response orchestration. Controllers use application and local dependencies, then create responses and views. |
-| `src/Project/Factory/` | Constructs applications, commands, containers, forms, request handlers, middleware, and the localization services (`I18n/`). |
+| `src/Project/Factory/` | Constructs applications, commands, containers, forms, request handlers, middleware, the localization services (`I18n/`) and the session store (`Session/`). |
 | `src/Project/Instantiator/` | Selects and configures module-specific controller instantiators. |
 | `src/Project/Middleware/` | Project-specific request processing, currently session and API authentication. |
 | `src/Project/RequestHandler/` | Module request handlers, including renderer capabilities and special route behavior. |
@@ -44,12 +45,14 @@ Initialization is wrapped in a `Throwable` catch. If setup fails before normal a
 2. **Exception handler 1** wraps the rest of the pipeline and can render exceptions thrown during content negotiation or routing.
 3. **View renderer setting** reads `Accept` and sets the requested renderer interface on the request. A missing header is treated as `*/*`.
 4. **Route middleware** maps a recognized URL prefix to numbered route-part attributes.
-5. **Session authentication** only acts when route part 1 is `stuff`; other modules pass straight through.
-6. **Request logger** logs requests that continue to this point.
-7. **API authentication** only acts when route part 1 is `api`.
-8. **Exception handler 2** wraps resource dispatch and controller execution so application exceptions can use the normal response path.
-9. **Resource middleware** selects the dynamic request handler for `api`, `sandbox`, or `stuff`.
-10. The selected module handler resolves its route configuration, chooses a renderer, instantiates the controller, and calls `handle()`.
+5. **Session** (`webservco/middleware`) resumes the session of a request that sends the session cookie, and sends `Cache-Control: private, no-cache` with every response to a request with a session, error pages included.
+6. **Session authentication** only acts when route part 1 is `stuff`; other modules pass straight through.
+7. **Request logger** logs requests that continue to this point.
+8. **API authentication** only acts when route part 1 is `api`.
+9. **Exception handler 2** wraps resource dispatch and controller execution so application exceptions can use the normal response path.
+10. **CSRF check** (`webservco/middleware`) refuses a request that isn't GET, HEAD or OPTIONS without the session's token, except when route part 1 is `api`: the error page, with 403 ([Session, CSRF token and flash messages](components.md#session-csrf-token-and-flash-messages)).
+11. **Resource middleware** selects the dynamic request handler for `api`, `sandbox`, or `stuff`.
+12. The selected module handler resolves its route configuration, chooses a renderer, instantiates the controller, and calls `handle()`.
 
 When no middleware handles a request, `StackHandler` calls its fallback `ExceptionRequestHandler`, configured with `NotFoundController`. A recognized module prefix with an unconfigured route reaches its module handler and currently throws `UnexpectedValueException`; that is sent through `ErrorController`, rather than the fallback 404 controller.
 
@@ -102,7 +105,7 @@ The module handlers declare supported renderers in `getAvailableViewRenderers()`
 
 Controllers create a view object, wrap it in a `ViewContainer` with a template name such as `stuff/item`, and pass the container to `createResponse()`. The view container gets its `TemplateService` from `Project\Controller\AbstractController`, which points at `resources/templates/vanilla` and appends `.php`.
 
-For HTML responses, `AbstractDefaultControllerBase` renders the page view first, puts that HTML string in `MainView::data`, then renders the module's main template. API, Sandbox, Stuff, and Error abstract controllers select their own main template. The Sandbox one also uses its own main view, `Project\View\Sandbox\MainView`, which is localized and carries the language switch ([Languages and translations](components.md#languages-and-translations)). For non-HTML renderers, the page container is rendered directly and no HTML main view is wrapped around it.
+For HTML responses, `AbstractDefaultControllerBase` renders the page view first, puts that HTML string in `MainView::data`, then renders the module's main template. API, Sandbox, Stuff, and Error abstract controllers select their own main template. The Sandbox one also uses its own main view, `Project\View\Sandbox\MainView`, which is localized and carries the language switch ([Languages and translations](components.md#languages-and-translations)). The Stuff one uses `Project\View\Stuff\MainView`, with the flash messages and the token of the search form. For non-HTML renderers, the page container is rendered directly and no HTML main view is wrapped around it.
 
 Each template receives its typed view as `$view`. Templates assert the expected view type, then output that view's values. `AbstractView::escape()` performs HTML escaping for a nullable string. Use it for dynamic text and attribute values; filtering input or sanitizing a route does not make a value safe for HTML. A localized view (`AbstractLocalizedView`) adds `text()` for translated texts and `date()`, `time()`, `dateTime()` and `number()` for formats; they return escaped text.
 
@@ -118,9 +121,9 @@ Each template receives its typed view as `$view`. Templates assert the expected 
 
 ## Session authentication path
 
-`AuthenticationMiddleware` acts only under `/stuff`. It starts a session in web SAPIs, permits `/stuff/authenticate` through while unauthenticated, and otherwise stores a next-location value and returns a 303 redirect. An authenticated request receives `isAuthenticated` and `userId` attributes.
+`AuthenticationMiddleware` acts only under `/stuff`. It starts a session in web SAPIs (in `var/sessions`, the session store's directory), permits `/stuff/authenticate` through while unauthenticated, and otherwise stores a next-location value and returns a 303 redirect. An authenticated request receives `isAuthenticated` and `userId` attributes.
 
-`AuthenticationController` builds a password form using the configured password. A valid submission stores `isAuthenticated` and a generated `userId` in the session, clears the saved next location, and redirects back to the requested page (or `/stuff/items`). The logout controller destroys the session and redirects to authentication.
+`AuthenticationController` builds a password form using the configured password, with the CSRF token's hidden field. A valid submission renews the session ID and the token, stores `isAuthenticated` and a generated `userId` in the session, clears the saved next location, adds the flash message "You are logged in.", and redirects back to the requested page (or `/stuff/items`). The logout controller destroys the session, adds "You are logged out." (in a new session), and redirects to authentication.
 
 This is a small demonstration login: it uses one configured shared password and derives its example user id from that password. It is not a full user-account or production authentication design.
 
@@ -131,4 +134,4 @@ This is a small demonstration login: it uses one configured shared password and 
 - **Application exception during dispatch**: exception middleware logs through the exception handler, adds the throwable to the request, then calls the configured error controller.
 - **Exception before middleware is built or an exception while rendering an error**: the registered uncaught handler logs and emits a generic message; in a web SAPI it sets status 500.
 
-`ErrorController` reveals exception code and message only in development and testing. In staging and production it uses a generic message and a 500 display code. It accepts an exception's numeric HTTP status only if the status code is recognized; otherwise it responds with 500.
+`ErrorController` reveals exception code and message only in development and testing, except for a `ClientErrorException` (such as the CSRF middleware's "This page has expired."), whose code and message it shows in every environment. In staging and production it uses a generic message and a 500 display code. It accepts an exception's numeric HTTP status only if the status code is recognized; otherwise it responds with 500.

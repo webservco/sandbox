@@ -124,6 +124,7 @@ final class ItemController extends AbstractItemController implements StuffContro
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new ItemView(
                 $this->createCommonView($request),
+                $this->getLocalDependencyContainer()->getCsrfTokenService()->getToken(),
                 $form,
                 $itemEntity,
             ),

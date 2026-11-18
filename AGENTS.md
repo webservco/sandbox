@@ -7,9 +7,10 @@ This repository contains the `webservco/sandbox` PHP application, a small sandbo
 ## Layout
 
 - `src/Project/` contains application controllers, request handlers, middleware, factories, views, and commands.
-- `config/` contains route configuration; `resources/templates/` contains PHP templates; `resources/i18n/` contains the message catalogs (English, German) of the Sandbox module.
+- `config/` contains route configuration; `resources/templates/` contains PHP templates; `resources/i18n/` contains the message catalogs (English, German) of the Sandbox module and of the Stuff module's flash messages.
 - `public/` contains the web entry point and development-only public utilities.
 - `bin/` contains CLI entry points; `tests/` contains tests.
+- `var/` holds the logs (`var/log/`) and the session files (`var/sessions/`), outside git.
 - `docs/` contains MkDocs documentation. Read the relevant module docs before changing behavior; `docs/Development/PHP/Sandbox/index.md` describes the sandbox modules and example endpoints.
 
 ## Development

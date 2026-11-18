@@ -30,6 +30,9 @@ final class AuthenticationMiddleware implements MiddlewareInterface
         private ResponseFactoryInterface $responseFactory,
         private ServerRequestAttributeServiceInterface $serverRequestAttributeService,
         private SessionServiceInterface $sessionService,
+        // The directory of the session files: the session store's (`SessionStoreFactory`), so that the session
+        // middleware resumes the session started here.
+        private string $sessionStoragePath,
     ) {
     }
 
@@ -44,8 +47,8 @@ final class AuthenticationMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        // Start session. Method checks if already started.
-        $this->sessionService->start();
+        // Start session. Method checks if already started (eg. resumed by the session middleware).
+        $this->sessionService->start($this->sessionStoragePath);
 
         // Check if already authenticated.
         if ($this->isAuthenticated()) {
