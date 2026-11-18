@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands (beyond those in AGENTS.md)
 
 - Auto-fix coding standard issues: `ddev composer fix:phpcs`
-- Run a single test: `ddev exec vendor/bin/phpunit --configuration vendor/webservco/coding-standards/phpunit/phpunit-13.xml --filter <TestName>` (the suite reads `tests/Unit/`, which is currently empty; `tests/HTTP/HTTPTests.http` holds manual HTTP requests).
+- Run a single test: `ddev exec vendor/bin/phpunit --configuration vendor/webservco/coding-standards/phpunit/phpunit-13.xml --no-coverage --filter <TestName>` (the suite reads `tests/Unit/`; `tests/HTTP/HTTPTests.http` holds manual HTTP requests).
 - Lint, PHPCS, PHPStan (level max), PHPMD, Psalm and Phan all run over `bin config public resources src tests`, so templates and route files must pass static analysis too. Rule sets come from `vendor/webservco/coding-standards/`, plus `.phpcs/php-coding-standard.xml` for PHPCS.
 
 ## Architecture
@@ -20,12 +20,16 @@ The application is assembled from many small `webservco/*` Composer packages (in
 
 ### Request pipeline
 
-`Factory/Http/RequestHandlerFactory` builds a PSR-15 `StackHandler`. The middleware order matters: exception handler, view renderer selection (from the Accept header), `RouteMiddleware`, session authentication, request logging, API (JWT) authentication, a second exception handler, then `ResourceMiddleware`. Unmatched requests fall back to `NotFoundController`.
+`Factory/Http/RequestHandlerFactory` builds a PSR-15 `StackHandler`. The middleware order matters: language (`LanguageMiddleware`), exception handler, view renderer selection (from the Accept header), `RouteMiddleware`, session authentication, request logging, API (JWT) authentication, a second exception handler, then `ResourceMiddleware`. Unmatched requests fall back to `NotFoundController`.
 
 Routing uses three parts: `/{module}/{route}/{extra}`. The default route is `sandbox/test`.
 - Part 1 (the module: `api`, `sandbox`, `stuff`) must be listed in `RouteMiddleware` and is mapped in `Factory/Middleware/ResourceMiddlewareFactory` to a module request handler in `src/Project/RequestHandler/Dynamic/`. Each handler also declares the view renderers (HTML/JSON) its module supports.
 - Part 2 is looked up in `config/{Module}/Routes.php`, which maps route strings to controller classes. API routes include the version, for example `v1/about`.
 - Part 3 is read by controllers via `getServerRequestAttributeService()->getRoutePart(3, $request)`.
+
+### Languages
+
+The Sandbox module's pages are in English (the default) or German, with `webservco/i18n` (its README is in `vendor/webservco/i18n/`). `LanguageMiddleware` resolves the language of every request (`?lang=`, the `lang` cookie, `Accept-Language`) and sets `Content-Language`. The languages are the enum `Project\Enum\I18n\Language`; `Factory/I18n/LanguageListFactory` is the one place that builds their list. `AbstractSandboxController::getLocalizationContainer()` gives the translator and formatter of the request; the module's views extend `AbstractLocalizedView`, and its layout view is `Project\View\Sandbox\MainView`, with the language switch. Texts are keys in `resources/i18n/{code}/{catalog}.php`; English has every key. `tests/Unit/Resources/I18n/CatalogTest.php` runs the component's catalog checks.
 
 ### Adding a module or controller
 
@@ -42,7 +46,7 @@ Templates are plain PHP files in `resources/templates/vanilla/`, resolved by `Ab
 
 ### Modules
 
-- **sandbox**: a minimal example (`TestController`) and the `bin/sandbox-test` CLI command.
+- **sandbox**: a minimal example (`TestController`) in English and German, and the `bin/sandbox-test` CLI command.
 - **stuff**: session-authenticated CRUD with forms (`webservco/form`) and a MariaDB database. `AuthenticationMiddleware` sets the user id request attribute.
 - **api**: a JSON:API endpoint protected by a JWT. `ApiAuthenticationMiddleware` validates against `API_KEY` and `JWT_SECRET` from the config; see `docs/Development/PHP/Sandbox/index.md` for how to build a token.
 

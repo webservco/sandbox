@@ -30,7 +30,7 @@ Composer scripts are the executable reference. In a configured DDEV environment,
 | `ddev composer check:phan` | Phan using the shared WebServCo config. |
 | `ddev composer check` | Runs lint, PHPCS, PHPStan, PHPMD, Psalm, and Phan in sequence. |
 | `ddev composer check:skeleton` | PDS skeleton validation; separate from `check`. |
-| `ddev composer test` | PHPUnit using the shared PHPUnit 10 configuration. |
+| `ddev composer test` | PHPUnit using the shared PHPUnit 13 configuration, with coverage: it needs Xdebug (`ddev xdebug on`, then `ddev xdebug off`). |
 
 `ddev composer fix:phpcs` runs PHP Code Beautifier and Fixer with the same project ruleset. Review its changes rather than assuming an automatic fix is semantically correct.
 
@@ -42,7 +42,7 @@ Composer scripts are the executable reference. In a configured DDEV environment,
 - The shared Psalm config analyses project PHP directories, excludes `vendor/` and `var/`, checks array offsets, and enables unused variable/parameter checks.
 - Phan parses project directories and `vendor/` so dependency symbols are available, while excluding `vendor/` from analysis. Its config enables strict checking and several correctness plugins.
 - The PHPMD ruleset includes all standard rule groups with a few project-wide naming adjustments.
-- PHPUnit's shared config targets PHPUnit 10, `tests/Unit`, and the app's `src` for coverage.
+- PHPUnit's shared config targets PHPUnit 13, `tests/Unit`, and the app's `src` for coverage. It requires coverage metadata (`#[CoversClass]`, or `#[CoversNothing]`) on every test class, and fails on warnings: without a coverage driver it runs no test.
 
 The PHPCS ruleset also enforces file/type-name matching using this repository's PSR-4 roots, alphabetical attribute ordering, and a 25-line function length target. It requires imported references for used classes, functions, and constants. The Slevomat rules are customized to allow constructor property promotion, named arguments, and PHP 8 trailing commas, while keeping selected PSR-12 spacing rules authoritative. Longer methods or exceptional cases use narrow inline suppressions.
 
@@ -50,7 +50,9 @@ The project requirement is PHP `^8.4`, while the included PHPCS ruleset is named
 
 ## Tests and HTTP examples
 
-The repository currently contains `tests/HTTP/HTTPTests.http`, with cURL and REST Client examples for content negotiation, exception handling, 404s, Sandbox routes, and the API. There are no PHPUnit test files under `tests/Unit/` at present, even though the PHPUnit script and shared configuration are set up for them.
+`tests/HTTP/HTTPTests.http` has cURL and REST Client examples for content negotiation, exception handling, 404s, Sandbox routes, languages, and the API.
+
+`tests/Unit/Resources/I18n/CatalogTest.php` runs the catalog checks of `webservco/i18n` on `resources/i18n/`, one test per check. It has `#[CoversNothing]`: the code it runs is in `vendor/`. Run the suite with `ddev xdebug on && ddev composer test; ddev xdebug off`, or one test without coverage: `ddev exec vendor/bin/phpunit --configuration vendor/webservco/coding-standards/phpunit/phpunit-13.xml --no-coverage --filter CatalogTest`.
 
 The HTTP collection assumes the local DDEV host and current routes. Adapt the URL and request credentials/configuration to the environment before using the API examples.
 

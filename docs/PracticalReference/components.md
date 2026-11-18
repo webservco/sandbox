@@ -29,6 +29,7 @@ The following table summarizes the WebServCo runtime components visible in the i
 | `webservco/http-request-handler` | Middleware stack, dynamic module handlers, and exception/fallback handlers. |
 | `webservco/http-request-service` | Request method/body/header and server-attribute services used by containers and API handling. |
 | `webservco/http-response-service` | Response status-code service. |
+| `webservco/i18n` | Languages, message catalogs and their checks, ICU translator and formatter, the language of a request (`LanguageMiddleware`), localized views and the language switch. |
 | `webservco/jsonapi` | JSON:API document, data, and error contracts/DTOs. |
 | `webservco/jsonapi-application` | JSON:API handler, request validation, service containers, and API view types. |
 | `webservco/jwt` | HS256 JWT decoder and normalized payload DTO. |
@@ -72,6 +73,17 @@ The `ViewInterface` is the data boundary between a controller and renderer. App 
 
 The HTML renderer includes the requested PHP template in a scoped render method with `$view` available. The JSON renderers serialize the view object. The base controller wraps only HTML views in a `MainView`; non-HTML data is rendered directly.
 
+### Languages and translations
+
+`webservco/i18n` puts the Sandbox module's pages in the language of the request; its README (`vendor/webservco/i18n/README.md`) has the catalog format, the message rules and the formats. The other modules aren't translated.
+
+- **Languages.** The enum `Project\Enum\I18n\Language` implements `LanguageInterface`: English (the default, ICU locale `en_GB`) and German, in the order of the language switch. `LanguageListFactory` is the one place that builds the `LanguageList`.
+- **Language of a request.** `LanguageMiddleware` runs first in the stack, for every module. It takes the language from `?lang=`, the `lang` cookie, `Accept-Language` or the default, in that order, and puts it on the request. Every response gets `Content-Language`; a `?lang=` response sets the cookie, the others vary on `Cookie, Accept-Language`.
+- **Translator and formatter.** `AbstractSandboxController::getLocalizationContainer()` creates them once per request through `RequestLocalizationContainerFactory`: the catalogs of `resources/i18n/`, the request's language, and the display time zone (`DISPLAY_TIME_ZONE`, UTC).
+- **Views.** A localized view extends `AbstractLocalizedView` and takes the container as its first constructor argument. Its template calls `text()`, `date()`, `time()`, `dateTime()` and `number()`, which return escaped text. The module's layout view is `Project\View\Sandbox\MainView` instead of `WebServCo\View\View\MainView`; it carries the language switch, from `LanguageLinkViewFactory`.
+- **Catalogs.** `resources/i18n/{code}/{catalog}.php` returns `name => message`; the key is `{catalog}.{name}`. English is the reference and has every key; a key German lacks falls back to English with a warning in the log.
+- **Checks.** `tests/Unit/Resources/I18n/CatalogTest.php` runs the component's eight catalog checks: structure, message syntax, lookalike letters, parameters, plural categories, duplicate cases, British spelling, and every literal key in `config`, `resources/templates` and `src`.
+
 ### Input and data transfer
 
 The data extraction container exposes both strict and loose services, with scalar and non-empty variants and array-aware variants:
@@ -97,6 +109,7 @@ The database schema is outside this repository. The shared library assumes a `st
 | Route dispatch | `src/Project/Factory/Middleware/ResourceMiddlewareFactory.php` | `route`, dynamic request handlers |
 | Controller creation | `src/Project/Instantiator/Controller/` | `controller`, `reflection` |
 | Page rendering | `src/Project/Controller/AbstractController.php`, `src/Project/View/` | `view` |
+| Languages | `src/Project/Enum/I18n/`, `src/Project/Factory/I18n/`, `src/Project/Controller/Sandbox/AbstractSandboxController.php`, `resources/i18n/` | `i18n` |
 | Forms | `src/Project/Factory/Form/`, `src/Project/Controller/Stuff/` | `form` |
 | API request | `src/Project/Middleware/API/ApiAuthenticationMiddleware.php`, `src/Project/Controller/API/` | `jwt`, `jsonapi`, `jsonapi-application` |
 | Stuff persistence | `src/Project/Factory/Container/StuffLocalDependencyContainerFactory.php` | `app-stuff-common`, `database`, `data` |

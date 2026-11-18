@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Project\Factory\Http;
 
 use Override;
+use Project\Factory\I18n\LanguageListFactory;
 use Project\Factory\Middleware\ResourceMiddlewareFactory;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WebServCo\Http\Contract\Message\Request\RequestHandler\RequestHandlerFactoryInterface;
+use WebServCo\I18n\Service\LanguageMiddleware;
+use WebServCo\I18n\Service\LanguageResolver;
 use WebServCo\Middleware\Service\Dynamic\RouteMiddleware;
 use WebServCo\Middleware\Service\Log\LoggerMiddleware;
 use WebServCo\Middleware\Service\ViewRenderer\ViewRendererSettingMiddleware;
 use WebServCo\Stuff\Contract\RouteInterface;
+
+use function str_starts_with;
 
 /**
  * Request handler factory.
@@ -35,6 +40,13 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
         $stackHandler = $this->createStackHandler();
 
         // Add application specific middleware next.
+
+        /**
+         * Language middleware: the language of the request (`webservco/i18n`).
+         *
+         * Before the exception handlers, so that error pages can be translated too.
+         */
+        $stackHandler->addMiddleware($this->createLanguageMiddleware());
 
         /**
          * Exception handler middleware (1).
@@ -90,6 +102,21 @@ final class RequestHandlerFactory extends AbstractRequestHandlerFactory implemen
         return $stackHandler;
     }
     /** @phpcs:enable */
+
+    private function createLanguageMiddleware(): MiddlewareInterface
+    {
+        $languageListFactory = new LanguageListFactory();
+
+        return new LanguageMiddleware(
+            new LanguageResolver($languageListFactory->createLanguageList()),
+            // Secure cookie when the site is served over HTTPS.
+            str_starts_with(
+                $this->applicationDependencyContainer->getServiceContainer()->getConfigurationGetter()
+                    ->getString('BASE_URL'),
+                'https://',
+            ),
+        );
+    }
 
     private function createResourceMiddleware(): MiddlewareInterface
     {

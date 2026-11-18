@@ -9,8 +9,9 @@
 | `src/Project/Command/` | CLI command implementations. |
 | `src/Project/Container/` | Application and module-local container implementations. |
 | `src/Project/Contract/` | App-specific interfaces, including module controller markers and container/form-factory contracts. |
+| `src/Project/Enum/` | App-specific enums: the languages (`I18n\Language`). |
 | `src/Project/Controller/` | Request-to-response orchestration. Controllers use application and local dependencies, then create responses and views. |
-| `src/Project/Factory/` | Constructs applications, commands, containers, forms, request handlers, and middleware. |
+| `src/Project/Factory/` | Constructs applications, commands, containers, forms, request handlers, middleware, and the localization services (`I18n/`). |
 | `src/Project/Instantiator/` | Selects and configures module-specific controller instantiators. |
 | `src/Project/Middleware/` | Project-specific request processing, currently session and API authentication. |
 | `src/Project/RequestHandler/` | Module request handlers, including renderer capabilities and special route behavior. |
@@ -18,8 +19,9 @@
 | `src/Project/View/` | Typed view data objects passed to renderers. |
 | `config/{Module}/Routes.php` | Route-key-to-controller maps loaded at runtime. |
 | `resources/templates/vanilla/` | HTML page templates and module-specific templates. |
+| `resources/i18n/` | Message catalogs of the Sandbox module, one directory per language code. |
 | `public/` and `bin/` | Web and CLI entry points. |
-| `tests/` | HTTP request examples; PHPUnit is configured, but no unit tests are currently present. |
+| `tests/` | HTTP request examples (`tests/HTTP/`) and PHPUnit tests (`tests/Unit/`): the catalog checks. |
 
 ### Web bootstrap
 
@@ -38,15 +40,16 @@ Initialization is wrapped in a `Throwable` catch. If setup fails before normal a
 
 `RequestHandlerFactory::createRequestHandler()` adds these middlewares to `StackHandler` in the listed order. `StackHandler` consumes the stack from the first added middleware to the last:
 
-1. **Exception handler 1** wraps the rest of the pipeline and can render exceptions thrown during content negotiation or routing.
-2. **View renderer setting** reads `Accept` and sets the requested renderer interface on the request. A missing header is treated as `*/*`.
-3. **Route middleware** maps a recognized URL prefix to numbered route-part attributes.
-4. **Session authentication** only acts when route part 1 is `stuff`; other modules pass straight through.
-5. **Request logger** logs requests that continue to this point.
-6. **API authentication** only acts when route part 1 is `api`.
-7. **Exception handler 2** wraps resource dispatch and controller execution so application exceptions can use the normal response path.
-8. **Resource middleware** selects the dynamic request handler for `api`, `sandbox`, or `stuff`.
-9. The selected module handler resolves its route configuration, chooses a renderer, instantiates the controller, and calls `handle()`.
+1. **Language** (`webservco/i18n`) resolves the language of the request from `?lang=`, the `lang` cookie, `Accept-Language` or the default (English), and sets it as the request attribute `language`. Every response gets `Content-Language`, and either the cookie (after `?lang=`) or `Vary: Cookie, Accept-Language`. It runs before the exception handlers, so that error pages can be translated too.
+2. **Exception handler 1** wraps the rest of the pipeline and can render exceptions thrown during content negotiation or routing.
+3. **View renderer setting** reads `Accept` and sets the requested renderer interface on the request. A missing header is treated as `*/*`.
+4. **Route middleware** maps a recognized URL prefix to numbered route-part attributes.
+5. **Session authentication** only acts when route part 1 is `stuff`; other modules pass straight through.
+6. **Request logger** logs requests that continue to this point.
+7. **API authentication** only acts when route part 1 is `api`.
+8. **Exception handler 2** wraps resource dispatch and controller execution so application exceptions can use the normal response path.
+9. **Resource middleware** selects the dynamic request handler for `api`, `sandbox`, or `stuff`.
+10. The selected module handler resolves its route configuration, chooses a renderer, instantiates the controller, and calls `handle()`.
 
 When no middleware handles a request, `StackHandler` calls its fallback `ExceptionRequestHandler`, configured with `NotFoundController`. A recognized module prefix with an unconfigured route reaches its module handler and currently throws `UnexpectedValueException`; that is sent through `ErrorController`, rather than the fallback 404 controller.
 
@@ -99,9 +102,9 @@ The module handlers declare supported renderers in `getAvailableViewRenderers()`
 
 Controllers create a view object, wrap it in a `ViewContainer` with a template name such as `stuff/item`, and pass the container to `createResponse()`. The view container gets its `TemplateService` from `Project\Controller\AbstractController`, which points at `resources/templates/vanilla` and appends `.php`.
 
-For HTML responses, `AbstractDefaultControllerBase` renders the page view first, puts that HTML string in `MainView::data`, then renders the module's main template. API, Sandbox, Stuff, and Error abstract controllers select their own main template. For non-HTML renderers, the page container is rendered directly and no HTML main view is wrapped around it.
+For HTML responses, `AbstractDefaultControllerBase` renders the page view first, puts that HTML string in `MainView::data`, then renders the module's main template. API, Sandbox, Stuff, and Error abstract controllers select their own main template. The Sandbox one also uses its own main view, `Project\View\Sandbox\MainView`, which is localized and carries the language switch ([Languages and translations](components.md#languages-and-translations)). For non-HTML renderers, the page container is rendered directly and no HTML main view is wrapped around it.
 
-Each template receives its typed view as `$view`. Templates assert the expected view type, then output that view's values. `AbstractView::escape()` performs HTML escaping for a nullable string. Use it for dynamic text and attribute values; filtering input or sanitizing a route does not make a value safe for HTML.
+Each template receives its typed view as `$view`. Templates assert the expected view type, then output that view's values. `AbstractView::escape()` performs HTML escaping for a nullable string. Use it for dynamic text and attribute values; filtering input or sanitizing a route does not make a value safe for HTML. A localized view (`AbstractLocalizedView`) adds `text()` for translated texts and `date()`, `time()`, `dateTime()` and `number()` for formats; they return escaped text.
 
 ### Response creation
 

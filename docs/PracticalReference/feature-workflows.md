@@ -6,12 +6,12 @@ For an ordinary page in an existing module, follow this sequence:
 
 1. Add a route key and controller class to the module's `config/{Module}/Routes.php`.
 2. Create the controller under `src/Project/Controller/{Module}/`. Implement the module marker controller interface, commonly by extending that module's abstract controller.
-3. Create a view under `src/Project/View/{Module}/`. Keep the view as a typed data object; the existing views extend `AbstractView` and expose constructor-promoted `public readonly` properties.
+3. Create a view under `src/Project/View/{Module}/`. Keep the view as a typed data object; the existing views extend `AbstractView` (the Sandbox ones through `AbstractLocalizedView`, see [Translate a page](#translate-a-page)) and expose constructor-promoted `public readonly` properties.
 4. In the controller's `handle()` method, collect validated inputs and call services. Create a view container with the view factory and a template name relative to `resources/templates/vanilla`.
 5. Add the matching PHP template. Assert the expected view class and escape dynamic HTML output.
 6. If the page needs a service not already available, add it through the module-local dependency-container interface, implementation, and factory.
 
-The existing Sandbox route is the smallest example: `config/Sandbox/Routes.php` maps `test` to `TestController`; the controller reads route part 3, creates `TestView`, selects `sandbox/test`, and uses the Sandbox main layout.
+The existing Sandbox route is the smallest example: `config/Sandbox/Routes.php` maps `test` to `TestController`; the controller reads route part 3, creates `TestView` in the language of the request, selects `sandbox/test`, and uses the Sandbox main layout.
 
 For a controller response, the usual shape is:
 
@@ -30,6 +30,21 @@ public function handle(ServerRequestInterface $request): ResponseInterface
 ```
 
 The inherited controller base provides the application, local, and view-services containers, `createResponse()`, `createCommonView()`, and the HTML page-layout path. Use the module's abstract controller when it already chooses the correct main layout.
+
+## Translate a page
+
+The Sandbox module's pages are translated with `webservco/i18n` ([Languages and translations](components.md#languages-and-translations)). For a page of that module:
+
+1. Add its texts to the English catalog, `resources/i18n/en/{catalog}.php` (`sandbox` for this module), as `name => message`. English is the reference: it has every key. Messages are plain text in [ICU MessageFormat](https://unicode-org.github.io/icu/userguide/format_parse/messages/): `{count, plural, one {# item} other {# items}}`.
+2. Add the same names to `resources/i18n/de/{catalog}.php`. A plural has exactly the plural categories of its language (English and German: `one` and `other`).
+3. Let the view extend `AbstractLocalizedView`, and pass `$this->getLocalizationContainer($request)` as its first constructor argument.
+4. In the template, print `$view->text('sandbox.test.date')`, `$view->text('sandbox.test.items', ['count' => $count])`, `$view->date($dateTime)` or `$view->number($number, 2)`. They return escaped text. Write each key in full: the checks find keys in the code by their form.
+5. Run the tests (`ddev xdebug on && ddev composer test; ddev xdebug off`): `CatalogTest` reports a key English lacks, a key only one language has, a wrong plural, a US spelling, and the other catalog problems.
+6. Look at the page in both languages: the language switch links to `?lang=de` and `?lang=en`.
+
+For a page of another module, its abstract controller first needs what `AbstractSandboxController` has: `getLocalizationContainer()` and a localized layout view. When a second module needs them, move them up into `Project\Controller\AbstractController`.
+
+A new language is a case of `Project\Enum\I18n\Language` (code, ICU locale, native name) and a catalog directory `resources/i18n/{code}/` with every catalog and name of English.
 
 ## Add a new top-level module
 

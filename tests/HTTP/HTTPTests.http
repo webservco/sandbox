@@ -26,6 +26,13 @@ curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.
 curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/sandbox/qwerty
 curl --header "Accept: */*" -w "\n" --verbose https://sandbox.ddev.site/sandbox/test/foo
 
+# cURL - language: `?lang=` (sets the `lang` cookie), then the cookie, then Accept-Language, then English
+curl --header "Accept: text/html" -w "\n" --verbose "https://sandbox.ddev.site/sandbox/test?lang=de"
+curl --header "Accept: text/html" --header "Cookie: lang=de" -w "\n" --verbose https://sandbox.ddev.site/sandbox/test
+curl --header "Accept: text/html" --header "Accept-Language: de-AT,en;q=0.5" -w "\n" --verbose https://sandbox.ddev.site/sandbox/test
+# Unknown language: ignored, the next source decides
+curl --header "Accept: text/html" -w "\n" --verbose "https://sandbox.ddev.site/sandbox/test?lang=fr"
+
 # cURL  - API test
 # OK
 curl --header "Accept: application/json" -w "\n" --verbose https://sandbox.ddev.site/api/v1/version

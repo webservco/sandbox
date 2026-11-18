@@ -37,6 +37,7 @@ Payload:
 
 - Web: https://sandbox.ddev.site/sandbox/test
 - Web: https://sandbox.ddev.site/sandbox/test/{SOME_STRING}
+- Web, in German: https://sandbox.ddev.site/sandbox/test?lang=de (the language switch is at the top of the page; the choice is kept in the `lang` cookie)
 - CLI: `ddev exec bin/sandbox-test`
 
 ---

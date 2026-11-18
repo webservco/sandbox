@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+use Project\View\Sandbox\MainView;
+
+// @phan-suppress-next-line PhanImpossibleConditionInGlobalScope, PhanRedundantConditionInGlobalScope
+assert(isset($view) && $view instanceof MainView);
 ?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>main.sandbox.default</title>
+    <title><?=$view->text('sandbox.layout.title')?></title>
     <?php
     /**
      * Avoid using the base tag;

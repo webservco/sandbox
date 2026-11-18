@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Project\Controller\Sandbox;
 
+use DateTimeImmutable;
 use Override;
 use Project\Contract\Controller\SandboxControllerInterface;
 use Project\View\Sandbox\TestView;
@@ -34,9 +35,15 @@ final class TestController extends AbstractSandboxController implements SandboxC
     {
         return $this->viewServicesContainer->getViewContainerFactory()->createViewContainerFromView(
             new TestView(
+                $this->getLocalizationContainer($request),
                 17,
                 $this->applicationDependencyContainer->getRequestServiceContainer()
                     ->getServerRequestAttributeService()->getRoutePart(3, $request),
+                // A system time: the formatter shows it in the display time zone.
+                new DateTimeImmutable(),
+                1234567.891,
+                // Plural examples: English and German have `one` (1) and `other` (5).
+                [1, 5],
             ),
             'sandbox/test',
         );
