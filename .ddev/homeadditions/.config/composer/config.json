@@ -6,13 +6,6 @@
             "options" : {
                 "symlink" : true
             }
-        },
-        {
-            "type" : "path",
-            "url" : "~/p/webservco-components/i18n",
-            "options" : {
-                "symlink" : true
-            }
         }
     ]
 }

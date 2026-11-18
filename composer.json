@@ -43,7 +43,7 @@
         "webservco/form": "^2",
         "webservco/http": "^2",
         "webservco/http-request-handler": "^2",
-        "webservco/i18n": "@dev",
+        "webservco/i18n": "^0",
         "webservco/jsonapi": "^2",
         "webservco/jsonapi-application": "^2",
         "webservco/jwt": "^2",
